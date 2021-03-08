@@ -1,0 +1,21 @@
+{
+	"name": "set",
+	"erdAbbreviation": "<set>",
+	"dtdAbbreviation": "{set}",
+	"parentType": "string",
+	"defaultValues": {
+		"primaryKey": false,
+		"relationshipType": "",
+		"parentRelationship": "",
+		"childRelationships": [],
+		"foreignCollection": "",
+		"foreignField": [],
+		"default": "",
+		"minLength": "",
+		"maxLength": "",
+		"enum": [],
+		"sample":"",
+		"pattern": "",
+		"comments":""
+	}
+}

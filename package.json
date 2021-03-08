@@ -1,0 +1,44 @@
+{
+    "name": "MariaDB",
+    "version": "0.0.1",
+    "versionDate": "2021-03-08",
+    "author": "hackolade",
+    "engines": {
+        "hackolade": "4.3.10",
+        "hackoladePlugin": "1.2.0"
+    },
+    "contributes": {
+        "target": {
+            "applicationTarget": "MariaDB",
+            "title": "MariaDB",
+            "versions": [
+                "v10.x"
+            ]
+        },
+        "features": {
+            "nestedCollections": false,
+            "disablePatternField": false,
+            "disableMultipleTypes": true,
+            "enableForwardEngineering": true,
+            "disableReverseEngineering": false,
+            "disableChoices": true,
+            "enableJsonType": true,
+            "useJsonTypesWithComplexTypes": true,
+            "reverseSchemaIntoOneColumn": true,
+			"disableDenormalization": true,
+			"enableComplexTypesNormalization": true,
+            "views": {
+                "enabled": true,
+                "viewLevel": "model",
+                "disablePipelines": true
+            },
+            "relationships": {
+                "compositeRelationships": true
+            },
+            "FEScriptCommentsSupported": true
+        }
+    },
+    "description": "Hackolade plugin for MariaDB",
+    "icon_url": "logo.jpg",
+    "disabled": false
+}
