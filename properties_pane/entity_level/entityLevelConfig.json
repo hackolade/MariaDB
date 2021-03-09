@@ -1712,7 +1712,7 @@ making sure that you maintain a proper JSON format.
 						"options": [
 							"",
 							"HASH",
-							"KEY",
+							"KEY"
 						]
 					},
 					{
