@@ -1082,6 +1082,7 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "SQL",
 					"options": [
+						"",
 						"SQL"
 					]
 				},
@@ -1113,11 +1114,12 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "SQL Security",
-					"propertyKeyword": "funcSqlSecutrity",
+					"propertyKeyword": "funcSqlSecurity",
 					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
 					"propertyType": "select",
 					"defaultValue": "DEFINER",
 					"options": [
+						"",
 						"DEFINER",
 						"INVOKER"
 					]
