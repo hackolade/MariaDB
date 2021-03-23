@@ -1,4 +1,5 @@
-const DbFunction = require("./parsers/DbFunction");
+const functionHelper = require("./parsers/functionHelper");
+const procedureHelper = require("./parsers/procedureHelper");
 
 const parseDatabaseStatement = (statement) => {
 	const characterSetRegExp = /CHARACTER\ SET\ (.+?)\ /i;
@@ -24,9 +25,7 @@ const parseDatabaseStatement = (statement) => {
 const parseFunctions = (functions) => {
 	return functions.map(f => {
 		const query = f.data[0]['Create Function'];
-		const func = new DbFunction(query);
-		
-		func.parse();
+		const func = functionHelper.parseFunctionQuery(query);
 
 		return {
 			funcName: f.meta['Name'],
@@ -36,11 +35,30 @@ const parseFunctions = (functions) => {
 			funcParams: func.parameters,
 			funcDataType: func.returnType,
 			funcBody: func.body,
-			funcLanguage: func.getLanguage(),
-			funcDeterministic: func.getDeterministic(),
-			funcContains: func.getContains(),
+			funcLanguage: 'SQL',
+			funcDeterministic: functionHelper.getDeterministic(func.characteristics),
+			funcContains: functionHelper.getContains(func.characteristics),
 			funcSqlSecurity: f.meta['Security_type'],
 			funcComments: f.meta['Comment'],
+		};
+	});
+};
+
+const parseProcedures = (procedures) => {
+	return procedures.map(procedure => {
+		const meta = procedure.meta;
+		const data = procedureHelper.parseProcedure(procedure.data[0]['Create Procedure']);
+		
+		return {
+			storedProcName: meta['Name'],
+			storedProcOrReplace: data.orReplace,
+			storedProcParameters: data.parameters,
+			storedProcBody: data.body,
+			storedProcLanguage: 'SQL',
+			storedProcDeterministic: data.deterministic,
+			storedProcContains: data.contains,
+			storedProcSqlSecurity: meta['Security_type'],
+			storedProcComments: meta['Comment']
 		};
 	});
 };
@@ -48,4 +66,5 @@ const parseFunctions = (functions) => {
 module.exports = {
 	parseDatabaseStatement,
 	parseFunctions,
+	parseProcedures,
 };

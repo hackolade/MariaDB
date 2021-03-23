@@ -70,12 +70,26 @@ const createInstance = (connection) => {
 		);
 	};
 
+	const getProcedures = async (dbName) => {
+		const functions = await connection.query(`show procedure status WHERE Db = '${dbName}'`);
+
+		return Promise.all(
+			functions.map(
+				f => connection.query(`show create procedure \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
+					meta: f,
+					data: functionCode,
+				}))
+			)
+		);
+	};
+
 	return {
 		getCount,
 		getRecords,
 		getVersion,
 		describeDatabase,
 		getFunctions,
+		getProcedures,
 	};
 };
 

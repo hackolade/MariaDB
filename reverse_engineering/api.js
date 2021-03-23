@@ -113,6 +113,9 @@ module.exports = {
 				const UDFs = mariadbHelper.parseFunctions(
 					await instance.getFunctions(dbName)
 				);
+				const Procedures = mariadbHelper.parseProcedures(
+					await instance.getProcedures(dbName)
+				);
 
 				const result = await async.mapSeries(tables, async (tableName) => {
 					const count = await instance.getCount(dbName, tableName);
@@ -135,6 +138,7 @@ module.exports = {
 						bucketInfo: {
 							...containerData,
 							UDFs,
+							Procedures,
 						},
 					};
 				});
