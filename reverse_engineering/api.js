@@ -3,6 +3,10 @@
 const connectionHelper = require('./helpers/connectionHelper');
 const mariadbHelper = require('./helpers/mariadbHelper');
 
+BigInt.prototype.toJSON = function () {
+	return Number(this.valueOf());
+}
+
 module.exports = {
 	async connect(connectionInfo) {
 		const connection = await connectionHelper.connect(connectionInfo);
@@ -120,6 +124,7 @@ module.exports = {
 				const result = await async.mapSeries(tables, async (tableName) => {
 					const count = await instance.getCount(dbName, tableName);
 					const records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+					const ddl = await instance.showCreateTable(dbName, tableName);
 
 					return {
 						dbName: dbName,
@@ -127,10 +132,10 @@ module.exports = {
 						// entityLevel: entityData,
 						documents: records,
 						views: [],
-						// ddl: {
-						// 	script: ddl,
-						// 	type: 'snowflake'
-						// },
+						ddl: {
+							script: ddl,
+							type: 'mariadb'
+						},
 						emptyBucket: false,
 						// validation: {
 						// 	jsonSchema
@@ -180,7 +185,7 @@ const getDbCollectionNames = (entities, dbName, includeSystemCollection) => {
 			return true;
 		}
 
-		const isSystem = !['BASE TABLE', 'VIEW'].includes(table['Table_type']);
+		const isSystem = !['BASE TABLE', 'VIEW', 'SEQUENCE'].includes(table['Table_type']);
 
 		return !isSystem;
 	}).map(table => {

@@ -83,6 +83,12 @@ const createInstance = (connection) => {
 		);
 	};
 
+	const showCreateTable = async (dbName, tableName) => {
+		const result = await connection.query(`show create table \`${dbName}\`.\`${tableName}\`;`);
+
+		return result[0]?.['Create Table'];
+	};
+
 	return {
 		getCount,
 		getRecords,
@@ -90,6 +96,7 @@ const createInstance = (connection) => {
 		describeDatabase,
 		getFunctions,
 		getProcedures,
+		showCreateTable,
 	};
 };
 
