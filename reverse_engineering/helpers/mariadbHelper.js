@@ -63,8 +63,82 @@ const parseProcedures = (procedures) => {
 	});
 };
 
+const isJson = (columnName, constraints) => {
+	return constraints.some(constraint => {
+		const check = constraint['CHECK_CLAUSE'];
+
+		if (!/json_valid/i.test(check)) {
+			return false;
+		}
+
+		return check.includes(`\`${columnName}\``);
+	});
+};
+
+const getSubtype = (fieldName, records) => {
+	const record = records.find(records => {
+		if (typeof records[fieldName] !== 'string') {
+			return false;
+		}
+
+		try {
+			return JSON.parse(records[fieldName]);
+		} catch (e) {
+			return false;
+		}
+	});
+
+	if (!record) {
+		return ' ';
+	}
+
+	const item = JSON.parse(record[fieldName]);
+ 
+	if (!item) {
+		return ' ';
+	}
+
+	if (Array.isArray(item)) {
+		return 'array';
+	}
+
+	if (typeof item === 'object') {
+		return 'object';
+	}
+
+	return ' ';
+};
+
+const getJsonSchema = ({ columns, constraints, records }) => {
+	const properties = columns.filter((column) => {
+		return column['Type'] === 'longtext';
+	}).reduce((schema, column) => {
+		const fieldName = column['Field'];
+	
+		if (!isJson(fieldName, constraints)) {
+			return schema;
+		}
+		const subtype = getSubtype(fieldName, records);
+
+		return {
+			...schema,
+			[fieldName]: {
+				type: 'char',
+				mode: 'longtext',
+				synonym: 'json',
+				subtype,
+			}
+		};
+	}, {});
+
+	return {
+		properties,
+	};
+};
+
 module.exports = {
 	parseDatabaseStatement,
 	parseFunctions,
 	parseProcedures,
+	getJsonSchema,
 };

@@ -15,6 +15,7 @@ const connect = async (connectionInfo) => {
 		ssl: false,
 		dateStrings: true ,
 		supportBigInt: true,
+		autoJsonMap: false,
 	  });
 
 	  return connection;
@@ -40,7 +41,9 @@ const createInstance = (connection) => {
 	};
 	
 	const getRecords = async (dbName, tableName, limit) => {
-		const result = await connection.query(`SELECT * FROM \`${dbName}\`.\`${tableName}\` LIMIT ${limit};`);
+		const result = await connection.query({
+			sql: `SELECT * FROM \`${dbName}\`.\`${tableName}\` LIMIT ${limit};`
+		});
 
 		return result;
 	};
@@ -89,6 +92,18 @@ const createInstance = (connection) => {
 		return result[0]?.['Create Table'];
 	};
 
+	const getConstraints = async (dbName, tableName) => {
+		const result = await connection.query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
+
+		return result;
+	};
+
+	const getColumns = async (dbName, tableName) => {
+		const result = await connection.query(`show fields from \`${dbName}\`.\`${tableName}\`;`);
+
+		return result;
+	};
+
 	return {
 		getCount,
 		getRecords,
@@ -97,6 +112,8 @@ const createInstance = (connection) => {
 		getFunctions,
 		getProcedures,
 		showCreateTable,
+		getConstraints,
+		getColumns,
 	};
 };
 
