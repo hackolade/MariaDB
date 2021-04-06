@@ -9,8 +9,8 @@
 	"subtypes": {
 		"object": {
 			"childValueType": [
-				"binary",
 				"char",
+				"binary",
 				"datetime",
 				"enum",
 				"geometry",
