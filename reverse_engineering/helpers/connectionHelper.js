@@ -104,6 +104,12 @@ const createInstance = (connection) => {
 		return result;
 	};
 
+	const getIndexes = async (dbName, tableName) => {
+		const result = await connection.query(`show index from \`${tableName}\` from \`${dbName}\`;`);
+
+		return result;
+	};
+
 	return {
 		getCount,
 		getRecords,
@@ -114,6 +120,7 @@ const createInstance = (connection) => {
 		showCreateTable,
 		getConstraints,
 		getColumns,
+		getIndexes,
 	};
 };
 

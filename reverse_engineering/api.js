@@ -125,6 +125,7 @@ module.exports = {
 					const count = await instance.getCount(dbName, tableName);
 					const records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
 					const ddl = await instance.showCreateTable(dbName, tableName);
+					const indexes = await instance.getIndexes(dbName, tableName);
 					const constraints = await instance.getConstraints(dbName, tableName);
 					const columns = await instance.getColumns(dbName, tableName);
 					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
