@@ -136,9 +136,83 @@ const getJsonSchema = ({ columns, constraints, records }) => {
 	};
 };
 
+const getIndexOrder = (collation) => {
+	if (collation === 'A') {
+		return 'ASC';
+	} else if (collation === 'D') {
+		return 'DESC';
+	} else {
+		return null;
+	}
+};
+
+const getIndexType = (index) => {
+	if (index['Key_name'] === 'PRIMARY') {
+		return 'PRIMARY';
+	} else if (index['Index_type'] === 'FULLTEXT') {
+		return 'FULLTEXT';
+	} else if (index['Index_type'] === 'SPATIAL') {
+		return 'SPATIAL';
+	} else if (Number(index['Non_unique']) === 0) {
+		return 'UNIQUE';
+	} else {
+		return 'KEY';
+	}
+};
+
+const getIndexCategory = (index) => {
+	if (index['Index_type'] === 'BTREE') {
+		return 'BTREE';
+	} else if (index['Index_type'] === 'HASH') {
+		return 'HASH';
+	} else if (index['Index_type'] === 'RTREE') {
+		return 'RTREE';
+	} else {
+		return '';
+	}
+};
+
+const parseIndexes = (indexes) => {
+	const indexesByConstraint = indexes.reduce((result, index) => {
+		const constraintName = index['Key_name'];
+
+		if (result[constraintName]) {
+			return {
+				...result,
+				[constraintName]: {
+					...result[constraintName],
+					indxKey: result[constraintName].indxKey.concat({
+						name: index['Column_name'],
+						type: getIndexOrder(index['Collation']),
+					}),
+				},
+			};
+		}
+
+		const indexData = {
+			indxName: constraintName,
+			indexType: getIndexType(index),
+			indexCategory: getIndexCategory(index),
+			indexComment: index['Index_comment'],
+			indxKey: [{
+				name: index['Column_name'],
+				type: getIndexOrder(index['Collation']),
+			}],
+		};
+
+		return {
+			...result,
+			[constraintName]: indexData,
+		};
+	}, {});
+
+	return Object.values(indexesByConstraint);
+};
+
 module.exports = {
 	parseDatabaseStatement,
 	parseFunctions,
 	parseProcedures,
 	getJsonSchema,
+	parseIndexes,
 };

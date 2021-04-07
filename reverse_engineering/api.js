@@ -129,11 +129,14 @@ module.exports = {
 					const constraints = await instance.getConstraints(dbName, tableName);
 					const columns = await instance.getColumns(dbName, tableName);
 					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
+					const Indxs = mariadbHelper.parseIndexes(indexes);
 
 					return {
 						dbName: dbName,
 						collectionName: tableName,
-						// entityLevel: entityData,
+						entityLevel: {
+							Indxs,
+						},
 						documents: records,
 						views: [],
 						standardDoc: records[0],
