@@ -104,7 +104,7 @@ module.exports = {
 			const collections = data.collectionData.collections;
 			const dataBaseNames = data.collectionData.dataBaseNames;
 			const connection = await this.connect(data);
-			const instance = await connectionHelper.createInstance(connection); 
+			const instance = await connectionHelper.createInstance(connection, logger); 
 
 			log.info('MariaDB version: ' + connection.serverVersion());
 

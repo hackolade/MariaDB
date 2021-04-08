@@ -33,7 +33,7 @@ const getTables = async (connection, dbName) => {
 	return tables;
 };
 
-const createInstance = (connection) => {
+const createInstance = (connection, logger) => {
 	const getCount = async (dbName, tableName) => {
 		const count = await connection.query(`SELECT COUNT(*) as count FROM \`${dbName}\`.\`${tableName}\`;`);
 
@@ -93,9 +93,17 @@ const createInstance = (connection) => {
 	};
 
 	const getConstraints = async (dbName, tableName) => {
-		const result = await connection.query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
-
-		return result;
+		try {
+			const result = await connection.query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
+	
+			return result;
+		} catch (error) {
+			logger.log('error', {
+				message: '[Warning] ' + error.message,
+				stack: error.stack,
+			});
+			return [];
+		}
 	};
 
 	const getColumns = async (dbName, tableName) => {
