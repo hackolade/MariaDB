@@ -1913,20 +1913,14 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "NoWait",
 					"options": [
+						"",
 						"NoWait",
 						"Wait"
-					],
-					"dependency": {
-						"type": "or",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						}]
-					}
+					]
 				},
 				{
 					"propertyName": "Wait",
-					"propertyKeyword": "waitNoWait",
+					"propertyKeyword": "waitValue",
 					"propertyTooltip": "",
 					"propertyType": "numeric",
 					"valueType": "number",
@@ -1934,14 +1928,8 @@ making sure that you maintain a proper JSON format.
 					"minValue": 1,
 					"step": 1,
 					"dependency": {
-						"type": "and",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						},{
-							"key": "waitNoWait",
-							"value": "Wait"
-						}]
+						"key": "waitNoWait",
+						"value": "Wait"
 					}
 				},
 				{
@@ -1951,19 +1939,13 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "DEFAULT",
 					"options": [
+						"",
 						"DEFAULT",
 						"COPY",
 						"INPLACE",
 						"NOCOPY",
 						"INSTANT"
-					],
-					"dependency": {
-						"type": "or",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						}]
-					}
+					]
 				},
 				{
 					"propertyName": "Lock",
@@ -1972,6 +1954,7 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "DEFAULT",
 					"options": [
+						"",
 						"DEFAULT",
 						"SHARED",
 						"EXCLUSIVE"
