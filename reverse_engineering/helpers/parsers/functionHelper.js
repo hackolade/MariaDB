@@ -3,7 +3,7 @@ const parseFunctionQuery = (query) => {
 	const parseRegexp = /create(?<orReplace>\s+or\s+replace)?(?<definer>\s+definer\s*=[\s\S]+?)?(?<aggregate>\s+aggregate)?\s+function(?<ifNotExists>\s+if not exists)?\s+\`(?<funcName>[\s\S]+?)\`\s*\((?<funcParameters>[\s\S]*?)\)\s+returns\s+(?<returnType>[a-z0-9\(\)]+)(?<characteristics>(\s*language\s+sql)?(\s*(not)?\s+deterministic)?(\s*contains\s+(sql|no\s+sql|reads\s+sql\s+data|modifies\s+sql\s+data))?(\s*sql\s+security\s+(definer|invoker))?(\s*comment\s+\'[\s\S]+?\')?(\s*charset\s+[\S\s]+?)?(\s*COLLATE\s+[\S\s]+?)?)?\s+(?<funcBody>(begin|return)([\s\S]+))/i;
 
 	if (!parseRegexp.test(query)) {
-		return;
+		return {};
 	}
 
 	const result = query.match(parseRegexp);
