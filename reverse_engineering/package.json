@@ -4,7 +4,8 @@
   "description": "",
   "author": "Hackolade",
   "dependencies": {
-    "mariadb": "^2.5.3"
+    "mariadb": "^2.5.3",
+    "tunnel-ssh": "^4.1.4"
   },
   "installed": true
 }
