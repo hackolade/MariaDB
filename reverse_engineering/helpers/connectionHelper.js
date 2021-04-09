@@ -1,6 +1,33 @@
 const mariadb = require('mariadb');
+const fs = require('fs');
 
 let connection;
+
+const getSslOptions = (connectionInfo) => {
+	if (connectionInfo.sslType === 'Off') {
+		return false;
+	}
+
+	if (connectionInfo.sslType === 'Unvalidated') {
+		return {
+			rejectUnauthorized: false
+		};
+	}
+
+	if (connectionInfo.sslType === 'TRUST_CUSTOM_CA_SIGNED_CERTIFICATES') {
+		return {
+			ca: fs.readFileSync(connectionInfo.certAuthority),
+		};
+	}
+
+	if (connectionInfo.sslType === 'TRUST_SERVER_CLIENT_CERTIFICATES') {
+		return {
+			ca: fs.readFileSync(connectionInfo.certAuthority),
+			cert: fs.readFileSync(connectionInfo.clientCert),
+			key: fs.readFileSync(connectionInfo.clientPrivateKey),
+		};
+	}
+};
 
 const connect = async (connectionInfo) => {
 	if (connection) {
@@ -12,7 +39,7 @@ const connect = async (connectionInfo) => {
 		password: connectionInfo.userPassword, 
 		port: connectionInfo.port,
 		metaAsArray: false,
-		ssl: false,
+		ssl: getSslOptions(connectionInfo),
 		dateStrings: true ,
 		supportBigInt: true,
 		autoJsonMap: false,
