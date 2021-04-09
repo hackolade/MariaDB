@@ -15,6 +15,8 @@ module.exports = {
 	},
 
 	disconnect(connectionInfo, logger, callback, app) {
+		connectionHelper.close();
+		
 		callback();
 	},
 

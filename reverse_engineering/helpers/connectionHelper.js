@@ -1,7 +1,48 @@
 const mariadb = require('mariadb');
 const fs = require('fs');
+const ssh = require('tunnel-ssh');
 
 let connection;
+let sshTunnel;
+
+const getSshConfig = (info) => {
+	const config = {
+		username: info.ssh_user,
+		host: info.ssh_host,
+		port: info.ssh_port,
+		dstHost: info.host,
+		dstPort: info.port,
+		localHost: '127.0.0.1',
+		localPort: info.port,
+		keepAlive: true
+	};
+
+	if (info.ssh_method === 'privateKey') {
+		return Object.assign({}, config, {
+			privateKey: fs.readFileSync(info.ssh_key_file),
+			passphrase: info.ssh_key_passphrase
+		});
+	} else {
+		return Object.assign({}, config, {
+			password: info.ssh_password
+		});
+	}
+};
+
+const connectViaSsh = (info) => new Promise((resolve, reject) => {
+	ssh(getSshConfig(info), (err, tunnel) => {
+		if (err) {
+			reject(err);
+		} else {
+			resolve({
+				tunnel,
+				info: Object.assign({}, info, {
+					host: '127.0.0.1',
+				})
+			});
+		}
+	});
+});
 
 const getSslOptions = (connectionInfo) => {
 	if (connectionInfo.sslType === 'Off') {
@@ -29,12 +70,15 @@ const getSslOptions = (connectionInfo) => {
 	}
 };
 
-const connect = async (connectionInfo) => {
-	if (connection) {
-		return connection;
+const createConnection = async (connectionInfo) => {
+	if (connectionInfo.ssh) {
+		const { info, tunnel } = await connectViaSsh(connectionInfo);
+		sshTunnel = tunnel;
+		connectionInfo = info;
 	}
 
-	connection = await mariadb.createConnection({ 
+	return await mariadb.createConnection({ 
+		host: connectionInfo.host,
 		user: connectionInfo.userName, 
 		password: connectionInfo.userPassword, 
 		port: connectionInfo.port,
@@ -43,9 +87,17 @@ const connect = async (connectionInfo) => {
 		dateStrings: true ,
 		supportBigInt: true,
 		autoJsonMap: false,
-	  });
+	});
+};
 
-	  return connection;
+const connect = async (connectionInfo) => {
+	if (connection) {
+		return connection;
+	}
+ 
+	connection = await createConnection(connectionInfo);
+
+	return connection;
 };
 
 const getDatabases = async (connection, systemDatabases) => {
@@ -166,9 +218,22 @@ const createInstance = (connection, logger) => {
 	};
 };
 
+const close = () => {
+	if (connection) {
+		connection.end();
+		connection = null;
+	}
+
+	if (sshTunnel) {
+		sshTunnel.close();
+		sshTunnel = null;
+	}
+};
+
 module.exports = {
 	connect,
 	getDatabases,
 	getTables,
 	createInstance,
+	close,
 };
