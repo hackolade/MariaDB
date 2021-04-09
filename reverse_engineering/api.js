@@ -107,29 +107,64 @@ module.exports = {
 			const instance = await connectionHelper.createInstance(connection, logger); 
 
 			log.info('MariaDB version: ' + connection.serverVersion());
+			log.progress('Start reverse engineering ...');			
 
 			const result = await async.mapSeries(dataBaseNames, async (dbName) => {
 				const tables = collections[dbName].filter(name => !isViewName(name));
-				const views = collections[dbName].filter(isViewName);
+				const views = collections[dbName].filter(isViewName).map(getViewName);
+	
+				log.info(`Parsing database "${dbName}"`);
+				log.progress(`Parsing database "${dbName}"`, dbName);			
+
 				const containerData = mariadbHelper.parseDatabaseStatement(
 					await instance.describeDatabase(dbName)
 				);
+
+				log.info(`Parsing functions`);
+				log.progress(`Parsing functions`, dbName);	
+
 				const UDFs = mariadbHelper.parseFunctions(
 					await instance.getFunctions(dbName)
 				);
+
+				log.info(`Parsing procedures`);
+				log.progress(`Parsing procedures`, dbName);
+
 				const Procedures = mariadbHelper.parseProcedures(
 					await instance.getProcedures(dbName)
 				);
 
 				const result = await async.mapSeries(tables, async (tableName) => {
+					log.info(`Sampling table "${tableName}"`);
+					log.progress(`Sampling table`, dbName, tableName);
+
 					const count = await instance.getCount(dbName, tableName);
 					const records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+					
+					log.info(`Get create table statement "${tableName}"`);
+					log.progress(`Get create table statement`, dbName, tableName);
+
 					const ddl = await instance.showCreateTable(dbName, tableName);
+
+					log.info(`Get indexes "${tableName}"`);
+					log.progress(`Get indexes`, dbName, tableName);
+
 					const indexes = await instance.getIndexes(dbName, tableName);
+
+					log.info(`Get constraints "${tableName}"`);
+					log.progress(`Get constraints`, dbName, tableName);
+
 					const constraints = await instance.getConstraints(dbName, tableName);
+
+					log.info(`Get columns "${tableName}"`);
+					log.progress(`Get columns`, dbName, tableName);
+
 					const columns = await instance.getColumns(dbName, tableName);
 					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
 					const Indxs = mariadbHelper.parseIndexes(indexes);
+
+					log.info(`Data retrieved successfully "${tableName}"`);
+					log.progress(`Data retrieved successfully`, dbName, tableName);
 
 					return {
 						dbName: dbName,
@@ -156,7 +191,26 @@ module.exports = {
 					};
 				});
 				
-				return result;
+				const viewData = await async.mapSeries(views, async (viewName) => {
+					log.info(`Getting data from view "${viewName}"`);
+					log.progress(`Getting data from view`, dbName, viewName);
+
+					const ddl = await instance.showCreateView(dbName, viewName);
+
+					return {
+						name: viewName,
+						ddl: {
+							script: ddl,
+							type: 'mariadb'
+						}
+					};
+				});
+
+				return [...result, {
+					dbName: dbName,
+					views: viewData,
+					emptyBucket: false,
+				}];
 			});
 
 
@@ -172,6 +226,10 @@ const createLogger = ({ title, logger, hiddenKeys }) => {
 	return {
 		info(message) {
 			logger.log('info', { message }, title, hiddenKeys);
+		},
+
+		progress(message, dbName = '', tableName = '') {
+			logger.progress({ message, containerName: dbName, entityName: tableName });
 		},
 
 		error(error) {
@@ -218,4 +276,6 @@ const getLimit = (count, recordSamplingSettings) => {
 const isViewName = (name) => {
 	return /\ \(v\)$/i.test(name);
 };
+
+const getViewName = (name) => name.replace(/\ \(v\)$/i, '');
 

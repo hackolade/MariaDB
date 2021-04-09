@@ -118,6 +118,12 @@ const createInstance = (connection, logger) => {
 		return result;
 	};
 
+	const showCreateView = async (dbName, viewName) => {
+		const result = await connection.query(`show create view \`${dbName}\`.\`${viewName}\`;`);
+
+		return result[0]?.['Create View'];
+	};
+
 	return {
 		getCount,
 		getRecords,
@@ -129,6 +135,7 @@ const createInstance = (connection, logger) => {
 		getConstraints,
 		getColumns,
 		getIndexes,
+		showCreateView,
 	};
 };
 
