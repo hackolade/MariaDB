@@ -130,7 +130,7 @@
 	"NEW___MODEL_NAME": "New model",
 	"NEW___BUCKET_NAME": "New database",
 	"NEW___COLLECTION_NAME": "New table",
-	"NEW___FIELD_NAME": "New volumn",
+	"NEW___FIELD_NAME": "New column",
 	"NEW___PATTERN_FIELD_NAME": "^New Pattern Column$",
 	"COLLECTION_SCHEMA_DEFINITION_NAME": "Table definitions",
 	"COLLECTION_SCHEMA_DEFINITION_TYPE": "document",

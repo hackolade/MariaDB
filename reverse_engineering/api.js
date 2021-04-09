@@ -206,11 +206,15 @@ module.exports = {
 					};
 				});
 
-				return [...result, {
-					dbName: dbName,
-					views: viewData,
-					emptyBucket: false,
-				}];
+				if (viewData.length) {
+					return [...result, {
+						dbName: dbName,
+						views: viewData,
+						emptyBucket: false,
+					}];
+				}
+				
+				return result;
 			});
 
 
