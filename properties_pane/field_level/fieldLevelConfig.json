@@ -1933,11 +1933,6 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			"pattern",
-			{
-				"propertyName": "Default constraint name",
-				"propertyKeyword": "defaultConstraintName",
-				"propertyType": "text"
-			},
 			"enum",
 			"sample",
 			{

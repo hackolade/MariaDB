@@ -28,18 +28,18 @@ const parseFunctions = (functions) => {
 		const func = functionHelper.parseFunctionQuery(query);
 
 		return {
-			funcName: f.meta['Name'],
-			funcOrReplace: func.orReplace,
-			funcAggregate: func.isAggregate,
-			funcIfNotExist: func.ifNotExists,
-			funcParams: func.parameters,
-			funcDataType: func.returnType,
-			funcBody: func.body,
-			funcLanguage: 'SQL',
-			funcDeterministic: functionHelper.getDeterministic(func.characteristics),
-			funcContains: functionHelper.getContains(func.characteristics),
-			funcSqlSecurity: f.meta['Security_type'],
-			funcComments: f.meta['Comment'],
+			name: f.meta['Name'],
+			functionOrReplace: func.orReplace,
+			functionAggregate: func.isAggregate,
+			functionIfNotExist: func.ifNotExists,
+			functionParams: func.parameters,
+			functionDataType: func.returnType,
+			functionBody: func.body,
+			functionLanguage: 'SQL',
+			functionDeterministic: functionHelper.getDeterministic(func.characteristics),
+			functionContains: functionHelper.getContains(func.characteristics),
+			functionSqlSecurity: f.meta['Security_type'],
+			functionDescription: f.meta['Comment'],
 		};
 	});
 };

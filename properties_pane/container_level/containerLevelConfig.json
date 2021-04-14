@@ -1030,32 +1030,40 @@ making sure that you maintain a proper JSON format.
 			"structure": [
 				{
 					"propertyName": "Name",
-					"propertyKeyword": "funcName",
+					"propertyKeyword": "name",
 					"propertyTooltip": "The name of the function.",
 					"propertyType": "text"
 				},
 				{
+					"propertyName": "Comments",
+					"propertyKeyword": "functionDescription",
+					"shouldValidate": false,
+					"propertyTooltip": "description",
+					"propertyType": "details",
+					"template": "textarea"
+				},
+				{
 					"propertyName": "Or replace",
-					"propertyKeyword": "funcOrReplace",
+					"propertyKeyword": "functionOrReplace",
 					"propertyType": "checkbox",
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
 				},
 				{
 					"propertyName": "Aggregate",
-					"propertyKeyword": "funcAggregate",
+					"propertyKeyword": "functionAggregate",
 					"propertyType": "checkbox",
 					"propertyTooltip": "functions that are computed over a sequence of rows and return one result for the sequence of rows."
 				},
 				{
 					"propertyName": "If not exist",
-					"propertyKeyword": "funcIfNotExist",
+					"propertyKeyword": "functionIfNotExist",
 					"propertyTooltip": "The function will only be created if a function with the same name does not already exist. If the function already exists, then a warning will be triggered by default.",
 					"defaultValue": true,
 					"propertyType": "checkbox"
 				},
 				{
 					"propertyName": "Parameters",
-					"propertyKeyword": "funcParams",
+					"propertyKeyword": "functionArguments",
 					"propertyTooltip": "For a Python UDF, a list of input argument names and data types. For a SQL UDF, a list of data types, without argument names.  You can specify a maximum of 32 arguments.",
 					"propertyType": "details",
 					"template": "textarea",
@@ -1063,13 +1071,13 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Returns data type",
-					"propertyKeyword": "funcDataType",
+					"propertyKeyword": "functionReturnType",
 					"propertyTooltip": "Any valid MariaDB data type",
 					"propertyType": "text"
 				},
 				{
 					"propertyName": "Function",
-					"propertyKeyword": "funcBody",
+					"propertyKeyword": "functionBody",
 					"propertyTooltip": "A valid executable Python program that returns a value or a SQL SELECT clause.",
 					"propertyType": "details",
 					"template": "textarea",
@@ -1077,7 +1085,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Language",
-					"propertyKeyword": "funcLanguage",
+					"propertyKeyword": "functionLanguage",
 					"propertyTooltip": "language",
 					"propertyType": "select",
 					"defaultValue": "SQL",
@@ -1099,7 +1107,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Contains",
-					"propertyKeyword": "funcContains",
+					"propertyKeyword": "functionContains",
 					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
 					"propertyType": "select",
 					"defaultValue": "",
@@ -1113,7 +1121,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "SQL Security",
-					"propertyKeyword": "funcSqlSecurity",
+					"propertyKeyword": "functionSqlSecurity",
 					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
 					"propertyType": "select",
 					"defaultValue": "DEFINER",
@@ -1124,8 +1132,9 @@ making sure that you maintain a proper JSON format.
 					]
 				},
 				{
-					"propertyName": "Comments",
-					"propertyKeyword": "funcComments",
+					"propertyName": "Remarks",
+					"propertyKeyword": "functionComments",
+					"shouldValidate": false,
 					"propertyTooltip": "comments",
 					"addTimestampButton": false,
 					"propertyType": "details",

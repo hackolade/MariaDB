@@ -1,17 +1,10 @@
 {
 	"type": "ddl",
-	"ddlType": "mssql",
-	"namePrefix": "MS SQL Server",
+	"ddlType": "mariadb",
+	"namePrefix": "MariaDB",
 	"level": {
 		"container": true,
 		"entity": true,
 		"view": true
-	},
-	"additionalOptions": [
-		{
-			"id": "useGoStatement",
-			"value": false,
-			"name": "Use GO statements"
-		}
-	]
+	}
 }
