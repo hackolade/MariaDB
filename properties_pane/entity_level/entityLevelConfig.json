@@ -206,7 +206,7 @@ making sure that you maintain a proper JSON format.
 							"InnoDB",
 							"CSV",
 							"Connect",
-							"MRG_MyISAM",
+							"MERGE",
 							"Memory",
 							"Aria",
 							"MyISAM",
@@ -295,10 +295,6 @@ making sure that you maintain a proper JSON format.
 						"propertyKeyword": "characterSet",
 						"propertyTooltip": "Select from list of options",
 						"propertyType": "select",
-						"dependency": {
-							"key": "defaultCharSet",
-							"value": false
-						},
 						"options": [
 							"",
 							"utf8mb4",
@@ -1269,8 +1265,14 @@ making sure that you maintain a proper JSON format.
 						"valueType": "number",
 						"minValue": 0,
 						"dependency": {
-							"key": "ENCRYPTED",
-							"value": "Yes"
+							"type": "and",
+							"values": [{
+								"key": "ENGINE",
+								"value": "InnoDB"
+							}, {
+								"key": "ENCRYPTED",
+								"value": "Yes"
+							}]
 						}
 					},
 					{
@@ -1301,7 +1303,7 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [{
 								"key": "ENGINE",
-								"value": "MRG_MyISAM"
+								"value": "MERGE"
 							}]
 						},
 						"options": [
@@ -1321,7 +1323,7 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [{
 								"key": "ENGINE",
-								"value": "MRG_MyISAM"
+								"value": "MERGE"
 							}]
 						}
 					},
@@ -1428,8 +1430,11 @@ making sure that you maintain a proper JSON format.
 						"maxValue": 9,
 						"step": 1,
 						"dependency": {
-							"type": "or",
+							"type": "and",
 							"values": [{
+								"key": "ENGINE",
+								"value": "InnoDB"
+							}, {
 								"key": "PAGE_COMPRESSED",
 								"value": 1
 							}]
