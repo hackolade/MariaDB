@@ -1159,25 +1159,25 @@ making sure that you maintain a proper JSON format.
 			"structure": [
 				{
 					"propertyName": "Name",
-					"propertyKeyword": "storedProcName",
+					"propertyKeyword": "name",
 					"propertyTooltip": "The name of the procedure.",
 					"propertyType": "text"
 				},
 				{
 					"propertyName": "Or replace",
-					"propertyKeyword": "storedProcOrReplace",
+					"propertyKeyword": "orReplace",
 					"propertyType": "checkbox",
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
 				},
 				{
 					"propertyName": "Delimiter",
-					"propertyKeyword": "storedProcDelimiter",
+					"propertyKeyword": "delimiter",
 					"propertyType": "text",
 					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
 				},
 				{
 					"propertyName": "Parameters",
-					"propertyKeyword": "storedProcParameters",
+					"propertyKeyword": "inputArgs",
 					"propertyTooltip": "A list of parameter names, modes, and data types. ",
 					"propertyType": "details",
 					"template": "textarea",
@@ -1185,7 +1185,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Procedure body",
-					"propertyKeyword": "storedProcBody",
+					"propertyKeyword": "body",
 					"propertyTooltip": "Valid SQL procedure statement.",
 					"propertyType": "details",
 					"template": "textarea",
