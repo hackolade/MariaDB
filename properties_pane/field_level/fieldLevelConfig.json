@@ -1122,7 +1122,7 @@ making sure that you maintain a proper JSON format.
 			"default",
 			{
 				"propertyName": "Invisible",
-				"propertyKeyword": "invisble",
+				"propertyKeyword": "invisible",
 				"propertyTooltip": "Will not be listed in the results of a SELECT * statement, nor do they need to be assigned a value in an INSERT statement, unless INSERT explicitly mentions them by name.",
 				"propertyType": "checkbox"
 			},
@@ -1405,7 +1405,7 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "Invisible",
-				"propertyKeyword": "invisble",
+				"propertyKeyword": "invisible",
 				"propertyTooltip": "Will not be listed in the results of a SELECT * statement, nor do they need to be assigned a value in an INSERT statement, unless INSERT explicitly mentions them by name.",
 				"propertyType": "checkbox"
 			},
@@ -1460,40 +1460,31 @@ making sure that you maintain a proper JSON format.
 			},
 			{
 				"propertyName": "Auto-increment",
-				"propertyKeyword": "auto_increment",
+				"propertyKeyword": "autoincrement",
 				"propertyTooltip": "Column whose value can can be set automatically from a simple counter.  Column must be a key, and there can only be one AUTO_INCREMENT column in a table.",
 				"propertyType": "checkbox",
 				"dependency": {
-					"type": "and",
+					"type": "or",
 					"values": [
 						{
-							"key": "primaryKey",
-							"value": true
+							"key": "mode",
+							"value": "tinyint"
 						},
 						{
-							"type": "or",
-							"values": [
-								{
-									"key": "mode",
-									"value": "tinyint"
-								},
-								{
-									"key": "mode",
-									"value": "smallint"
-								},
-								{
-									"key": "mode",
-									"value": "mediumint"
-								},
-								{
-									"key": "mode",
-									"value": "int"
-								},
-								{
-									"key": "mode",
-									"value": "bigint"
-								}
-							]
+							"key": "mode",
+							"value": "smallint"
+						},
+						{
+							"key": "mode",
+							"value": "mediumint"
+						},
+						{
+							"key": "mode",
+							"value": "int"
+						},
+						{
+							"key": "mode",
+							"value": "bigint"
 						}
 					]
 				}
@@ -1942,11 +1933,6 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			"pattern",
-			{
-				"propertyName": "Default constraint name",
-				"propertyKeyword": "defaultConstraintName",
-				"propertyType": "text"
-			},
 			"enum",
 			"sample",
 			{

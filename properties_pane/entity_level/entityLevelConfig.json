@@ -129,7 +129,17 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Or replace",
 				"propertyKeyword": "orReplace",
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [{
+						"key": "ifNotExist",
+						"value": false
+					}, {
+						"key": "ifNotExist",
+						"exists": false
+					}]
+				}
 			},
 			{
 				"propertyName": "If not exist",
@@ -141,6 +151,9 @@ making sure that you maintain a proper JSON format.
 					"values": [{
 						"key": "orReplace",
 						"value": false
+					}, {
+						"key": "orReplace",
+						"exists": false
 					}]
 				}
 			},
@@ -193,7 +206,7 @@ making sure that you maintain a proper JSON format.
 							"InnoDB",
 							"CSV",
 							"Connect",
-							"MRG_MyISAM",
+							"MERGE",
 							"Memory",
 							"Aria",
 							"MyISAM",
@@ -255,7 +268,7 @@ making sure that you maintain a proper JSON format.
 						"propertyType": "numeric",
 						"valueType": "number",
 						"propertyTooltip": "Can be set to 1 to maintain a live checksum for all table's rows.",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"maxValue": 1,
 						"step": 1,
@@ -282,10 +295,6 @@ making sure that you maintain a proper JSON format.
 						"propertyKeyword": "characterSet",
 						"propertyTooltip": "Select from list of options",
 						"propertyType": "select",
-						"dependency": {
-							"key": "defaultCharSet",
-							"value": false
-						},
 						"options": [
 							"",
 							"utf8mb4",
@@ -1196,8 +1205,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Can be set to 1 to speed up write operations. In that case, when data are modified, the indexes are not updated until the table is closed. Writing the changes to the index file altogether can be much faster. However, note that this option is applied only if the delay_key_write server variable is set to 'ON'.",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"maxValue": 1,
 						"step": 1,
@@ -1257,8 +1265,14 @@ making sure that you maintain a proper JSON format.
 						"valueType": "number",
 						"minValue": 0,
 						"dependency": {
-							"key": "ENCRYPTED",
-							"value": "Yes"
+							"type": "and",
+							"values": [{
+								"key": "ENGINE",
+								"value": "InnoDB"
+							}, {
+								"key": "ENCRYPTED",
+								"value": "Yes"
+							}]
 						}
 					},
 					{
@@ -1289,7 +1303,7 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [{
 								"key": "ENGINE",
-								"value": "MRG_MyISAM"
+								"value": "MERGE"
 							}]
 						},
 						"options": [
@@ -1299,12 +1313,27 @@ making sure that you maintain a proper JSON format.
 						]
 					},
 					{
+						"propertyName": "Union",
+						"propertyKeyword": "UNION",
+						"propertyTooltip": "Contains a comma-separated list of MyISAM tables which are accessed by the new table.",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false,
+						"dependency": {
+							"type": "or",
+							"values": [{
+								"key": "ENGINE",
+								"value": "MERGE"
+							}]
+						}
+					},
+					{
 						"propertyName": "Key block size",
 						"propertyKeyword": "KEY_BLOCK_SIZE",
 						"propertyType": "numeric",
 						"valueType": "number",
 						"propertyTooltip": "this value is just a hint, and the storage engine could modify or ignore it.",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"step": 1
 					},
@@ -1314,8 +1343,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Value will not be used as real limits, but they help the storage engine to optimize the table.",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"step": 1,
 						"dependency": {
@@ -1332,8 +1360,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Value will not be used as real limits, but they help the storage engine to optimize the table.",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"step": 1,
 						"dependency": {
@@ -1362,8 +1389,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Determines whether indexes and data should use page checksums for extra safety.",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"maxValue": 1,
 						"step": 1,
@@ -1381,8 +1407,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "used to enable InnoDB page compression for InnoDB tables.",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 0,
+						"defaultValue": 0,
 						"minValue": 0,
 						"maxValue": 1,
 						"step": 1,
@@ -1400,14 +1425,16 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Valid values are 1 (the best speed) through 9 (the best compression)",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 1,
+						"defaultValue": 1,
 						"minValue": 1,
 						"maxValue": 9,
 						"step": 1,
 						"dependency": {
-							"type": "or",
+							"type": "and",
 							"values": [{
+								"key": "ENGINE",
+								"value": "InnoDB"
+							}, {
 								"key": "PAGE_COMPRESSED",
 								"value": 1
 							}]
@@ -1415,7 +1442,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "Row format",
-						"propertyKeyword": "rowFormat",
+						"propertyKeyword": "ROW_FORMAT",
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
@@ -1435,7 +1462,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "Row format",
-						"propertyKeyword": "rowFormat",
+						"propertyKeyword": "ROW_FORMAT",
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
@@ -1455,7 +1482,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "Row format",
-						"propertyKeyword": "rowFormat",
+						"propertyKeyword": "ROW_FORMAT",
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
@@ -1481,8 +1508,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "numeric",
 						"valueType": "number",
-						"propertyTooltip": "",
-						"defaulValue": 1,
+						"defaultValue": 1,
 						"minValue": 0,
 						"maxValue": 1,
 						"step": 1,
@@ -1491,6 +1517,9 @@ making sure that you maintain a proper JSON format.
 							"values": [{
 								"key": "ENGINE",
 								"value": "Sequence"
+							}, {
+								"key": "ENGINE",
+								"value": "InnoDB"
 							}]
 						}
 					},
@@ -1575,10 +1604,6 @@ making sure that you maintain a proper JSON format.
 							"LIST",
 							"HASH",
 							"KEY",
-							"RANGE COLUMNS",
-							"LIST COLUMNS",
-							"HASH COLUMNS",
-							"KEY",
 							"SYSTEM_TIME"
 						]
 					},
@@ -1615,30 +1640,9 @@ making sure that you maintain a proper JSON format.
 							},{
 								"key": "partitionType",
 								"value": "HASH"
-							}]
-						}
-					},
-					{
-						"propertyName": "Definition",
-						"propertyKeyword": "partition_definitionn",
-						"propertyTooltip": "Indicate the partition name and ",
-						"propertyType": "details",
-						"template": "textarea",
-						"markdown": false,
-						"dependency": {
-							"type": "or",
-							"values": [{
-								"key": "partitionType",
-								"value": "RANGE"
 							},{
 								"key": "partitionType",
-								"value": "LIST"
-							},{
-								"key": "partitionType",
-								"value": "RANGE COLUMNS"
-							},{
-								"key": "partitionType",
-								"value": "LIST COLUMNS"
+								"value": "KEY"
 							}]
 						}
 					},
@@ -1653,7 +1657,7 @@ making sure that you maintain a proper JSON format.
 					},
 					{
 						"propertyName": "Interval",
-						"propertyKeyword": "partitions",
+						"propertyKeyword": "interval",
 						"propertyType": "numeric",
 						"valueType": "number",
 						"allowNegative": false,
@@ -1696,10 +1700,10 @@ making sure that you maintain a proper JSON format.
 							"YEAR_MONTH"
 						],
 						"dependency": {
-							"type": "not",
+							"type": "or",
 							"values": [{
-								"key": "time_unit",
-								"value": ""
+								"key": "partitionType",
+								"value": "SYSTEM_TIME"
 							}]
 						}
 					},
@@ -1750,9 +1754,8 @@ making sure that you maintain a proper JSON format.
 						}
 					},
 					{
-						"propertyName": "Definition",
-						"propertyKeyword": "partition_definitionn",
-						"propertyTooltip": "Indicate the partition name and ",
+						"propertyName": "Subpartition Expression",
+						"propertyKeyword": "subpartitioning_expression",
 						"propertyType": "details",
 						"template": "textarea",
 						"markdown": false,
@@ -1766,6 +1769,28 @@ making sure that you maintain a proper JSON format.
 								"value": "KEY"
 							}]
 						}
+					},
+					{
+						"propertyName": "Partition definitions",
+						"propertyKeyword": "partition_definitions",
+						"propertyTooltip": "Indicate the partition definition",
+						"propertyType": "group",
+						"structure": [
+							{
+								"propertyName": "Partition definition",
+								"propertyKeyword": "partitionDefinition",
+								"propertyType": "details",
+								"template": "textarea",
+								"markdown": false
+							},
+							{
+								"propertyName": "Subpartition definitions",
+								"propertyKeyword": "subpartitionDefinition",
+								"propertyType": "details",
+								"template": "textarea",
+								"markdown": false
+							}
+						]
 					}
 				]
 			},
@@ -1869,6 +1894,7 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "BTREE",
 					"options": [
+						"",
 						"BTREE",
 						"HASH",
 						"RTREE"
@@ -1880,6 +1906,7 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "fieldList",
 					"template": "orderedList",
 					"attributeList": [
+						"",
 						"ASC",
 						"DESC"
 					]				
@@ -1891,35 +1918,23 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "NoWait",
 					"options": [
+						"",
 						"NoWait",
 						"Wait"
-					],
-					"dependency": {
-						"type": "or",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						}]
-					}
+					]
 				},
 				{
 					"propertyName": "Wait",
-					"propertyKeyword": "waitNoWait",
+					"propertyKeyword": "waitValue",
 					"propertyTooltip": "",
 					"propertyType": "numeric",
 					"valueType": "number",
-					"defaulValue": 1,
+					"defaultValue": 1,
 					"minValue": 1,
 					"step": 1,
 					"dependency": {
-						"type": "and",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						},{
-							"key": "waitNoWait",
-							"value": "Wait"
-						}]
+						"key": "waitNoWait",
+						"value": "Wait"
 					}
 				},
 				{
@@ -1929,19 +1944,13 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "DEFAULT",
 					"options": [
+						"",
 						"DEFAULT",
 						"COPY",
 						"INPLACE",
 						"NOCOPY",
 						"INSTANT"
-					],
-					"dependency": {
-						"type": "or",
-						"values": [{
-							"key": "ENGINE",
-							"value": "InnoDB"
-						}]
-					}
+					]
 				},
 				{
 					"propertyName": "Lock",
@@ -1950,10 +1959,19 @@ making sure that you maintain a proper JSON format.
 					"propertyType": "select",
 					"defaultValue": "DEFAULT",
 					"options": [
+						"",
 						"DEFAULT",
 						"SHARED",
 						"EXCLUSIVE"
 					]
+				},
+				{
+					"propertyName": "Comment",
+					"propertyKeyword": "indexComment",
+					"propertyTooltip": "comment",
+					"addTimestampButton": false,
+					"propertyType": "details",
+					"template": "textarea"
 				}
 			]
 		}]

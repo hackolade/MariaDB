@@ -1030,32 +1030,46 @@ making sure that you maintain a proper JSON format.
 			"structure": [
 				{
 					"propertyName": "Name",
-					"propertyKeyword": "funcName",
+					"propertyKeyword": "name",
 					"propertyTooltip": "The name of the function.",
 					"propertyType": "text"
 				},
 				{
+					"propertyName": "Comments",
+					"propertyKeyword": "functionDescription",
+					"shouldValidate": false,
+					"propertyTooltip": "description",
+					"propertyType": "details",
+					"template": "textarea"
+				},
+				{
 					"propertyName": "Or replace",
-					"propertyKeyword": "funcOrReplace",
+					"propertyKeyword": "functionOrReplace",
 					"propertyType": "checkbox",
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
 				},
 				{
+					"propertyName": "Delimiter",
+					"propertyKeyword": "functionDelimiter",
+					"propertyType": "text",
+					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
+				},
+				{
 					"propertyName": "Aggregate",
-					"propertyKeyword": "funcAggregate",
+					"propertyKeyword": "functionAggregate",
 					"propertyType": "checkbox",
 					"propertyTooltip": "functions that are computed over a sequence of rows and return one result for the sequence of rows."
 				},
 				{
 					"propertyName": "If not exist",
-					"propertyKeyword": "funcIfNotExist",
+					"propertyKeyword": "functionIfNotExist",
 					"propertyTooltip": "The function will only be created if a function with the same name does not already exist. If the function already exists, then a warning will be triggered by default.",
 					"defaultValue": true,
 					"propertyType": "checkbox"
 				},
 				{
 					"propertyName": "Parameters",
-					"propertyKeyword": "funcParams",
+					"propertyKeyword": "functionArguments",
 					"propertyTooltip": "For a Python UDF, a list of input argument names and data types. For a SQL UDF, a list of data types, without argument names.  You can specify a maximum of 32 arguments.",
 					"propertyType": "details",
 					"template": "textarea",
@@ -1063,13 +1077,13 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Returns data type",
-					"propertyKeyword": "funcDataType",
+					"propertyKeyword": "functionReturnType",
 					"propertyTooltip": "Any valid MariaDB data type",
 					"propertyType": "text"
 				},
 				{
 					"propertyName": "Function",
-					"propertyKeyword": "funcBody",
+					"propertyKeyword": "functionBody",
 					"propertyTooltip": "A valid executable Python program that returns a value or a SQL SELECT clause.",
 					"propertyType": "details",
 					"template": "textarea",
@@ -1077,7 +1091,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Language",
-					"propertyKeyword": "funcLanguage",
+					"propertyKeyword": "functionLanguage",
 					"propertyTooltip": "language",
 					"propertyType": "select",
 					"defaultValue": "SQL",
@@ -1087,7 +1101,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Deterministic",
-					"propertyKeyword": "funcDeterministic",
+					"propertyKeyword": "functionDeterministic",
 					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
 					"propertyType": "select",
 					"defaultValue": "",
@@ -1099,13 +1113,13 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Contains",
-					"propertyKeyword": "funcContains",
+					"propertyKeyword": "functionContains",
 					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
 					"propertyType": "select",
 					"defaultValue": "",
 					"options": [
 						"",
-						"SQL",
+						"CONTAINS SQL",
 						"NO SQL",
 						"READS SQL DATA",
 						"MODIFIES SQL DATA"
@@ -1113,18 +1127,20 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "SQL Security",
-					"propertyKeyword": "funcSqlSecutrity",
+					"propertyKeyword": "functionSqlSecurity",
 					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
 					"propertyType": "select",
 					"defaultValue": "DEFINER",
 					"options": [
+						"",
 						"DEFINER",
 						"INVOKER"
 					]
 				},
 				{
-					"propertyName": "Comments",
-					"propertyKeyword": "funcComments",
+					"propertyName": "Remarks",
+					"propertyKeyword": "functionComments",
+					"shouldValidate": false,
 					"propertyTooltip": "comments",
 					"addTimestampButton": false,
 					"propertyType": "details",
@@ -1149,37 +1165,23 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Or replace",
-					"propertyKeyword": "soredProcOrReplace",
+					"propertyKeyword": "storedProcOrReplace",
 					"propertyType": "checkbox",
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
 				},
 				{
-					"propertyName": "In/Out/InOut",
-					"propertyKeyword": "proc_parameter",
-					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"IN",
-						"OUT",
-						"INOUT"
-					]
+					"propertyName": "Delimiter",
+					"propertyKeyword": "storedProcDelimiter",
+					"propertyType": "text",
+					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
 				},
 				{
 					"propertyName": "Parameters",
-					"propertyKeyword": "inOutInOutParams",
-					"propertyTooltip": "A list of parameter names,  modes, and data types. ",
+					"propertyKeyword": "storedProcParameters",
+					"propertyTooltip": "A list of parameter names, modes, and data types. ",
 					"propertyType": "details",
 					"template": "textarea",
-					"markdown": false,
-					"dependency": {
-						"type": "not",
-						"values": [{
-							"key": "proc_parameter",
-							"value": ""
-						}]
-					}
+					"markdown": false
 				},
 				{
 					"propertyName": "Procedure body",
@@ -1213,7 +1215,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Contains",
-					"propertyKeyword": "stordProcContains",
+					"propertyKeyword": "storedProcContains",
 					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
 					"propertyType": "select",
 					"defaultValue": "",
@@ -1227,11 +1229,12 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "SQL Security",
-					"propertyKeyword": "sotredProcSqlSecutrity",
+					"propertyKeyword": "storedProcSqlSecurity",
 					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
 					"propertyType": "select",
 					"defaultValue": "DEFINER",
 					"options": [
+						"",
 						"DEFINER",
 						"INVOKER"
 					]

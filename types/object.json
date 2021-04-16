@@ -10,17 +10,17 @@
 		"object": {
 			"childValueType": [
 				"char",
-				"numeric",
 				"binary",
 				"datetime",
-				"geography",
+				"enum",
 				"geometry",
-				"hierarchyid",
-				"sql_variant",
-				"uniqueidentifier",
-				"xml",
+				"inet6",
+				"numeric",
 				"rowversion",
+				"set",
+				"sql_variant",
 				"table",
+				"xml",
 				"reference",
 				"multiple"
 			]

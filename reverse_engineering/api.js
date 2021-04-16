@@ -1,105 +1,287 @@
 'use strict';
 
-const connectionStringParser = require('mssql/lib/connectionstring');
-const { getClient, setClient, clearClient } = require('./connectionState');
-const { getObjectsFromDatabase } = require('./databaseService/databaseService');
-const {
-	reverseCollectionsToJSON,
-	mergeCollectionsWithViews,
-	getCollectionsRelationships,
-} = require('./reverseEngineeringService/reverseEngineeringService');
-const logInfo = require('./helpers/logInfo');
-const filterRelationships = require('./helpers/filterRelationships');
-const getOptionsFromConnectionInfo = require('./helpers/getOptionsFromConnectionInfo');
+const connectionHelper = require('./helpers/connectionHelper');
+const mariadbHelper = require('./helpers/mariadbHelper');
+
+BigInt.prototype.toJSON = function () {
+	return Number(this.valueOf());
+}
 
 module.exports = {
-	async connect(connectionInfo, logger, callback, app) {
-		const client = getClient();
-		if (!client) {
-			await setClient(connectionInfo);
-			return getClient();
-		}
+	async connect(connectionInfo) {
+		const connection = await connectionHelper.connect(connectionInfo);
 
-		return client;
+		return connection;
 	},
 
 	disconnect(connectionInfo, logger, callback, app) {
-		clearClient();
+		connectionHelper.close();
+		
 		callback();
 	},
 
 	async testConnection(connectionInfo, logger, callback, app) {
+		const log = createLogger({
+			title: 'Test connection',
+			hiddenKeys: connectionInfo.hiddenKeys,
+			logger,
+		});
+
 		try {
-			logInfo('Test connection', connectionInfo, logger);
-			await this.connect(connectionInfo);
+			logger.clear();
+			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
+
+			const connection = await this.connect(connectionInfo);
+			await connection.ping();
+
+			log.info('Connected successfully');
+
 			callback(null);
 		} catch(error) {
-			logger.log('error', { message: error.message, stack: error.stack, error }, 'Test connection');
+			log.error(error);
 			callback({ message: error.message, stack: error.stack });
 		}
-	},
-
-	getDatabases(connectionInfo, logger, callback, app) {
-		callback();
-	},
-
-	getDocumentKinds(connectionInfo, logger, callback, app) {
-		callback();
 	},
 
 	async getDbCollectionsNames(connectionInfo, logger, callback, app) {
-		try {
-			logInfo('Retrieving databases and tables information', connectionInfo, logger);
-			const client = await this.connect(connectionInfo);
-			if (!client.config.database) {
-				throw new Error('No database specified');
-			}
+		const log = createLogger({
+			title: 'Retrieving databases and tables information',
+			hiddenKeys: connectionInfo.hiddenKeys,
+			logger,
+		});
 
-			const objects = await getObjectsFromDatabase(client);
-			callback(null, objects);
+		try {
+			logger.clear();
+			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
+			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema'];
+
+			const connection = await this.connect(connectionInfo);
+			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await connectionHelper.getDatabases(connection, systemDatabases);
+			
+			const collections = await databases.reduce(async (next, dbName) => {
+				const result = await next;
+				try {
+					const entities = await connectionHelper.getTables(connection, dbName);
+					const dbCollections = getDbCollectionNames(entities, dbName, connectionInfo.includeSystemCollection);
+
+					return result.concat({
+						dbName,
+						dbCollections,
+						isEmpty: dbCollections.length === 0,
+					});
+				} catch (error) {
+					log.info(`Error reading database "${dbName}"`);
+					log.error(error);
+
+					return result.concat({
+						dbName,
+						dbCollections: [],
+						isEmpty: true,
+						status: true,
+					});
+				}
+			}, Promise.resolve([]));
+
+			log.info('Names retrieved successfully');
+
+			callback(null, collections);
 		} catch(error) {
-			logger.log('error', { message: error.message, stack: error.stack, error }, 'Retrieving databases and tables information');
+			log.error(error);
 			callback({ message: error.message, stack: error.stack });
 		}
 	},
 
-	async getDbCollectionsData(collectionsInfo, logger, callback, app) {
-		try {
-			logger.log('info', collectionsInfo, 'Retrieving schema', collectionsInfo.hiddenKeys);
-			logger.progress({ message: 'Start reverse-engineering process', containerName: '', entityName: '' });
-			const { collections } = collectionsInfo.collectionData;
-			const client = getClient();
-			if (!client.config.database) {
-				throw new Error('No database specified');
-			}
+	async getDbCollectionsData(data, logger, callback, app) {
+		const _ = app.require('lodash');
+		const async = app.require('async');
+		const log = createLogger({
+			title: 'Reverse-engineering process',
+			hiddenKeys: data.hiddenKeys,
+			logger,
+		});
 
-			const reverseEngineeringOptions = getOptionsFromConnectionInfo(collectionsInfo);
-			const [jsonSchemas, relationships] = await Promise.all([
-				await reverseCollectionsToJSON(logger)(client, collections, reverseEngineeringOptions),
-				await getCollectionsRelationships(logger)(client, collections),
-			]);
-			callback(null, mergeCollectionsWithViews(jsonSchemas), null, filterRelationships(relationships, jsonSchemas));
-		} catch (error) {
-			logger.log('error', { message: error.message, stack: error.stack, error }, 'Reverse-engineering process failed');
-			callback({ message: error.message, stack: error.stack })
+		try {
+			logger.log('info', data, 'data', data.hiddenKeys);
+
+			const collections = data.collectionData.collections;
+			const dataBaseNames = data.collectionData.dataBaseNames;
+			const connection = await this.connect(data);
+			const instance = await connectionHelper.createInstance(connection, logger); 
+
+			log.info('MariaDB version: ' + connection.serverVersion());
+			log.progress('Start reverse engineering ...');			
+
+			const result = await async.mapSeries(dataBaseNames, async (dbName) => {
+				const tables = collections[dbName].filter(name => !isViewName(name));
+				const views = collections[dbName].filter(isViewName).map(getViewName);
+	
+				log.info(`Parsing database "${dbName}"`);
+				log.progress(`Parsing database "${dbName}"`, dbName);			
+
+				const containerData = mariadbHelper.parseDatabaseStatement(
+					await instance.describeDatabase(dbName)
+				);
+
+				log.info(`Parsing functions`);
+				log.progress(`Parsing functions`, dbName);	
+
+				const UDFs = mariadbHelper.parseFunctions(
+					await instance.getFunctions(dbName)
+				);
+
+				log.info(`Parsing procedures`);
+				log.progress(`Parsing procedures`, dbName);
+
+				const Procedures = mariadbHelper.parseProcedures(
+					await instance.getProcedures(dbName)
+				);
+
+				const result = await async.mapSeries(tables, async (tableName) => {
+					log.info(`Sampling table "${tableName}"`);
+					log.progress(`Sampling table`, dbName, tableName);
+
+					const count = await instance.getCount(dbName, tableName);
+					const records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+					
+					log.info(`Get create table statement "${tableName}"`);
+					log.progress(`Get create table statement`, dbName, tableName);
+
+					const ddl = await instance.showCreateTable(dbName, tableName);
+
+					log.info(`Get indexes "${tableName}"`);
+					log.progress(`Get indexes`, dbName, tableName);
+
+					const indexes = await instance.getIndexes(dbName, tableName);
+
+					log.info(`Get constraints "${tableName}"`);
+					log.progress(`Get constraints`, dbName, tableName);
+
+					const constraints = await instance.getConstraints(dbName, tableName);
+
+					log.info(`Get columns "${tableName}"`);
+					log.progress(`Get columns`, dbName, tableName);
+
+					const columns = await instance.getColumns(dbName, tableName);
+					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
+					const Indxs = mariadbHelper.parseIndexes(indexes);
+
+					log.info(`Data retrieved successfully "${tableName}"`);
+					log.progress(`Data retrieved successfully`, dbName, tableName);
+
+					return {
+						dbName: dbName,
+						collectionName: tableName,
+						entityLevel: {
+							Indxs,
+						},
+						documents: records,
+						views: [],
+						standardDoc: records[0],
+						ddl: {
+							script: ddl,
+							type: 'mariadb'
+						},
+						emptyBucket: false,
+						validation: {
+							jsonSchema
+						},
+						bucketInfo: {
+							...containerData,
+							UDFs,
+							Procedures,
+						},
+					};
+				});
+				
+				const viewData = await async.mapSeries(views, async (viewName) => {
+					log.info(`Getting data from view "${viewName}"`);
+					log.progress(`Getting data from view`, dbName, viewName);
+
+					const ddl = await instance.showCreateView(dbName, viewName);
+
+					return {
+						name: viewName,
+						ddl: {
+							script: ddl,
+							type: 'mariadb'
+						}
+					};
+				});
+
+				if (viewData.length) {
+					return [...result, {
+						dbName: dbName,
+						views: viewData,
+						emptyBucket: false,
+					}];
+				}
+				
+				return result;
+			});
+
+
+			callback(null, result.flat());
+		} catch(error) {
+			log.error(error);
+			callback({ message: error.message, stack: error.stack });
 		}
 	},
-
-	parseConnectionString({ connectionString = '' }, logger, callback) {
-		try {
-			const parsedConnectionStringData = connectionStringParser.resolve(connectionString);
-			const parsedData = {
-				databaseName: parsedConnectionStringData.database,
-				host: parsedConnectionStringData.server,
-				port: parsedConnectionStringData.port,
-				authMethod: 'Username / Password',
-				userName: parsedConnectionStringData.user,
-				userPassword: parsedConnectionStringData.password
-			}; 
-			callback(null, { parsedData });
-		} catch(err) {
-			logger.log('error', { message: err.message, stack: err.stack, err }, 'Parsing connection string failed');
-			callback({ message: err.message, stack: err.stack });
-		}
-	}
 };
+
+const createLogger = ({ title, logger, hiddenKeys }) => {
+	return {
+		info(message) {
+			logger.log('info', { message }, title, hiddenKeys);
+		},
+
+		progress(message, dbName = '', tableName = '') {
+			logger.progress({ message, containerName: dbName, entityName: tableName });
+		},
+
+		error(error) {
+			logger.log('error', {
+				message: error.message,
+				stack: error.stack,
+			}, title);
+		}
+	};
+};
+
+const getDbCollectionNames = (entities, dbName, includeSystemCollection) => {
+	const isView = (type) => {
+		return ['SYSTEM VIEW', 'VIEW'].includes(type);
+	};
+
+	return entities.filter(table => {
+		if (includeSystemCollection) {
+			return true;
+		}
+
+		const isSystem = !['BASE TABLE', 'VIEW', 'SEQUENCE'].includes(table['Table_type']);
+
+		return !isSystem;
+	}).map(table => {
+		const name = table[`Tables_in_${dbName}`];
+
+		if (isView(table['Table_type'])) {
+			return `${name} (v)`;
+		} else {
+			return name;
+		}
+	});
+};
+
+const getLimit = (count, recordSamplingSettings) => {
+	const per = recordSamplingSettings.relative.value;
+	const size = (recordSamplingSettings.active === 'absolute')
+		? recordSamplingSettings.absolute.value
+		: Math.round(count / 100 * per);
+	return size;
+};
+
+const isViewName = (name) => {
+	return /\ \(v\)$/i.test(name);
+};
+
+const getViewName = (name) => name.replace(/\ \(v\)$/i, '');
+
