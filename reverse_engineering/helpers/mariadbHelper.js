@@ -29,10 +29,11 @@ const parseFunctions = (functions) => {
 
 		return {
 			name: f.meta['Name'],
+			functionDelimiter: (func.body || '').includes(';') ? '$$' : '',
 			functionOrReplace: func.orReplace,
 			functionAggregate: func.isAggregate,
 			functionIfNotExist: func.ifNotExists,
-			functionParams: func.parameters,
+			functionArguments: func.parameters,
 			functionDataType: func.returnType,
 			functionBody: func.body,
 			functionLanguage: 'SQL',
@@ -51,6 +52,7 @@ const parseProcedures = (procedures) => {
 		
 		return {
 			storedProcName: meta['Name'],
+			storedProcDelimiter: (data.body || '').includes(';') ? '$$' : '',
 			storedProcOrReplace: data.orReplace,
 			storedProcParameters: data.parameters,
 			storedProcBody: data.body,
@@ -173,7 +175,7 @@ const getIndexCategory = (index) => {
 };
 
 const parseIndexes = (indexes) => {
-	const indexesByConstraint = indexes.reduce((result, index) => {
+	const indexesByConstraint = indexes.filter(index => !['PRIMARY', 'UNIQUE'].includes(getIndexType(index))).reduce((result, index) => {
 		const constraintName = index['Key_name'];
 
 		if (result[constraintName]) {

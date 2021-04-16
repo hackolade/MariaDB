@@ -6,5 +6,6 @@
 		"container": true,
 		"entity": true,
 		"view": true
-	}
+	},
+	"resolvedDefinitions": true
 }

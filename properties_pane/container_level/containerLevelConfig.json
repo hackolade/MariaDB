@@ -1049,6 +1049,12 @@ making sure that you maintain a proper JSON format.
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
 				},
 				{
+					"propertyName": "Delimiter",
+					"propertyKeyword": "functionDelimiter",
+					"propertyType": "text",
+					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
+				},
+				{
 					"propertyName": "Aggregate",
 					"propertyKeyword": "functionAggregate",
 					"propertyType": "checkbox",
@@ -1095,7 +1101,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Deterministic",
-					"propertyKeyword": "funcDeterministic",
+					"propertyKeyword": "functionDeterministic",
 					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
 					"propertyType": "select",
 					"defaultValue": "",
@@ -1113,7 +1119,7 @@ making sure that you maintain a proper JSON format.
 					"defaultValue": "",
 					"options": [
 						"",
-						"SQL",
+						"CONTAINS SQL",
 						"NO SQL",
 						"READS SQL DATA",
 						"MODIFIES SQL DATA"
@@ -1162,6 +1168,12 @@ making sure that you maintain a proper JSON format.
 					"propertyKeyword": "storedProcOrReplace",
 					"propertyType": "checkbox",
 					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
+				},
+				{
+					"propertyName": "Delimiter",
+					"propertyKeyword": "storedProcDelimiter",
+					"propertyType": "text",
+					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
 				},
 				{
 					"propertyName": "Parameters",
