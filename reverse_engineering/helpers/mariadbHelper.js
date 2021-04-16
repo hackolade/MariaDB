@@ -51,11 +51,11 @@ const parseProcedures = (procedures) => {
 		const data = procedureHelper.parseProcedure(procedure.data[0]['Create Procedure']);
 		
 		return {
-			storedProcName: meta['Name'],
-			storedProcDelimiter: (data.body || '').includes(';') ? '$$' : '',
-			storedProcOrReplace: data.orReplace,
-			storedProcParameters: data.parameters,
-			storedProcBody: data.body,
+			name: meta['Name'],
+			delimiter: (data.body || '').includes(';') ? '$$' : '',
+			orReplace: data.orReplace,
+			inputArgs: data.parameters,
+			body: data.body,
 			storedProcLanguage: 'SQL',
 			storedProcDeterministic: data.deterministic,
 			storedProcContains: data.contains,
