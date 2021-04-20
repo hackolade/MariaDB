@@ -112,8 +112,8 @@ module.exports = {
 			log.progress('Start reverse engineering ...');			
 
 			const result = await async.mapSeries(dataBaseNames, async (dbName) => {
-				const tables = collections[dbName].filter(name => !isViewName(name));
-				const views = collections[dbName].filter(isViewName).map(getViewName);
+				const tables = (collections[dbName] || []).filter(name => !isViewName(name));
+				const views = (collections[dbName] || []).filter(isViewName).map(getViewName);
 	
 				log.info(`Parsing database "${dbName}"`);
 				log.progress(`Parsing database "${dbName}"`, dbName);			

@@ -116,7 +116,7 @@ const createInstance = (connection, logger) => {
 	const getCount = async (dbName, tableName) => {
 		const count = await connection.query(`SELECT COUNT(*) as count FROM \`${dbName}\`.\`${tableName}\`;`);
 
-		return count[0]?.count || 0;
+		return Number(count[0]?.count || 0);
 	};
 	
 	const getRecords = async (dbName, tableName, limit) => {
