@@ -1,6 +1,6 @@
 {
 	"type": "ddl",
-	"ddlType": "mariadb",
+	"ddlType": "plugin",
 	"namePrefix": "MariaDB",
 	"level": {
 		"container": true,
