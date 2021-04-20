@@ -1193,7 +1193,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Language",
-					"propertyKeyword": "storedProcLanguage",
+					"propertyKeyword": "language",
 					"propertyTooltip": "language",
 					"propertyType": "select",
 					"defaultValue": "SQL",
@@ -1203,7 +1203,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Deterministic",
-					"propertyKeyword": "storedProcDeterministic",
+					"propertyKeyword": "deterministic",
 					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
 					"propertyType": "select",
 					"defaultValue": "",
@@ -1215,13 +1215,13 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Contains",
-					"propertyKeyword": "storedProcContains",
+					"propertyKeyword": "contains",
 					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
 					"propertyType": "select",
 					"defaultValue": "",
 					"options": [
 						"",
-						"SQL",
+						"CONTAINS SQL",
 						"NO SQL",
 						"READS SQL DATA",
 						"MODIFIES SQL DATA"
@@ -1229,7 +1229,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "SQL Security",
-					"propertyKeyword": "storedProcSqlSecurity",
+					"propertyKeyword": "securityMode",
 					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
 					"propertyType": "select",
 					"defaultValue": "DEFINER",
@@ -1241,7 +1241,7 @@ making sure that you maintain a proper JSON format.
 				},
 				{
 					"propertyName": "Comments",
-					"propertyKeyword": "storedProcComments",
+					"propertyKeyword": "comments",
 					"propertyTooltip": "comments",
 					"addTimestampButton": false,
 					"propertyType": "details",

@@ -56,11 +56,11 @@ const parseProcedures = (procedures) => {
 			orReplace: data.orReplace,
 			inputArgs: data.parameters,
 			body: data.body,
-			storedProcLanguage: 'SQL',
-			storedProcDeterministic: data.deterministic,
-			storedProcContains: data.contains,
-			storedProcSqlSecurity: meta['Security_type'],
-			storedProcComments: meta['Comment']
+			language: 'SQL',
+			deterministic: data.deterministic,
+			contains: data.contains,
+			securityMode: meta['Security_type'],
+			comments: meta['Comment']
 		};
 	});
 };
