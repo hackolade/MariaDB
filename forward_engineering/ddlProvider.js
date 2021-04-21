@@ -251,7 +251,7 @@ module.exports = (baseProvider, options, app) => {
 
 		createCheckConstraint(checkConstraint) {
 			return assignTemplates(templates.checkConstraint, {
-				name: checkConstraint.name ? `\`${checkConstraint.name}\` ` : '',
+				name: checkConstraint.name ? `${wrap(checkConstraint.name, '`', '`')} ` : '',
 				expression: _.trim(checkConstraint.expression).replace(/^\(([\s\S]*)\)$/, '$1'),
 			});
 		},
