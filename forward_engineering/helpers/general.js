@@ -119,7 +119,7 @@ module.exports = (_, wrap) => {
 			if (options.characterSet) {
 				tableOptions.push(`CHARSET=${options.characterSet}`);
 			}
-			if (options.characterSet) {
+			if (options.collation) {
 				tableOptions.push(`COLLATE=${options.collation}`);
 			}
 		}
