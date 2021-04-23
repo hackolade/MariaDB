@@ -1878,8 +1878,9 @@ making sure that you maintain a proper JSON format.
 					"propertyKeyword": "indexType",
 					"propertyTooltip": "",
 					"propertyType": "select",
-					"defaultValue": "KEY",
+					"defaultValue": "",
 					"options": [
+						"",
 						"PRIMARY",
 						"KEY",
 						"UNIQUE",
