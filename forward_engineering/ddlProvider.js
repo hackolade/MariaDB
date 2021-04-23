@@ -194,7 +194,7 @@ module.exports = (baseProvider, options, app) => {
 			const wholeStatementCommented = !isParentActivated || allDeactivated;
 			const indexType = index.indexType ? `${_.toUpper(index.indexType)} ` : '';
 			const ifNotExist = index.ifNotExist ? 'IF NOT EXISTS ' : '';
-			const name = `\`${index.indxName}\``;
+			const name = wrap(index.indxName, '`', '`');
 			const table = getTableName(tableName, dbData.databaseName);
 			const indexCategory = index.indexCategory ? ` USING ${index.indexCategory}` : '';
 			let indexOptions = [];

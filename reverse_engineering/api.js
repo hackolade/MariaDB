@@ -53,7 +53,7 @@ module.exports = {
 		try {
 			logger.clear();
 			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
-			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema'];
+			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema', 'mysql', 'performance_schema'];
 
 			const connection = await this.connect(connectionInfo);
 			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await connectionHelper.getDatabases(connection, systemDatabases);
@@ -249,10 +249,14 @@ const createLogger = ({ title, logger, hiddenKeys }) => {
 
 const getDbCollectionNames = (entities, dbName, includeSystemCollection) => {
 	const isView = (type) => {
-		return ['SYSTEM VIEW', 'VIEW'].includes(type);
+		return ['VIEW'].includes(type);
 	};
 
 	return entities.filter(table => {
+		if (table['Table_type'] === 'SYSTEM VIEW') {
+			return false;
+		}
+
 		if (includeSystemCollection) {
 			return true;
 		}
