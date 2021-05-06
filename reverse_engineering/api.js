@@ -7,6 +7,8 @@ BigInt.prototype.toJSON = function () {
 	return Number(this.valueOf());
 }
 
+const ACCESS_DENIED_ERROR = 1045;
+
 module.exports = {
 	async connect(connectionInfo) {
 		const connection = await connectionHelper.connect(connectionInfo);
@@ -39,7 +41,11 @@ module.exports = {
 			callback(null);
 		} catch(error) {
 			log.error(error);
-			callback({ message: error.message, stack: error.stack });
+			if (error.errno === ACCESS_DENIED_ERROR) {
+				callback({ message: `Access denied for user "${connectionInfo.userName}". Please, check whether the password is correct and the user has enough permissions to connect to the database server.`, stack: error.stack });
+			} else {
+				callback({ message: error.message, stack: error.stack });
+			}
 		}
 	},
 
