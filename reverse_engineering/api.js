@@ -143,11 +143,19 @@ module.exports = {
 				);
 
 				const result = await async.mapSeries(tables, async (tableName) => {
-					log.info(`Sampling table "${tableName}"`);
-					log.progress(`Sampling table`, dbName, tableName);
+					log.info(`Get columns "${tableName}"`);
+					log.progress(`Get columns`, dbName, tableName);
 
-					const count = await instance.getCount(dbName, tableName);
-					const records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+					const columns = await instance.getColumns(dbName, tableName);
+					let records = [];
+					
+					if (containsJson(columns)) {
+						log.info(`Sampling table "${tableName}"`);
+						log.progress(`Sampling table`, dbName, tableName);
+	
+						const count = await instance.getCount(dbName, tableName);
+						records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+					}
 					
 					log.info(`Get create table statement "${tableName}"`);
 					log.progress(`Get create table statement`, dbName, tableName);
@@ -163,11 +171,6 @@ module.exports = {
 					log.progress(`Get constraints`, dbName, tableName);
 
 					const constraints = await instance.getConstraints(dbName, tableName);
-
-					log.info(`Get columns "${tableName}"`);
-					log.progress(`Get columns`, dbName, tableName);
-
-					const columns = await instance.getColumns(dbName, tableName);
 					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
 					const Indxs = mariadbHelper.parseIndexes(indexes);
 
@@ -295,3 +298,6 @@ const isViewName = (name) => {
 
 const getViewName = (name) => name.replace(/\ \(v\)$/i, '');
 
+const containsJson = (columns) => {
+	return columns.some(column => column['Type'] === 'longtext' || column['Type'] === 'json');
+};
