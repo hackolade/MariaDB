@@ -54,12 +54,20 @@ module.exports = ({
 			!isAllColumnsDeactivated && isParentActivated
 				? ' (' + dividedColumns.activatedItems.join(', ') + deactivatedColumnsAsString + ')'
 				: ' (' + keyData.columns.map(columnMapToString).join(', ') + ')';
+		const using = keyData.category ? ` USING ${keyData.category}` : '';
+		const ignore = keyData.ignore ? ` IGNORED` : '';
+		const comment = keyData.comment ? ` COMMENT '${keyData.comment}'` : '';
+		const blockSize = keyData.blockSize ? ` KEY_BLOCK_SIZE=${keyData.blockSize}` : '';
 	
 		return {
 			statement: assignTemplates(templates.createKeyConstraint, {
 				constraintName: keyData.name ? `CONSTRAINT \`${_.trim(keyData.name)}\` ` : '',
 				keyType: keyData.keyType,
+				blockSize,
 				columns,
+				comment,
+				ignore,
+				using,
 			}),
 			isActivated: !isAllColumnsDeactivated,
 		};

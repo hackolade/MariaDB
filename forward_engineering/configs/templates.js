@@ -16,7 +16,7 @@ module.exports = {
 	createForeignKeyConstraint:
 		'CONSTRAINT `${name}` FOREIGN KEY (${foreignKey}) REFERENCES ${primaryTable}(${primaryKey})',
 
-	createKeyConstraint: '${constraintName}${keyType}${columns}',
+	createKeyConstraint: '${constraintName}${keyType}${columns}${using}${blockSize}${comment}${ignore}',
 
 	createForeignKey:
 		'ALTER TABLE ${foreignTable} ADD CONSTRAINT `${name}` FOREIGN KEY (${foreignKey}) REFERENCES ${primaryTable}(${primaryKey});',

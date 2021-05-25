@@ -1256,6 +1256,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
@@ -1381,8 +1387,8 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
-						"propertyName": "Index name",
-						"propertyKeyword": "indxName",
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
 						"propertyType": "text"
 					},
 					{
@@ -1668,6 +1674,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
@@ -1824,8 +1836,8 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
-						"propertyName": "Index name",
-						"propertyKeyword": "indxName",
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
 						"propertyType": "text"
 					},
 					{
@@ -2118,6 +2130,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
@@ -2243,8 +2261,8 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
-						"propertyName": "Index name",
-						"propertyKeyword": "indxName",
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
 						"propertyType": "text"
 					},
 					{
@@ -2447,6 +2465,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
@@ -2572,8 +2596,8 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
-						"propertyName": "Index name",
-						"propertyKeyword": "indxName",
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
 						"propertyType": "text"
 					},
 					{
@@ -2874,6 +2898,12 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
@@ -2999,8 +3029,8 @@ making sure that you maintain a proper JSON format.
 				},
 				"structure": [
 					{
-						"propertyName": "Index name",
-						"propertyKeyword": "indxName",
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
 						"propertyType": "text"
 					},
 					{

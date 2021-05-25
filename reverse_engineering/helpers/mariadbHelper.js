@@ -153,7 +153,7 @@ const addKeyOptions = (jsonSchema, indexes) => {
 	if (primaryIndexes.length === 1) {
 		const primaryIndex = primaryIndexes[0];
 		const columnName = primaryIndex['Column_name'];
-		const primaryKeyOptions = getIndexData(primaryIndex);
+		const { constraintName, ...primaryKeyOptions } = getIndexData(primaryIndex);
 
 		jsonSchema = {
 			...jsonSchema,
@@ -172,7 +172,7 @@ const addKeyOptions = (jsonSchema, indexes) => {
 
 const getIndexData = (index) => {
 	return {
-		indxName: index['Key_name'],
+		constraintName: index['Key_name'],
 		indexCategory: getIndexCategory(index),
 		indexComment: index['Index_comment'],
 		indexOrder: getIndexOrder(index['Collation']),
