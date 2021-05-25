@@ -1808,49 +1808,127 @@ making sure that you maintain a proper JSON format.
 	},
 	{
 		"lowerTab": "Composite keys",
-		"structure": [{
-			"propertyName": "Primary key",
-			"propertyType": "group",
-			"groupItemLimit": 1,
-			"propertyKeyword": "primaryKey",
-			"propertyTooltip": "",
-			"structure": [{
-				"propertyName": "Constraint name",
-				"propertyKeyword": "constraintName",
+		"structure": [
+			{
+				"propertyName": "Primary key",
+				"propertyType": "group",
+				"groupItemLimit": 1,
+				"propertyKeyword": "primaryKey",
 				"propertyTooltip": "",
-				"propertyType": "text"
-			}, {
-				"propertyName": "Key",
-				"propertyKeyword": "compositePrimaryKey",
-				"propertyType": "primaryKeySetter",
-				"abbr": "pk",
-				"attributeList": [
-					"ascending",
-					"descending"
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Key",
+						"propertyKeyword": "compositePrimaryKey",
+						"propertyType": "primaryKeySetter",
+						"abbr": "pk",
+						"attributeList": [
+							"ascending",
+							"descending"
+						]
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
 				]
-			} 
-		]}, 
-		{
-			"propertyName": "Unique key",
-			"propertyType": "group",
-			"propertyKeyword": "uniqueKey",
-			"propertyTooltip": "",
-			"structure": [{
-				"propertyName": "Constraint name",
-				"propertyKeyword": "constraintName",
+			}, 
+			{
+				"propertyName": "Unique key",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKey",
 				"propertyTooltip": "",
-				"propertyType": "text"
-			}, {
-				"propertyName": "Key",
-				"propertyKeyword": "compositeUniqueKey",
-				"propertyType": "primaryKeySetter",
-				"abbr": " ",
-				"attributeList": [
-					"ascending",
-					"descending"
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Key",
+						"propertyKeyword": "compositeUniqueKey",
+						"propertyType": "primaryKeySetter",
+						"abbr": " ",
+						"attributeList": [
+							"ascending",
+							"descending"
+						]
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
 				]
-			}]
-		}]
+			}
+		]
 	},
 	{
 		"lowerTab": "Indexes",

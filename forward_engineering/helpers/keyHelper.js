@@ -1,5 +1,9 @@
 module.exports = (_, clean) => {
-	const isInlineUnique = column => {
+	const mapProperties = (jsonSchema, iteratee) => {
+		return Object.entries(jsonSchema.properties).map(iteratee);
+	};
+
+	const isUniqueKey = column => {
 		if (column.compositeUniqueKey) {
 			return false;
 		} else if (!column.unique) {
@@ -8,8 +12,12 @@ module.exports = (_, clean) => {
 			return true;
 		}
 	};
-	
-	const isInlinePrimaryKey = column => {
+
+	const isInlineUnique = column => {
+		return isUniqueKey(column) && !_.isEmpty(column.uniqueKeyOptions);
+	};	
+
+	const isPrimaryKey = column => {
 		if (column.compositeUniqueKey) {
 			return false;
 		} else if (column.compositePrimaryKey) {
@@ -19,6 +27,10 @@ module.exports = (_, clean) => {
 		} else {
 			return true;
 		}
+	};
+
+	const isInlinePrimaryKey = column => {
+		return isPrimaryKey(column) && _.isEmpty(column.primaryKeyOptions);
 	};
 	
 	const getOrder = order => {
@@ -42,6 +54,10 @@ module.exports = (_, clean) => {
 					isActivated: isActivated,
 				},
 			],
+			category: options['indexCategory'],
+			ignore: options['indexIgnore'],
+			comment: options['indexComment'],
+			blockSize: options['indexBlockSize'],
 		});
 	
 	const hydratePrimaryKeyOptions = (options, columnName, isActivated) =>
@@ -55,6 +71,10 @@ module.exports = (_, clean) => {
 					isActivated: isActivated,
 				},
 			],
+			category: options['indexCategory'],
+			ignore: options['indexIgnore'],
+			comment: options['indexComment'],
+			blockSize: options['indexBlockSize'],
 		});
 	
 	const findName = (keyId, properties) => {
@@ -109,8 +129,35 @@ module.exports = (_, clean) => {
 		if (!jsonSchema.properties) {
 			return [];
 		}
+
+		const primaryKeyConstraints = mapProperties(jsonSchema, ([ name, schema ]) => {
+			if (!isPrimaryKey(schema)) {
+				return;
+			} else if (_.isEmpty(schema.primaryKeyOptions)) {
+				return;
+			}
+
+			return hydratePrimaryKeyOptions(schema.primaryKeyOptions, name, schema.isActivated);
+		}).filter(Boolean);
+
+		const uniqueKeyConstraints = _.flatten(mapProperties(jsonSchema, ([ name, schema ]) => {
+			if (!isUniqueKey(schema)) {
+				return [];
+			} else if (_.isEmpty(schema.uniqueKeyOptions) || !Array.isArray(schema.uniqueKeyOptions)) {
+				return [];
+			}
+
+			return schema.uniqueKeyOptions.map(uniqueKey => (
+				hydrateUniqueOptions(uniqueKey, name, schema.isActivated)
+			));
+		})).filter(Boolean);
 	
-		return [...getCompositePrimaryKeys(jsonSchema), ...getCompositeUniqueKeys(jsonSchema)];
+		return [
+			...primaryKeyConstraints,
+			...getCompositePrimaryKeys(jsonSchema),
+			...uniqueKeyConstraints,
+			...getCompositeUniqueKeys(jsonSchema),
+		];
 	};
 	
 	return {

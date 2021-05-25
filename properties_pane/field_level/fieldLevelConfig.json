@@ -219,8 +219,8 @@ making sure that you maintain a proper JSON format.
 				],
 				"defaultValue": "string",
 				"dependency": {
-					"key": "synonym",
-					"value": "json"
+					"key": "mode",
+					"value": "longtext"
 				}
 			},
 			{
@@ -1220,6 +1220,96 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Primary key options",
+				"propertyType": "block",
+				"propertyKeyword": "primaryKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Primary key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Unique",
 				"propertyKeyword": "compositeUniqueKey",
 				"propertyType": "checkbox",
@@ -1259,6 +1349,95 @@ making sure that you maintain a proper JSON format.
 						}
 					]
 				}
+			},
+			{
+				"propertyName": "Unique key options",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Unique key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "unique",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			"foreignCollection",
 			"foreignField",
@@ -1459,6 +1638,96 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Primary key options",
+				"propertyType": "block",
+				"propertyKeyword": "primaryKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Primary key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Auto-increment",
 				"propertyKeyword": "autoincrement",
 				"propertyTooltip": "Column whose value can can be set automatically from a simple counter.  Column must be a key, and there can only be one AUTO_INCREMENT column in a table.",
@@ -1529,6 +1798,95 @@ making sure that you maintain a proper JSON format.
 						}
 					]
 				}
+			},
+			{
+				"propertyName": "Unique key options",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Unique key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "unique",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			"foreignCollection",
 			"foreignField",
@@ -1736,6 +2094,96 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Primary key options",
+				"propertyType": "block",
+				"propertyKeyword": "primaryKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Primary key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Unique",
 				"propertyKeyword": "compositeUniqueKey",
 				"propertyType": "checkbox",
@@ -1775,6 +2223,95 @@ making sure that you maintain a proper JSON format.
 						}
 					]
 				}
+			},
+			{
+				"propertyName": "Unique key options",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Unique key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "unique",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			{
 				"propertyName": "Remarks",
@@ -1892,6 +2429,96 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Primary key options",
+				"propertyType": "block",
+				"propertyKeyword": "primaryKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Primary key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Unique",
 				"propertyKeyword": "compositeUniqueKey",
 				"propertyType": "checkbox",
@@ -1931,6 +2558,95 @@ making sure that you maintain a proper JSON format.
 						}
 					]
 				}
+			},
+			{
+				"propertyName": "Unique key options",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Unique key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "unique",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			"pattern",
 			"enum",
@@ -2146,6 +2862,96 @@ making sure that you maintain a proper JSON format.
 				}
 			},
 			{
+				"propertyName": "Primary key options",
+				"propertyType": "block",
+				"propertyKeyword": "primaryKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Primary key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			},
+			{
 				"propertyName": "Unique",
 				"propertyKeyword": "compositeUniqueKey",
 				"propertyType": "checkbox",
@@ -2185,6 +2991,95 @@ making sure that you maintain a proper JSON format.
 						}
 					]
 				}
+			},
+			{
+				"propertyName": "Unique key options",
+				"propertyType": "group",
+				"propertyKeyword": "uniqueKeyOptions",
+				"enableForReference": true,
+				"propertyTooltip": "Unique key options",
+				"dependency": {
+					"type": "and",
+					"values": [
+						{
+							"key": "unique",
+							"value": true
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositePrimaryKey",
+								"value": false
+							}, {
+								"key": "compositePrimaryKey",
+								"exist": false
+							}]
+						},
+						{
+							"type": "or",
+							"values": [{
+								"key": "compositeUniqueKey",
+								"value": false
+							}, {
+								"key": "compositeUniqueKey",
+								"exist": false
+							}]
+						}
+					]
+				},
+				"structure": [
+					{
+						"propertyName": "Constraint name",
+						"propertyKeyword": "constraintName",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": [
+							"",
+							"BTREE",
+							"HASH",
+							"RTREE"
+						]
+					},
+					{
+						"propertyName": "Key order",
+						"propertyKeyword": "indexOrder",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ASC",
+							"DESC"
+						]
+					},
+					{
+						"propertyName": "Key block size",
+						"propertyKeyword": "indexBlockSize",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"minValue": 0,
+						"step": 1
+					},
+					{
+						"propertyName": "Ignore index",
+						"propertyKeyword": "indexIgnore",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Indexes can be specified to be ignored by the optimizer"
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
 			},
 			"foreignCollection",
 			"foreignField",

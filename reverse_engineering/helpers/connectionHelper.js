@@ -87,6 +87,8 @@ const createConnection = async (connectionInfo) => {
 		dateStrings: true ,
 		supportBigInt: true,
 		autoJsonMap: false,
+		connectTimeout: Number(connectionInfo.queryRequestTimeout) || 60000,
+		database: connectionInfo.databaseName,
 	});
 };
 

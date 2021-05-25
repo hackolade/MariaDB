@@ -77,8 +77,8 @@ const isJson = (columnName, constraints) => {
 	});
 };
 
-const getSubtype = (fieldName, records) => {
-	const record = records.find(records => {
+const findJsonRecord = (fieldName, records) => {
+	return records.find(records => {
 		if (typeof records[fieldName] !== 'string') {
 			return false;
 		}
@@ -89,11 +89,9 @@ const getSubtype = (fieldName, records) => {
 			return false;
 		}
 	});
+};
 
-	if (!record) {
-		return ' ';
-	}
-
+const getSubtype = (fieldName, record) => {
 	const item = JSON.parse(record[fieldName]);
  
 	if (!item) {
@@ -111,31 +109,105 @@ const getSubtype = (fieldName, records) => {
 	return ' ';
 };
 
-const getJsonSchema = ({ columns, constraints, records }) => {
+const addKeyOptions = (jsonSchema, indexes) => {
+	const primaryIndexes = indexes.filter(index => getIndexType(index) === 'PRIMARY');
+	const uniqueIndexes = indexes.filter(index => getIndexType(index) === 'UNIQUE');
+	const { single } = uniqueIndexes.reduce(({single, composite, hash}, index) => {
+		const indexName = index['Key_name'];
+		if (!hash[indexName]) {
+			hash[indexName] = true;
+
+			return {
+				single: single.concat(index),
+				composite,
+				hash,
+			};
+		} else {
+			return {
+				single: single.filter(index => index['Key_name'] !== indexName),
+				composite: composite.concat(index),
+				hash,
+			};
+		}
+	}, {composite: [], single: [], hash: {}});
+
+	jsonSchema = single.reduce((jsonSchema, index) => {
+		const columnName = index['Column_name'];
+		const uniqueKeyOptions = getIndexData(index);
+
+		return {
+			...jsonSchema,
+			properties: {
+				...jsonSchema.properties,
+				[columnName]: {
+					...(jsonSchema.properties[columnName] || {}),
+					uniqueKeyOptions: [
+						...((jsonSchema.properties[columnName] || {}).uniqueKeyOptions || []),
+						uniqueKeyOptions,
+					],
+				}
+			}
+		};
+	}, jsonSchema);
+
+	if (primaryIndexes.length === 1) {
+		const primaryIndex = primaryIndexes[0];
+		const columnName = primaryIndex['Column_name'];
+		const { constraintName, ...primaryKeyOptions } = getIndexData(primaryIndex);
+
+		jsonSchema = {
+			...jsonSchema,
+			properties: {
+				...jsonSchema.properties,
+				[columnName]: {
+					...(jsonSchema.properties[columnName] || {}),
+					primaryKeyOptions,
+				}
+			}
+		};
+	}
+
+	return jsonSchema;
+};
+
+const getIndexData = (index) => {
+	return {
+		constraintName: index['Key_name'],
+		indexCategory: getIndexCategory(index),
+		indexComment: index['Index_comment'],
+		indexOrder: getIndexOrder(index['Collation']),
+		indexIgnore: index['Ignored'] === 'YES'
+	};
+};
+
+const getJsonSchema = ({ columns, constraints, records, indexes }) => {
 	const properties = columns.filter((column) => {
 		return column['Type'] === 'longtext';
 	}).reduce((schema, column) => {
 		const fieldName = column['Field'];
-	
-		if (!isJson(fieldName, constraints)) {
+		const record = findJsonRecord(fieldName, records);
+		const isJsonSynonym = isJson(fieldName, constraints);
+		const subtype = record ? getSubtype(fieldName, record) : ' ';
+		const synonym = isJsonSynonym ? 'json' : '';
+
+		if (!synonym && subtype === ' ') {
 			return schema;
 		}
-		const subtype = getSubtype(fieldName, records);
 
 		return {
 			...schema,
 			[fieldName]: {
 				type: 'char',
 				mode: 'longtext',
-				synonym: 'json',
+				synonym,
 				subtype,
 			}
 		};
 	}, {});
 
-	return {
+	return addKeyOptions({
 		properties,
-	};
+	}, indexes);
 };
 
 const getIndexOrder = (collation) => {
