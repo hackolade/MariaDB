@@ -109,7 +109,78 @@ const getSubtype = (fieldName, record) => {
 	return ' ';
 };
 
-const getJsonSchema = ({ columns, constraints, records }) => {
+const addKeyOptions = (jsonSchema, indexes) => {
+	const primaryIndexes = indexes.filter(index => getIndexType(index) === 'PRIMARY');
+	const uniqueIndexes = indexes.filter(index => getIndexType(index) === 'UNIQUE');
+	const { single } = uniqueIndexes.reduce(({single, composite, hash}, index) => {
+		const indexName = index['Key_name'];
+		if (!hash[indexName]) {
+			hash[indexName] = true;
+
+			return {
+				single: single.concat(index),
+				composite,
+				hash,
+			};
+		} else {
+			return {
+				single: single.filter(index => index['Key_name'] !== indexName),
+				composite: composite.concat(index),
+				hash,
+			};
+		}
+	}, {composite: [], single: [], hash: {}});
+
+	jsonSchema = single.reduce((jsonSchema, index) => {
+		const columnName = index['Column_name'];
+		const uniqueKeyOptions = getIndexData(index);
+
+		return {
+			...jsonSchema,
+			properties: {
+				...jsonSchema.properties,
+				[columnName]: {
+					...(jsonSchema.properties[columnName] || {}),
+					uniqueKeyOptions: [
+						...((jsonSchema.properties[columnName] || {}).uniqueKeyOptions || []),
+						uniqueKeyOptions,
+					],
+				}
+			}
+		};
+	}, jsonSchema);
+
+	if (primaryIndexes.length === 1) {
+		const primaryIndex = primaryIndexes[0];
+		const columnName = primaryIndex['Column_name'];
+		const primaryKeyOptions = getIndexData(primaryIndex);
+
+		jsonSchema = {
+			...jsonSchema,
+			properties: {
+				...jsonSchema.properties,
+				[columnName]: {
+					...(jsonSchema.properties[columnName] || {}),
+					primaryKeyOptions,
+				}
+			}
+		};
+	}
+
+	return jsonSchema;
+};
+
+const getIndexData = (index) => {
+	return {
+		indxName: index['Key_name'],
+		indexCategory: getIndexCategory(index),
+		indexComment: index['Index_comment'],
+		indexOrder: getIndexOrder(index['Collation']),
+		indexIgnore: index['Ignored'] === 'YES'
+	};
+};
+
+const getJsonSchema = ({ columns, constraints, records, indexes }) => {
 	const properties = columns.filter((column) => {
 		return column['Type'] === 'longtext';
 	}).reduce((schema, column) => {
@@ -134,9 +205,9 @@ const getJsonSchema = ({ columns, constraints, records }) => {
 		};
 	}, {});
 
-	return {
+	return addKeyOptions({
 		properties,
-	};
+	}, indexes);
 };
 
 const getIndexOrder = (collation) => {

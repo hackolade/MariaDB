@@ -171,7 +171,7 @@ module.exports = {
 					log.progress(`Get constraints`, dbName, tableName);
 
 					const constraints = await instance.getConstraints(dbName, tableName);
-					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records });
+					const jsonSchema = mariadbHelper.getJsonSchema({ columns, constraints, records, indexes });
 					const Indxs = mariadbHelper.parseIndexes(indexes);
 
 					log.info(`Data retrieved successfully "${tableName}"`);
