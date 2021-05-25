@@ -187,12 +187,12 @@ const getJsonSchema = ({ columns, constraints, records, indexes }) => {
 		const fieldName = column['Field'];
 		const record = findJsonRecord(fieldName, records);
 		const isJsonSynonym = isJson(fieldName, constraints);
-	
-		if (!isJsonSynonym && !record) {
+		const subtype = record ? getSubtype(fieldName, record) : ' ';
+		const synonym = isJsonSynonym ? 'json' : '';
+
+		if (!synonym && subtype === ' ') {
 			return schema;
 		}
-		const subtype = getSubtype(fieldName, record);
-		const synonym = isJsonSynonym ? 'json' : '';
 
 		return {
 			...schema,
