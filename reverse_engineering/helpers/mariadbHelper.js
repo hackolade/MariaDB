@@ -77,8 +77,8 @@ const isJson = (columnName, constraints) => {
 	});
 };
 
-const getSubtype = (fieldName, records) => {
-	const record = records.find(records => {
+const findJsonRecord = (fieldName, records) => {
+	return records.find(records => {
 		if (typeof records[fieldName] !== 'string') {
 			return false;
 		}
@@ -89,11 +89,9 @@ const getSubtype = (fieldName, records) => {
 			return false;
 		}
 	});
+};
 
-	if (!record) {
-		return ' ';
-	}
-
+const getSubtype = (fieldName, record) => {
 	const item = JSON.parse(record[fieldName]);
  
 	if (!item) {
@@ -116,18 +114,21 @@ const getJsonSchema = ({ columns, constraints, records }) => {
 		return column['Type'] === 'longtext';
 	}).reduce((schema, column) => {
 		const fieldName = column['Field'];
+		const record = findJsonRecord(fieldName, records);
+		const isJsonSynonym = isJson(fieldName, constraints);
 	
-		if (!isJson(fieldName, constraints)) {
+		if (!isJsonSynonym && !record) {
 			return schema;
 		}
-		const subtype = getSubtype(fieldName, records);
+		const subtype = getSubtype(fieldName, record);
+		const synonym = isJsonSynonym ? 'json' : '';
 
 		return {
 			...schema,
 			[fieldName]: {
 				type: 'char',
 				mode: 'longtext',
-				synonym: 'json',
+				synonym,
 				subtype,
 			}
 		};

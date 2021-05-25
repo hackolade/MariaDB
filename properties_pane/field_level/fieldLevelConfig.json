@@ -219,8 +219,8 @@ making sure that you maintain a proper JSON format.
 				],
 				"defaultValue": "string",
 				"dependency": {
-					"key": "synonym",
-					"value": "json"
+					"key": "mode",
+					"value": "longtext"
 				}
 			},
 			{
