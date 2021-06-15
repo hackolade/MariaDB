@@ -33,8 +33,8 @@ module.exports = (baseProvider, options, app) => {
 	return {
 		createDatabase({ databaseName, orReplace, ifNotExist, collation, characterSet, comments, udfs, procedures }) {
 			let dbOptions = '';
-			dbOptions += collation ? tab(`\nCOLLATION = '${collation}'`) : '';
 			dbOptions += characterSet ? tab(`\nCHARACTER SET = '${characterSet}'`) : '';
+			dbOptions += collation ? tab(`\nCOLLATE = '${collation}'`) : '';
 			dbOptions += comments ? tab(`\nCOMMENT = '${comments}'`) : '';
 
 			const databaseStatement = assignTemplates(templates.createDatabase, {
@@ -155,8 +155,8 @@ module.exports = (baseProvider, options, app) => {
 			const invisible = columnDefinition.invisible ? ' INVISIBLE' : '';
 			const national = columnDefinition.national && canBeNational(type) ? 'NATIONAL ' : '';
 			const comment = columnDefinition.comment ? ` COMMENT='${columnDefinition.comment}'` : '';
-			const charset = columnDefinition.charset ? ` CHARSET ${columnDefinition.charset}` : '';
-			const collate = columnDefinition.collation ? ` COLLATE ${columnDefinition.collation}` : '';
+			const charset = type !== 'JSON' && columnDefinition.charset ? ` CHARSET ${columnDefinition.charset}` : '';
+			const collate = type !== 'JSON' && columnDefinition.charset && columnDefinition.collation ? ` COLLATE ${columnDefinition.collation}` : '';
 			const defaultValue = !_.isUndefined(columnDefinition.default)
 				? ' DEFAULT ' + decorateDefault(type, columnDefinition.default)
 				: '';
@@ -330,15 +330,17 @@ module.exports = (baseProvider, options, app) => {
 						keys: columnsAsString,
 				  });
 
+			const algorithm = viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
+
 			return commentIfDeactivated(
 				assignTemplates(templates.createView, {
 					name: getTableName(viewData.name, dbData.databaseName),
 					orReplace: viewData.orReplace ? 'OR REPLACE ' : '',
 					ifNotExist: viewData.ifNotExist ? 'IF NOT EXISTS ' : '',
 					sqlSecurity: viewData.sqlSecurity ? `SQL SECURITY ${viewData.sqlSecurity} ` : '',
-					algorithm: viewData.algorithm ? `ALGORITHM ${viewData.algorithm} ` : '',
 					checkOption: viewData.checkOption ? `\nWITH ${viewData.checkOption} CHECK OPTION` : '',
 					selectStatement,
+					algorithm,
 				}),
 				{ isActivated: !deactivatedWholeStatement },
 			);
@@ -385,7 +387,7 @@ module.exports = (baseProvider, options, app) => {
 				compressionMethod: jsonSchema.compressed ? jsonSchema.compression_method : '',
 				enum: jsonSchema.enum,
 				synonym: jsonSchema.synonym,
-				signed: jsonSchema.signed,
+				signed: jsonSchema.zerofill || jsonSchema.signed,
 				microSecPrecision: jsonSchema.microSecPrecision,
 				charset: jsonSchema.characterSet,
 				collation: jsonSchema.collation,

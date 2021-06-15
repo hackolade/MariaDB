@@ -7,5 +7,6 @@
 		"entity": true,
 		"view": true
 	},
-	"resolvedDefinitions": true
+	"resolvedDefinitions": true,
+	"applyScriptToInstance": true
 }

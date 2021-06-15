@@ -1,5 +1,5 @@
 module.exports = {
-	createDatabase: 'CREATE${orReplace} DATABASE${ifNotExist} `${name}`${dbOptions};\nUSE `${name}`;\n',
+	createDatabase: 'CREATE${orReplace} DATABASE${ifNotExist} `${name}`${dbOptions};\n\nUSE `${name}`;\n',
 
 	createTable:
 		'CREATE ${orReplace}${temporary}TABLE ${ifNotExist}${name} (\n' +
@@ -9,7 +9,7 @@ module.exports = {
 	createLikeTable: 'CREATE ${orReplace}${temporary}TABLE ${ifNotExist}${name} LIKE ${likeTableName};\n',
 
 	columnDefinition:
-		'`${name}` ${national}${type}${signed}${primary_key}${unique_key}${not_null}${default}${autoIncrement}${zeroFill}${invisible}${compressed}${charset}${collate}${comment}',
+		'`${name}` ${national}${type}${signed}${primary_key}${unique_key}${default}${autoIncrement}${zeroFill}${not_null}${invisible}${compressed}${charset}${collate}${comment}',
 
 	checkConstraint: 'CONSTRAINT ${name}CHECK (${expression})',
 

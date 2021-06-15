@@ -202,7 +202,7 @@ module.exports = (_, wrap) => {
 					return partitionDefinition.partitionDefinition;
 				}
 			})
-			.join('\n\t\t');
+			.join(',\n\t\t');
 	
 		if (!partitions) {
 			return '';
@@ -289,10 +289,14 @@ module.exports = (_, wrap) => {
 		}
 	
 		if (udfCharacteristics.comment) {
-			characteristics.push(`COMMENT ${wrap(udfCharacteristics.comment)}`);
+			characteristics.push(`COMMENT ${wrap(escapeQuotes(udfCharacteristics.comment))}`);
 		}
 	
 		return characteristics;
+	};
+
+	const escapeQuotes = (str = '') => {
+		return str.replace(/(')/gi, '\\$1');
 	};
 	
 	return {

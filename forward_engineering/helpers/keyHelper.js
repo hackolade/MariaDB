@@ -14,7 +14,7 @@ module.exports = (_, clean) => {
 	};
 
 	const isInlineUnique = column => {
-		return isUniqueKey(column) && !_.isEmpty(column.uniqueKeyOptions);
+		return isUniqueKey(column) && _.isEmpty(column.uniqueKeyOptions);
 	};	
 
 	const isPrimaryKey = column => {

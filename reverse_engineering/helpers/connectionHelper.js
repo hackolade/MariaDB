@@ -205,6 +205,10 @@ const createInstance = (connection, logger) => {
 		return result[0]?.['Create View'];
 	};
 
+	const query = (sql) => {
+		return connection.query(sql);
+	};
+
 	return {
 		getCount,
 		getRecords,
@@ -217,6 +221,7 @@ const createInstance = (connection, logger) => {
 		getColumns,
 		getIndexes,
 		showCreateView,
+		query,
 	};
 };
 
