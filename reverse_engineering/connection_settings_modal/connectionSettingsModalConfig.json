@@ -12,14 +12,14 @@
 			{
 				"inputLabel": "Host",
 				"inputKeyword": "host",
-				"description": "Specify host IP address or DNS name of Microsoft SQL server",
+				"description": "Specify host IP address or DNS name of MariaDB server",
 				"inputType": "text",
 				"regex": "([^\\s])"
 			},
 			{
 				"inputLabel": "Port",
 				"inputKeyword": "port",
-				"description": "Specify port number of Microsoft SQL server",
+				"description": "Specify port number of MariaDB server",
 				"inputType": "numeric",
 				"defaultValue": 3306
 			},

@@ -1,7 +1,7 @@
 {
     "name": "MariaDB",
-    "version": "0.1.4",
-    "versionDate": "2021-05-26",
+    "version": "0.1.5",
+    "versionDate": "2021-06-18",
     "author": "hackolade",
     "engines": {
         "hackolade": "4.3.18",
