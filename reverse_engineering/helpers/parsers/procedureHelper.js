@@ -1,6 +1,6 @@
 
 const isCreateOrReplace = (query) => {
-	return /^create\s+or\s+replace/i.test((query || '').trim());
+	return /^create\s+or\s+replace/i.test((String(query || '')).trim());
 };
 
 const getBodyAndParameters = (query) => {
@@ -73,8 +73,8 @@ const getContains = (characteristic) => {
 };
 
 const parseProcedure = (query) => {
-	const [noCharacteristicsQuery, characteristics] = findAndReplaceCharacteristics(query);
-	const { body, parameters } = getBodyAndParameters(noCharacteristicsQuery);
+	const [noCharacteristicsQuery, characteristics] = findAndReplaceCharacteristics(String(query));
+	const { body, parameters } = getBodyAndParameters(String(noCharacteristicsQuery));
 
 	return {
 		body,

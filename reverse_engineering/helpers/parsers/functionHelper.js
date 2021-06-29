@@ -6,7 +6,7 @@ const parseFunctionQuery = (query) => {
 		return {};
 	}
 
-	const result = query.match(parseRegexp);
+	const result = String(query).match(parseRegexp);
 	const {
 		orReplace,
 		definer,

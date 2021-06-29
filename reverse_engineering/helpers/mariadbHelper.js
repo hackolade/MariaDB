@@ -25,43 +25,59 @@ const parseDatabaseStatement = (statement) => {
 const parseFunctions = (functions) => {
 	return functions.map(f => {
 		const query = f.data[0]['Create Function'];
-		const func = functionHelper.parseFunctionQuery(query);
 
-		return {
-			name: f.meta['Name'],
-			functionDelimiter: (func.body || '').includes(';') ? '$$' : '',
-			functionOrReplace: func.orReplace,
-			functionAggregate: func.isAggregate,
-			functionIfNotExist: func.ifNotExists,
-			functionArguments: func.parameters,
-			functionDataType: func.returnType,
-			functionBody: func.body,
-			functionLanguage: 'SQL',
-			functionDeterministic: functionHelper.getDeterministic(func.characteristics),
-			functionContains: functionHelper.getContains(func.characteristics),
-			functionSqlSecurity: f.meta['Security_type'],
-			functionDescription: f.meta['Comment'],
-		};
+		try {
+			const func = functionHelper.parseFunctionQuery(String(query));
+	
+			return {
+				name: f.meta['Name'],
+				functionDelimiter: (func.body || '').includes(';') ? '$$' : '',
+				functionOrReplace: func.orReplace,
+				functionAggregate: func.isAggregate,
+				functionIfNotExist: func.ifNotExists,
+				functionArguments: func.parameters,
+				functionDataType: func.returnType,
+				functionBody: func.body,
+				functionLanguage: 'SQL',
+				functionDeterministic: functionHelper.getDeterministic(func.characteristics),
+				functionContains: functionHelper.getContains(func.characteristics),
+				functionSqlSecurity: f.meta['Security_type'],
+				functionDescription: f.meta['Comment'],
+			};
+		} catch (error) {
+			throw {
+				message: error.message + '.\nError parsing function: ' + query,
+				stack: error.stack,
+			};
+		}
 	});
 };
 
 const parseProcedures = (procedures) => {
 	return procedures.map(procedure => {
-		const meta = procedure.meta;
-		const data = procedureHelper.parseProcedure(procedure.data[0]['Create Procedure']);
-		
-		return {
-			name: meta['Name'],
-			delimiter: (data.body || '').includes(';') ? '$$' : '',
-			orReplace: data.orReplace,
-			inputArgs: data.parameters,
-			body: data.body,
-			language: 'SQL',
-			deterministic: data.deterministic,
-			contains: data.contains,
-			securityMode: meta['Security_type'],
-			comments: meta['Comment']
-		};
+		try {
+			const meta = procedure.meta;
+			const procValue = procedure.data[0]['Create Procedure'];
+			const data = procedureHelper.parseProcedure(String(procValue));
+			
+			return {
+				name: meta['Name'],
+				delimiter: (data.body || '').includes(';') ? '$$' : '',
+				orReplace: data.orReplace,
+				inputArgs: data.parameters,
+				body: data.body,
+				language: 'SQL',
+				deterministic: data.deterministic,
+				contains: data.contains,
+				securityMode: meta['Security_type'],
+				comments: meta['Comment']
+			};
+		} catch (error) {
+			throw {
+				message: error.message + '.\nError parsing procedure: ' + procedure.data[0]['Create Procedure'],
+				stack: error.stack,
+			};
+		}
 	});
 };
 
