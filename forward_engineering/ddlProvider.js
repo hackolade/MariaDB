@@ -195,7 +195,7 @@ module.exports = (baseProvider, options, app) => {
 			}
 
 			const allDeactivated = checkAllKeysDeactivated(index.indxKey || []);
-			const wholeStatementCommented = !isParentActivated || allDeactivated;
+			const wholeStatementCommented = index.isActivated === false || !isParentActivated || allDeactivated;
 			const indexType = index.indexType ? `${_.toUpper(index.indexType)} ` : '';
 			const ifNotExist = index.ifNotExist ? 'IF NOT EXISTS ' : '';
 			const name = wrap(index.indxName || '', '`', '`');
