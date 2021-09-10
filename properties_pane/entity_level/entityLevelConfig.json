@@ -1892,6 +1892,13 @@ making sure that you maintain a proper JSON format.
 						]
 					},
 					{
+						"propertyName": "Alternate key",
+						"propertyKeyword": "alternateKey",
+						"propertyTooltip": "",
+						"propertyType": "checkbox",
+						"setFieldPropertyBy": "compositeUniqueKey"
+					},
+					{
 						"propertyName": "Category",
 						"propertyKeyword": "indexCategory",
 						"propertyTooltip": "",
