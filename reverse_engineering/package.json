@@ -5,7 +5,7 @@
   "author": "Hackolade",
   "dependencies": {
     "mariadb": "^2.5.3",
-    "tunnel-ssh": "^4.1.4"
+    "tunnel-ssh": "github:hackolade/tunnel-ssh"
   },
   "installed": true
 }
