@@ -40,28 +40,16 @@
  * }
  */
  {
-    "modify": {
-        "field": [
-            {
-                "from": {
-                    "type": "char",
-                    "maxLength": {
-                        "type": "Condition",
-                        "value": "maxLength,length,>"
-                    }
-                },
-                "to": {
-                    "length": {
-                        "type": "Source",
-                        "path": "maxLength"
-                    }
-                }
-            }
-        ]
-    },
-    "delete": {
-		"field": {
-			"char": ["maxLength"]
-		}
-	}  
+	"modify": {
+		"field": [
+			{
+				"from": {
+					"compositeUniqueKey": true
+				},
+				"to": {
+					"primaryKey": false
+				}
+			}
+		]
+	}
 }
