@@ -1,4 +1,4 @@
-const mariadb = require('mariadb');
+const mysql = require('mysql');
 const fs = require('fs');
 const ssh = require('tunnel-ssh');
 
@@ -77,7 +77,7 @@ const createConnection = async (connectionInfo) => {
 		connectionInfo = info;
 	}
 
-	return await mariadb.createConnection({ 
+	return await mysql.createConnection({ 
 		host: connectionInfo.host,
 		user: connectionInfo.userName, 
 		password: connectionInfo.userPassword, 
@@ -92,6 +92,18 @@ const createConnection = async (connectionInfo) => {
 	});
 };
 
+const promisify = (f, context) => (...args) => {
+	return new Promise((resolve, reject) => {
+		return f.call(context, ...args, (error, results) => {
+			if (error) {
+				return reject(error);
+			} else {
+				return resolve(results);
+			}
+		});
+	});
+};
+
 const connect = async (connectionInfo) => {
 	if (connection) {
 		return connection;
@@ -102,27 +114,31 @@ const connect = async (connectionInfo) => {
 	return connection;
 };
 
-const getDatabases = async (connection, systemDatabases) => {
-	const databases = await connection.query('show databases;');
-
-	return databases.map(item => item.Database).filter(dbName => !systemDatabases.includes(dbName));
-};
-
-const getTables = async (connection, dbName) => {
-	const tables = await connection.query(`show full tables from \`${dbName}\`;`);
-
-	return tables;
-};
-
 const createInstance = (connection, logger) => {
+	const ping = async () => {
+		return await connection.ping();
+	};
+
+	const getDatabases = async (systemDatabases) => {
+		const databases = await query('show databases;');
+		
+		return databases.map(item => item.Database).filter(dbName => !systemDatabases.includes(dbName));
+	};
+	
+	const getTables = async (dbName) => {
+		const tables = await query(`show full tables from \`${dbName}\`;`);
+	
+		return tables;
+	};
+
 	const getCount = async (dbName, tableName) => {
-		const count = await connection.query(`SELECT COUNT(*) as count FROM \`${dbName}\`.\`${tableName}\`;`);
+		const count = await query(`SELECT COUNT(*) as count FROM \`${dbName}\`.\`${tableName}\`;`);
 
 		return Number(count[0]?.count || 0);
 	};
 	
 	const getRecords = async (dbName, tableName, limit) => {
-		const result = await connection.query({
+		const result = await query({
 			sql: `SELECT * FROM \`${dbName}\`.\`${tableName}\` LIMIT ${limit};`
 		});
 
@@ -130,23 +146,23 @@ const createInstance = (connection, logger) => {
 	};
 
 	const getVersion = async () => {
-		const version = await connection.query('select version() as version;');
+		const version = await query('select version() as version;');
 
 		return version[0].version;
 	};
 
 	const describeDatabase = async (dbName) => {
-		const data = await connection.query(`show create database \`${dbName}\`;`);
+		const data = await query(`show create database \`${dbName}\`;`);
 
 		return data[0]['Create Database'];
 	}; 
 
 	const getFunctions = async (dbName) => {
-		const functions = await connection.query(`show function status WHERE Db = '${dbName}'`);
+		const functions = await query(`show function status WHERE Db = '${dbName}'`);
 
 		return Promise.all(
 			functions.map(
-				f => connection.query(`show create function \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
+				f => query(`show create function \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
 					meta: f,
 					data: functionCode,
 				}))
@@ -155,11 +171,11 @@ const createInstance = (connection, logger) => {
 	};
 
 	const getProcedures = async (dbName) => {
-		const functions = await connection.query(`show procedure status WHERE Db = '${dbName}'`);
+		const functions = await query(`show procedure status WHERE Db = '${dbName}'`);
 
 		return Promise.all(
 			functions.map(
-				f => connection.query(`show create procedure \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
+				f => query(`show create procedure \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
 					meta: f,
 					data: functionCode,
 				}))
@@ -168,14 +184,14 @@ const createInstance = (connection, logger) => {
 	};
 
 	const showCreateTable = async (dbName, tableName) => {
-		const result = await connection.query(`show create table \`${dbName}\`.\`${tableName}\`;`);
+		const result = await query(`show create table \`${dbName}\`.\`${tableName}\`;`);
 
 		return result[0]?.['Create Table'];
 	};
 
 	const getConstraints = async (dbName, tableName) => {
 		try {
-			const result = await connection.query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
+			const result = await query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
 	
 			return result;
 		} catch (error) {
@@ -188,25 +204,31 @@ const createInstance = (connection, logger) => {
 	};
 
 	const getColumns = async (dbName, tableName) => {
-		const result = await connection.query(`show fields from \`${dbName}\`.\`${tableName}\`;`);
+		const result = await query(`show fields from \`${dbName}\`.\`${tableName}\`;`);
 
 		return result;
 	};
 
 	const getIndexes = async (dbName, tableName) => {
-		const result = await connection.query(`show index from \`${tableName}\` from \`${dbName}\`;`);
+		const result = await query(`show index from \`${tableName}\` from \`${dbName}\`;`);
 
 		return result;
 	};
 
 	const showCreateView = async (dbName, viewName) => {
-		const result = await connection.query(`show create view \`${dbName}\`.\`${viewName}\`;`);
+		const result = await query(`show create view \`${dbName}\`.\`${viewName}\`;`);
 
 		return result[0]?.['Create View'];
 	};
 
 	const query = (sql) => {
-		return connection.query(sql);
+		return promisify(connection.query, connection)(sql);
+	};
+
+	const serverVersion = async () => {
+		const result = await query('select VERSION() as version;');
+		
+		return result[0]?.version || '';
 	};
 
 	return {
@@ -222,6 +244,10 @@ const createInstance = (connection, logger) => {
 		getIndexes,
 		showCreateView,
 		query,
+		serverVersion,
+		ping,
+		getDatabases,
+		getTables,
 	};
 };
 
@@ -239,8 +265,6 @@ const close = () => {
 
 module.exports = {
 	connect,
-	getDatabases,
-	getTables,
 	createInstance,
 	close,
 };
