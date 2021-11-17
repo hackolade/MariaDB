@@ -34,7 +34,9 @@ module.exports = {
 			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
 
 			const connection = await this.connect(connectionInfo);
-			await connection.ping();
+			const instance = connectionHelper.createInstance(connection, logger);
+
+			await instance.ping();
 
 			log.info('Connected successfully');
 
@@ -62,12 +64,13 @@ module.exports = {
 			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema', 'mysql', 'performance_schema'];
 
 			const connection = await this.connect(connectionInfo);
-			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await connectionHelper.getDatabases(connection, systemDatabases);
+			const instance = connectionHelper.createInstance(connection, logger);
+			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await instance.getDatabases(systemDatabases);
 			
 			const collections = await databases.reduce(async (next, dbName) => {
 				const result = await next;
 				try {
-					const entities = await connectionHelper.getTables(connection, dbName);
+					const entities = await instance.getTables(dbName);
 					const dbCollections = getDbCollectionNames(entities, dbName, connectionInfo.includeSystemCollection);
 
 					return result.concat({
@@ -112,9 +115,9 @@ module.exports = {
 			const collections = data.collectionData.collections;
 			const dataBaseNames = data.collectionData.dataBaseNames;
 			const connection = await this.connect(data);
-			const instance = await connectionHelper.createInstance(connection, logger); 
+			const instance = await connectionHelper.createInstance(connection, logger);
 
-			log.info('MariaDB version: ' + connection.serverVersion());
+			log.info('MariaDB version: ' + await instance.serverVersion());
 			log.progress('Start reverse engineering ...');			
 
 			const result = await async.mapSeries(dataBaseNames, async (dbName) => {
