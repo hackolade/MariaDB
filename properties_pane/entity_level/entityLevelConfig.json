@@ -1376,8 +1376,9 @@ making sure that you maintain a proper JSON format.
 						"propertyKeyword": "PACK_KEYS",
 						"propertyTooltip": "Can be used to determine whether the indexes will be compressed. Set it to 1 to compress all keys. With a value of 0, compression will not be used. With the DEFAULT value, only long strings will be compressed. Uncompressed keys are faster.",
 						"propertyType": "select",
-						"defaultValue": "Default",
+						"defaultValue": "",
 						"options": [
+							"",
 							"Default",
 							"0",
 							"1"
