@@ -14,20 +14,21 @@ module.exports = (baseProvider, options, app) => {
 	} = app.utils.general;
 	const assignTemplates = app.utils.assignTemplates;
 	const _ = app.require('lodash');
-	const { decorateDefault, decorateType, canBeNational, getSign } = require('./helpers/columnDefinitionHelper')(_, wrap);
-	const { getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics } = require('./helpers/general')(_, wrap);
-	const {
-		generateConstraintsString,
-		foreignKeysToString,
-		foreignActiveKeysToString,
-		createKeyConstraint,
-	} = require('./helpers/constraintsHelper')({
+	const { decorateDefault, decorateType, canBeNational, getSign } = require('./helpers/columnDefinitionHelper')(
 		_,
-		commentIfDeactivated,
-		checkAllKeysDeactivated,
-		divideIntoActivatedAndDeactivated,
-		assignTemplates,
-	});
+		wrap,
+	);
+	const { getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes } =
+		require('./helpers/general')(_, wrap);
+	const { generateConstraintsString, foreignKeysToString, foreignActiveKeysToString, createKeyConstraint } =
+		require('./helpers/constraintsHelper')({
+			_,
+			commentIfDeactivated,
+			checkAllKeysDeactivated,
+			divideIntoActivatedAndDeactivated,
+			assignTemplates,
+			escapeQuotes,
+		});
 	const keyHelper = require('./helpers/keyHelper')(_, clean);
 
 	return {
@@ -35,7 +36,7 @@ module.exports = (baseProvider, options, app) => {
 			let dbOptions = '';
 			dbOptions += characterSet ? tab(`\nCHARACTER SET = '${characterSet}'`) : '';
 			dbOptions += collation ? tab(`\nCOLLATE = '${collation}'`) : '';
-			dbOptions += comments ? tab(`\nCOMMENT = '${comments}'`) : '';
+			dbOptions += comments ? tab(`\nCOMMENT = '${escapeQuotes(comments)}'`) : '';
 
 			const databaseStatement = assignTemplates(templates.createDatabase, {
 				name: databaseName,
@@ -154,9 +155,12 @@ module.exports = (baseProvider, options, app) => {
 			const autoIncrement = columnDefinition.autoIncrement ? ' AUTO_INCREMENT' : '';
 			const invisible = columnDefinition.invisible ? ' INVISIBLE' : '';
 			const national = columnDefinition.national && canBeNational(type) ? 'NATIONAL ' : '';
-			const comment = columnDefinition.comment ? ` COMMENT='${columnDefinition.comment}'` : '';
+			const comment = columnDefinition.comment ? ` COMMENT='${escapeQuotes(columnDefinition.comment)}'` : '';
 			const charset = type !== 'JSON' && columnDefinition.charset ? ` CHARSET ${columnDefinition.charset}` : '';
-			const collate = type !== 'JSON' && columnDefinition.charset && columnDefinition.collation ? ` COLLATE ${columnDefinition.collation}` : '';
+			const collate =
+				type !== 'JSON' && columnDefinition.charset && columnDefinition.collation
+					? ` COLLATE ${columnDefinition.collation}`
+					: '';
 			const defaultValue = !_.isUndefined(columnDefinition.default)
 				? ' DEFAULT ' + decorateDefault(type, columnDefinition.default)
 				: '';
@@ -223,7 +227,7 @@ module.exports = (baseProvider, options, app) => {
 			}
 
 			if (index.indexComment) {
-				indexOptions.push(`COMMENT '${index.indexComment}'`);
+				indexOptions.push(`COMMENT '${escapeQuotes(index.indexComment)}'`);
 			}
 
 			if (index.indexLock) {
@@ -330,7 +334,8 @@ module.exports = (baseProvider, options, app) => {
 						keys: columnsAsString,
 				  });
 
-			const algorithm = viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
+			const algorithm =
+				viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
 
 			return commentIfDeactivated(
 				assignTemplates(templates.createView, {
@@ -374,7 +379,7 @@ module.exports = (baseProvider, options, app) => {
 				unique: keyHelper.isInlineUnique(jsonSchema),
 				nullable: columnDefinition.nullable,
 				default: columnDefinition.default,
-				comment: columnDefinition.description,
+				comment: columnDefinition.description || jsonSchema.description,
 				isActivated: columnDefinition.isActivated,
 				length: columnDefinition.enum,
 				scale: columnDefinition.scale,

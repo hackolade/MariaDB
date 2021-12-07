@@ -5,6 +5,7 @@ module.exports = ({
 	checkAllKeysDeactivated,
 	divideIntoActivatedAndDeactivated,
 	assignTemplates,
+	escapeQuotes
 }) => {
 	const generateConstraintsString = (dividedConstraints, isParentActivated) => {
 		const deactivatedItemsAsString = commentIfDeactivated((dividedConstraints?.deactivatedItems || []).join(',\n\t'), {
@@ -56,7 +57,7 @@ module.exports = ({
 				: ' (' + keyData.columns.map(columnMapToString).join(', ') + ')';
 		const using = keyData.category ? ` USING ${keyData.category}` : '';
 		const ignore = keyData.ignore ? ` IGNORED` : '';
-		const comment = keyData.comment ? ` COMMENT '${keyData.comment}'` : '';
+		const comment = keyData.comment ? ` COMMENT '${escapeQuotes(keyData.comment)}'` : '';
 		const blockSize = keyData.blockSize ? ` KEY_BLOCK_SIZE=${keyData.blockSize}` : '';
 	
 		return {
