@@ -296,7 +296,7 @@ module.exports = (_, wrap) => {
 	};
 
 	const escapeQuotes = (str = '') => {
-		return str.replace(/(')/gi, '\\$1');
+		return str.replace(/(')/gi, '\'$1').replace(/\n/gi, '\\n');
 	};
 	
 	return {
@@ -305,5 +305,6 @@ module.exports = (_, wrap) => {
 		getPartitions,
 		getViewData,
 		getCharacteristics,
+		escapeQuotes
 	};
 };
