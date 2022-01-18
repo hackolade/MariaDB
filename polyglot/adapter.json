@@ -55,9 +55,9 @@
 					"childType": "boolean"
 				},
 				"to": {
-                    "type": "number",
-                    "childType": "integer",
-                    "mode": "tinyint",
+					"type": "number",
+					"childType": "integer",
+					"mode": "tinyint",
 					"precision": 1
 				}
 			}
