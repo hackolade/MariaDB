@@ -35,7 +35,8 @@
             "relationships": {
                 "compositeRelationships": true
             },
-            "FEScriptCommentsSupported": true
+            "FEScriptCommentsSupported": true,
+            "enableFetchSystemEntitiesCheckbox": true
         }
     },
     "description": "Hackolade plugin for MariaDB",
