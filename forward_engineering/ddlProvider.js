@@ -3,6 +3,7 @@ const types = require('./configs/types');
 const templates = require('./configs/templates');
 
 module.exports = (baseProvider, options, app) => {
+	const _ = app.require('lodash');
 	const {
 		tab,
 		commentIfDeactivated,
@@ -11,9 +12,8 @@ module.exports = (baseProvider, options, app) => {
 		hasType,
 		wrap,
 		clean,
-	} = app.utils.general;
-	const assignTemplates = app.utils.assignTemplates;
-	const _ = app.require('lodash');
+	} = app.require('@hackolade/ddl-fe-utils').general;
+	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
 	const { decorateDefault, decorateType, canBeNational, getSign } = require('./helpers/columnDefinitionHelper')(
 		_,
 		wrap,
@@ -32,7 +32,17 @@ module.exports = (baseProvider, options, app) => {
 	const keyHelper = require('./helpers/keyHelper')(_, clean);
 
 	return {
-		createDatabase({ databaseName, orReplace, ifNotExist, collation, characterSet, comments, udfs, procedures }) {
+		createDatabase({
+			databaseName,
+			orReplace,
+			ifNotExist,
+			collation,
+			characterSet,
+			comments,
+			udfs,
+			procedures,
+			useDb = true,
+		}) {
 			let dbOptions = '';
 			dbOptions += characterSet ? tab(`\nCHARACTER SET = '${characterSet}'`) : '';
 			dbOptions += collation ? tab(`\nCOLLATE = '${collation}'`) : '';
@@ -43,46 +53,10 @@ module.exports = (baseProvider, options, app) => {
 				orReplace: orReplace && !ifNotExist ? ' OR REPLACE' : '',
 				ifNotExist: ifNotExist ? ' IF NOT EXISTS' : '',
 				dbOptions: dbOptions,
+				usDb: useDb ? `USE \`${databaseName}\`;\n` : '',
 			});
-			const udfStatements = udfs.map(udf => {
-				const characteristics = getCharacteristics(udf.characteristics);
-				let startDelimiter = udf.delimiter ? `DELIMITER ${udf.delimiter}\n` : '';
-				let endDelimiter = udf.delimiter ? `DELIMITER ;\n` : '';
-
-				return (
-					startDelimiter +
-					assignTemplates(templates.createFunction, {
-						name: getTableName(udf.name, databaseName),
-						orReplace: udf.orReplace ? 'OR REPLACE ' : '',
-						ifNotExist: udf.ifNotExist ? 'IF NOT EXISTS ' : '',
-						aggregate: udf.aggregate ? 'AGGREGATE ' : '',
-						characteristics: characteristics.join('\n\t'),
-						type: udf.type,
-						parameters: udf.parameters,
-						body: udf.body,
-						delimiter: udf.delimiter || ';',
-					}) +
-					endDelimiter
-				);
-			});
-			const procStatements = procedures.map(procedure => {
-				const characteristics = getCharacteristics(procedure.characteristics);
-				let startDelimiter = procedure.delimiter ? `DELIMITER ${procedure.delimiter}\n` : '';
-				let endDelimiter = procedure.delimiter ? `DELIMITER ;\n` : '';
-
-				return (
-					startDelimiter +
-					assignTemplates(templates.createProcedure, {
-						name: getTableName(procedure.name, databaseName),
-						orReplace: procedure.orReplace ? 'OR REPLACE ' : '',
-						parameters: procedure.parameters,
-						characteristics: characteristics.join('\n\t'),
-						body: procedure.body,
-						delimiter: procedure.delimiter || ';',
-					}) +
-					endDelimiter
-				);
-			});
+			const udfStatements = udfs.map(udf => this.createUdf(databaseName, udf));
+			const procStatements = procedures.map(procedure => this.createProcedure(databaseName, procedure));
 
 			return [databaseStatement, ...udfStatements, ...procStatements].join('\n');
 		},
@@ -311,28 +285,7 @@ module.exports = (baseProvider, options, app) => {
 		},
 
 		createView(viewData, dbData, isActivated) {
-			const allDeactivated = checkAllKeysDeactivated(viewData.keys || []);
-			const deactivatedWholeStatement = allDeactivated || !isActivated;
-			const { columns, tables } = getViewData(viewData.keys, dbData);
-			let columnsAsString = columns.map(column => column.statement).join(',\n\t\t');
-
-			if (!deactivatedWholeStatement) {
-				const dividedColumns = divideIntoActivatedAndDeactivated(columns, column => column.statement);
-				const deactivatedColumnsString = dividedColumns.deactivatedItems.length
-					? commentIfDeactivated(dividedColumns.deactivatedItems.join(',\n\t\t'), {
-							isActivated: false,
-							isPartOfLine: true,
-					  })
-					: '';
-				columnsAsString = dividedColumns.activatedItems.join(',\n\t\t') + deactivatedColumnsString;
-			}
-
-			const selectStatement = _.trim(viewData.selectStatement)
-				? _.trim(tab(viewData.selectStatement))
-				: assignTemplates(templates.viewSelectStatement, {
-						tableName: tables.join(', '),
-						keys: columnsAsString,
-				  });
+			const { deactivatedWholeStatement, selectStatement } = this.viewSelectStatement(viewData, isActivated);
 
 			const algorithm =
 				viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
@@ -422,37 +375,8 @@ module.exports = (baseProvider, options, app) => {
 				characterSet: containerData.characterSet,
 				collation: containerData.collation,
 				comments: containerData.description,
-				udfs: (data?.udfs || []).map(udf => ({
-					name: udf.name,
-					delimiter: udf.functionDelimiter,
-					orReplace: udf.functionOrReplace,
-					aggregate: udf.functionAggregate,
-					ifNotExist: udf.functionIfNotExist,
-					parameters: udf.functionArguments,
-					type: udf.functionReturnType,
-					characteristics: {
-						sqlSecurity: udf.functionSqlSecurity,
-						language: udf.functionLanguage,
-						contains: udf.functionContains,
-						deterministic: udf.functionDeterministic,
-						comment: udf.functionDescription,
-					},
-					body: udf.functionBody,
-				})),
-				procedures: (data?.procedures || []).map(procedure => ({
-					orReplace: procedure.orReplace,
-					delimiter: procedure.delimiter,
-					name: procedure.name,
-					parameters: procedure.inputArgs,
-					body: procedure.body,
-					characteristics: {
-						comment: procedure.comments,
-						contains: procedure.contains,
-						language: procedure.language,
-						deterministic: procedure.deterministic,
-						sqlSecurity: procedure.securityMode,
-					},
-				})),
+				udfs: (data?.udfs || []).map(this.hydrateUdf),
+				procedures: (data?.procedures || []).map(this.hydrateProcedure),
 			};
 		},
 
@@ -500,6 +424,118 @@ module.exports = (baseProvider, options, app) => {
 
 		commentIfDeactivated(statement, data, isPartOfLine) {
 			return statement;
+		},
+
+		hydrateUdf(udf) {
+			return {
+				name: udf.name,
+				delimiter: udf.functionDelimiter,
+				orReplace: udf.functionOrReplace,
+				aggregate: udf.functionAggregate,
+				ifNotExist: udf.functionIfNotExist,
+				parameters: udf.functionArguments,
+				type: udf.functionReturnType,
+				characteristics: {
+					sqlSecurity: udf.functionSqlSecurity,
+					language: udf.functionLanguage,
+					contains: udf.functionContains,
+					deterministic: udf.functionDeterministic,
+					comment: udf.functionDescription,
+				},
+				body: udf.functionBody,
+			};
+		},
+
+		hydrateProcedure(procedure) {
+			return {
+				orReplace: procedure.orReplace,
+				delimiter: procedure.delimiter,
+				name: procedure.name,
+				parameters: procedure.inputArgs,
+				body: procedure.body,
+				characteristics: {
+					comment: procedure.comments,
+					contains: procedure.contains,
+					language: procedure.language,
+					deterministic: procedure.deterministic,
+					sqlSecurity: procedure.securityMode,
+				},
+			};
+		},
+
+		createUdf(databaseName, udf) {
+			const characteristics = getCharacteristics(udf.characteristics);
+			let startDelimiter = udf.delimiter ? `DELIMITER ${udf.delimiter}\n` : '';
+			let endDelimiter = udf.delimiter ? `DELIMITER ;\n` : '';
+
+			return (
+				startDelimiter +
+				assignTemplates(templates.createFunction, {
+					name: getTableName(udf.name, databaseName),
+					orReplace: udf.orReplace ? 'OR REPLACE ' : '',
+					ifNotExist: udf.ifNotExist ? 'IF NOT EXISTS ' : '',
+					aggregate: udf.aggregate ? 'AGGREGATE ' : '',
+					characteristics: characteristics.join('\n\t'),
+					type: udf.type,
+					parameters: udf.parameters,
+					body: udf.body,
+					delimiter: udf.delimiter || ';',
+				}) +
+				endDelimiter
+			);
+		},
+
+		createProcedure(databaseName, procedure) {
+			const characteristics = getCharacteristics(procedure.characteristics);
+			let startDelimiter = procedure.delimiter ? `DELIMITER ${procedure.delimiter}\n` : '';
+			let endDelimiter = procedure.delimiter ? `DELIMITER ;\n` : '';
+
+			return (
+				startDelimiter +
+				assignTemplates(templates.createProcedure, {
+					name: getTableName(procedure.name, databaseName),
+					orReplace: procedure.orReplace ? 'OR REPLACE ' : '',
+					parameters: procedure.parameters,
+					characteristics: characteristics.join('\n\t'),
+					body: procedure.body,
+					delimiter: procedure.delimiter || ';',
+				}) +
+				endDelimiter
+			);
+		},
+
+		dropIndex(tableName, dbData, index) {
+			const table = getTableName(tableName, dbData.databaseName);
+			const indexName = index.name;
+
+			return `ALTER TABLE ${table} DROP INDEX IF EXISTS \`${indexName}\`;`;
+		},
+
+		viewSelectStatement(viewData, isActivated = true) {
+			const allDeactivated = checkAllKeysDeactivated(viewData.keys || []);
+			const deactivatedWholeStatement = allDeactivated || !isActivated;
+			const { columns, tables } = getViewData(viewData.keys);
+			let columnsAsString = columns.map(column => column.statement).join(',\n\t\t');
+
+			if (!deactivatedWholeStatement) {
+				const dividedColumns = divideIntoActivatedAndDeactivated(columns, column => column.statement);
+				const deactivatedColumnsString = dividedColumns.deactivatedItems.length
+					? commentIfDeactivated(dividedColumns.deactivatedItems.join(',\n\t\t'), {
+							isActivated: false,
+							isPartOfLine: true,
+					  })
+					: '';
+				columnsAsString = dividedColumns.activatedItems.join(',\n\t\t') + deactivatedColumnsString;
+			}
+
+			const selectStatement = _.trim(viewData.selectStatement)
+				? _.trim(tab(viewData.selectStatement))
+				: assignTemplates(templates.viewSelectStatement, {
+						tableName: tables.join(', '),
+						keys: columnsAsString,
+				  });
+
+			return { deactivatedWholeStatement, selectStatement };
 		},
 	};
 };
