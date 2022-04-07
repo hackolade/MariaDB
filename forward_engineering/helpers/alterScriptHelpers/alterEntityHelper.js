@@ -1,5 +1,3 @@
-const { checkFieldPropertiesChanged, modifyGroupItems, getCompMod } = require('./common');
-
 const getAddCollectionScript = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
@@ -47,6 +45,7 @@ const getDeleteCollectionScript = app => collection => {
 
 const getModifyCollectionScript = app => collection => {
 	const _ = app.require('lodash');
+	const { modifyGroupItems, getCompMod } = require('./common')(_);
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 	const { generateIdToNameHashTable, generateIdToActivatedHashTable } = app.require('@hackolade/ddl-fe-utils');
 
@@ -71,12 +70,12 @@ const getModifyCollectionScript = app => collection => {
 		drop: (tableName, index) => ddlProvider.dropIndex(tableName, dbData, index),
 	});
 
-	const modifyTableOptionsScript = modifyTableOptions(jsonData, dbData);
+	const modifyTableOptionsScript = modifyTableOptions(jsonData, dbData, getCompMod);
 
 	return [].concat(modifyTableOptionsScript).concat(indexesScripts).join('\n\n');
 };
 
-const modifyTableOptions = (tableData, dbData) => {
+const modifyTableOptions = (tableData, dbData, getCompMod) => {
 	const { getTableName } = require('../general')({});
 	const compMod = getCompMod(tableData);
 	const isDefaultModified = compMod.tableOptions?.new?.defaultCharSet !== compMod.tableOptions?.old?.defaultCharSet;
@@ -140,6 +139,7 @@ const getDeleteColumnScript = app => collection => {
 
 const getModifyColumnScript = app => collection => {
 	const _ = app.require('lodash');
+	const { checkFieldPropertiesChanged } = require('./common')(_);
 	const { getTableName } = require('../general')({ _ });
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
 	const ddlProvider = require('../../ddlProvider')(null, null, app);

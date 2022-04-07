@@ -1,6 +1,6 @@
 module.exports = app => {
 	const _ = app.require('lodash');
-	const { getCompMod, modifyGroupItems } = require('./common');
+	const { getCompMod, modifyGroupItems } = require('./common')(_);
 	const { getTableName } = require('../general')({ _ });
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 	const { getDbData } = app.require('@hackolade/ddl-fe-utils').general;

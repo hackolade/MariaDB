@@ -1,5 +1,4 @@
 const templates = require('../../configs/templates');
-const { checkCompModEqual } = require('./common');
 
 const getAddViewScript = app => view => {
 	const _ = app.require('lodash');
@@ -31,6 +30,7 @@ const getDeleteViewScript = app => view => {
 
 const getModifiedViewScript = app => view => {
 	const _ = app.require('lodash');
+	const { checkCompModEqual } = require('./common')(_);
 	const { commentIfDeactivated } = app.require('@hackolade/ddl-fe-utils').general;
 	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
 	const { getTableName } = require('../general')({ _ });
@@ -87,8 +87,8 @@ const getKeys = (viewSchema, collectionRefsDefinitionsMap, ddlProvider, app) => 
 		}
 
 		const entityName =
-			_.get(definition.collection, '[0].code', {}) ||
-			_.get(definition.collection, '[0].collectionName', {}) ||
+			_.get(definition.collection, '[0].code', '') ||
+			_.get(definition.collection, '[0].collectionName', '') ||
 			'';
 		const dbName = _.get(definition.bucket, '[0].code') || _.get(definition.bucket, '[0].name', '');
 		const name = definition.name;
