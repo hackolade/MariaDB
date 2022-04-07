@@ -53,7 +53,7 @@ module.exports = (baseProvider, options, app) => {
 				orReplace: orReplace && !ifNotExist ? ' OR REPLACE' : '',
 				ifNotExist: ifNotExist ? ' IF NOT EXISTS' : '',
 				dbOptions: dbOptions,
-				usDb: useDb ? `USE \`${databaseName}\`;\n` : '',
+				useDb: useDb ? `USE \`${databaseName}\`;\n` : '',
 			});
 			const udfStatements = udfs.map(udf => this.createUdf(databaseName, udf));
 			const procStatements = procedures.map(procedure => this.createProcedure(databaseName, procedure));
