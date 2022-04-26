@@ -332,7 +332,7 @@ module.exports = (baseProvider, options, app) => {
 				unique: keyHelper.isInlineUnique(jsonSchema),
 				nullable: columnDefinition.nullable,
 				default: columnDefinition.default,
-				comment: columnDefinition.description || jsonSchema.description,
+				comment: columnDefinition.description || jsonSchema.refDescription || jsonSchema.description,
 				isActivated: columnDefinition.isActivated,
 				length: columnDefinition.enum,
 				scale: columnDefinition.scale,
