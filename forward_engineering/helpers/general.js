@@ -111,6 +111,10 @@ module.exports = (_, wrap) => {
 		}
 	};
 
+	const encodeStringLiteral = (str = '') => {
+		return str.replace(/(?<!\\)('|"|`)/gi, '\\$1').replace(/\n/gi, '\\n');
+	}
+
 	const getTableOptions = (options = {}) => {
 		const tableOptions = [];
 		const engine = options.ENGINE;
@@ -129,7 +133,7 @@ module.exports = (_, wrap) => {
 		}
 
 		if (options.description) {
-			tableOptions.push(`COMMENT = '${options.description}'`);
+			tableOptions.push(`COMMENT = '${encodeStringLiteral(options.description)}'`);
 		}
 
 		const optionKeywords = OPTIONS_BY_ENGINE[engine] || ['KEY_BLOCK_SIZE', 'PACK_KEYS', 'WITH_SYSTEM_VERSIONING'];
