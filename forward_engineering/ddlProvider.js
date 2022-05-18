@@ -392,7 +392,7 @@ module.exports = (baseProvider, options, app) => {
 				ifNotExist: !detailsTab.orReplace && detailsTab.ifNotExist,
 				likeTableName: likeTable?.code || likeTable?.collectionName,
 				selectStatement: _.trim(detailsTab.selectStatement),
-				options: detailsTab.tableOptions,
+				options: { ...detailsTab.tableOptions, description: detailsTab.description },
 				partitioning: detailsTab.partitioning,
 			};
 		},
