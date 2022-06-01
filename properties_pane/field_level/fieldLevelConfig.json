@@ -1182,9 +1182,71 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						},
+						{
+							"tooltip": "Remove the existing composite primary key definition prior to unlock the possibility to mark this single column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"tooltip": "Remove the existing single column primary key definition prior to unlock the possibility to mark this column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "primaryKey",
+								"value": true
+							}
+						}
+					]
+				},
 				"dependency": {
-					"key": "compositePrimaryKey",
-					"value": true
+					"type": "or",
+					"values": [
+						{
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"value": {
+								"type": "and",
+								"values": [
+									{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				},
 				"disabled": true
 			},
@@ -1197,24 +1259,69 @@ making sure that you maintain a proper JSON format.
 					"type": "and",
 					"values": [
 						{
-							"type": "or",
+							"type": "not",
+							"values": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"type": "not",
 							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
+								"level": "siblings",
+								"value": {
+									"type": "and",
+									"values": [{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}]
+								}
 							}]
 						},
 						{
-							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositePrimaryKey",
+											"value": false
+										},
+										{
+											"key": "compositePrimaryKey",
+											"exist": false
+										}
+									]
+								},
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositeUniqueKey",
+											"value": false
+										},
+										{
+											"key": "compositeUniqueKey",
+											"exist": false
+										}
+									]
+								}
+							]
 						}
 					]
 				}
@@ -1624,9 +1731,71 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						},
+						{
+							"tooltip": "Remove the existing composite primary key definition prior to unlock the possibility to mark this single column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"tooltip": "Remove the existing single column primary key definition prior to unlock the possibility to mark this column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "primaryKey",
+								"value": true
+							}
+						}
+					]
+				},
 				"dependency": {
-					"key": "compositePrimaryKey",
-					"value": true
+					"type": "or",
+					"values": [
+						{
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"value": {
+								"type": "and",
+								"values": [
+									{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				},
 				"disabled": true
 			},
@@ -1639,24 +1808,69 @@ making sure that you maintain a proper JSON format.
 					"type": "and",
 					"values": [
 						{
-							"type": "or",
+							"type": "not",
+							"values": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"type": "not",
 							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
+								"level": "siblings",
+								"value": {
+									"type": "and",
+									"values": [{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}]
+								}
 							}]
 						},
 						{
-							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositePrimaryKey",
+											"value": false
+										},
+										{
+											"key": "compositePrimaryKey",
+											"exist": false
+										}
+									]
+								},
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositeUniqueKey",
+											"value": false
+										},
+										{
+											"key": "compositeUniqueKey",
+											"exist": false
+										}
+									]
+								}
+							]
 						}
 					]
 				}
@@ -2105,9 +2319,71 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						},
+						{
+							"tooltip": "Remove the existing composite primary key definition prior to unlock the possibility to mark this single column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"tooltip": "Remove the existing single column primary key definition prior to unlock the possibility to mark this column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "primaryKey",
+								"value": true
+							}
+						}
+					]
+				},
 				"dependency": {
-					"key": "compositePrimaryKey",
-					"value": true
+					"type": "or",
+					"values": [
+						{
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"value": {
+								"type": "and",
+								"values": [
+									{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				},
 				"disabled": true
 			},
@@ -2120,24 +2396,69 @@ making sure that you maintain a proper JSON format.
 					"type": "and",
 					"values": [
 						{
-							"type": "or",
+							"type": "not",
+							"values": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"type": "not",
 							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
+								"level": "siblings",
+								"value": {
+									"type": "and",
+									"values": [{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}]
+								}
 							}]
 						},
 						{
-							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositePrimaryKey",
+											"value": false
+										},
+										{
+											"key": "compositePrimaryKey",
+											"exist": false
+										}
+									]
+								},
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositeUniqueKey",
+											"value": false
+										},
+										{
+											"key": "compositeUniqueKey",
+											"exist": false
+										}
+									]
+								}
+							]
 						}
 					]
 				}
@@ -2465,9 +2786,71 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						},
+						{
+							"tooltip": "Remove the existing composite primary key definition prior to unlock the possibility to mark this single column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"tooltip": "Remove the existing single column primary key definition prior to unlock the possibility to mark this column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "primaryKey",
+								"value": true
+							}
+						}
+					]
+				},
 				"dependency": {
-					"key": "compositePrimaryKey",
-					"value": true
+					"type": "or",
+					"values": [
+						{
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"value": {
+								"type": "and",
+								"values": [
+									{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				},
 				"disabled": true
 			},
@@ -2480,24 +2863,69 @@ making sure that you maintain a proper JSON format.
 					"type": "and",
 					"values": [
 						{
-							"type": "or",
+							"type": "not",
+							"values": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"type": "not",
 							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
+								"level": "siblings",
+								"value": {
+									"type": "and",
+									"values": [{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}]
+								}
 							}]
 						},
 						{
-							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositePrimaryKey",
+											"value": false
+										},
+										{
+											"key": "compositePrimaryKey",
+											"exist": false
+										}
+									]
+								},
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositeUniqueKey",
+											"value": false
+										},
+										{
+											"key": "compositeUniqueKey",
+											"exist": false
+										}
+									]
+								}
+							]
 						}
 					]
 				}
@@ -2833,6 +3261,17 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						}
+					]
+				},
 				"dependency": {
 					"key": "compositePrimaryKey",
 					"value": true
@@ -2878,6 +3317,17 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						}
+					]
+				},
 				"dependency": {
 					"key": "compositePrimaryKey",
 					"value": true
@@ -2923,9 +3373,71 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Primary key",
 				"propertyKeyword": "compositePrimaryKey",
 				"propertyType": "checkbox",
+				"propertyTooltip": {
+					"disabled": [
+						{
+							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
+							"dependency": {
+								"key": "compositePrimaryKey",
+								"value": true 
+							}
+						},
+						{
+							"tooltip": "Remove the existing composite primary key definition prior to unlock the possibility to mark this single column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"tooltip": "Remove the existing single column primary key definition prior to unlock the possibility to mark this column as the new primary key for this table",
+							"dependency": {
+								"level": "siblings",
+								"key": "primaryKey",
+								"value": true
+							}
+						}
+					]
+				},
 				"dependency": {
-					"key": "compositePrimaryKey",
-					"value": true
+					"type": "or",
+					"values": [
+						{
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"key": "compositePrimaryKey",
+							"value": true
+						},
+						{
+							"level": "siblings",
+							"value": {
+								"type": "and",
+								"values": [
+									{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}
+								]
+							}
+						}
+					]
 				},
 				"disabled": true
 			},
@@ -2938,24 +3450,69 @@ making sure that you maintain a proper JSON format.
 					"type": "and",
 					"values": [
 						{
-							"type": "or",
+							"type": "not",
+							"values": {
+								"level": "siblings",
+								"key": "compositePrimaryKey",
+								"value": true
+							}
+						},
+						{
+							"type": "not",
 							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
+								"level": "siblings",
+								"value": {
+									"type": "and",
+									"values": [{
+										"key": "primaryKey",
+										"value": true
+									},
+									{
+										"type": "or",
+										"values": [
+											{
+												"key": "compositeUniqueKey",
+												"value": false
+											},
+											{
+												"key": "compositeUniqueKey",
+												"exist": false
+											}
+										]
+									}]
+								}
 							}]
 						},
 						{
-							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"type": "and",
+							"values": [
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositePrimaryKey",
+											"value": false
+										},
+										{
+											"key": "compositePrimaryKey",
+											"exist": false
+										}
+									]
+								},
+								{
+									"type": "or",
+									"values": [
+										{
+											"key": "compositeUniqueKey",
+											"value": false
+										},
+										{
+											"key": "compositeUniqueKey",
+											"exist": false
+										}
+									]
+								}
+							]
 						}
 					]
 				}
