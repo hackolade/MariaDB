@@ -39,16 +39,18 @@
  * 		},
  * }
  */
- {
+{
 	"modify": {
 		"entity": [
 			[
 				"filterGroupPropertyByPath",
-                ["Indxs"],
-                {
-                    "key": "indexType",
-                    "value": "PRIMARY"
-                }
+				[
+					"Indxs"
+				],
+				{
+					"key": "indexType",
+					"value": "PRIMARY"
+				}
 			]
 		]
 	}
