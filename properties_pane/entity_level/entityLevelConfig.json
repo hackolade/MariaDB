@@ -2025,7 +2025,10 @@ making sure that you maintain a proper JSON format.
 					"propertyName": "Name",
 					"propertyKeyword": "indxName",
 					"propertyTooltip": "Optional, if not specified an automatic name will be assigned. Index name are needed to drop indexes and appear in error messages when a constraint is violated.",
-					"propertyType": "text"
+					"propertyType": "text",
+					"validation": {
+						"required": true
+					}
 				},
 				{
 					"propertyName": "Activated",
@@ -2049,7 +2052,6 @@ making sure that you maintain a proper JSON format.
 					"defaultValue": "",
 					"options": [
 						"",
-						"PRIMARY",
 						"KEY",
 						"UNIQUE",
 						"FULLTEXT",
