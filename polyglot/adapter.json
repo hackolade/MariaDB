@@ -92,6 +92,22 @@
 					"mode": "tinyint",
 					"precision": 1
 				}
+			},
+			{
+				"from": {
+					"type": "geoshape"
+				},
+				"to": {
+					"mode": "polygon"
+				}
+			},
+			{
+				"from": {
+					"type": "geopoint"
+				},
+				"to": {
+					"mode": "point"
+				}
 			}
 		]
 	}
