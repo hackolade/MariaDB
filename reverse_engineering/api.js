@@ -37,6 +37,13 @@ module.exports = {
 			const instance = connectionHelper.createInstance(connection, logger);
 
 			await instance.ping();
+			await new Promise((resolve, reject) => this.getDbCollectionsNames(connectionInfo, logger, (error) => {
+				if (error) {
+					reject(error);
+				} else {
+					resolve();
+				}
+			}, app));
 
 			log.info('Connected successfully');
 
@@ -79,6 +86,10 @@ module.exports = {
 						isEmpty: dbCollections.length === 0,
 					});
 				} catch (error) {
+					if (connectionInfo.databaseName) {
+						throw error;
+					}
+
 					log.info(`Error reading database "${dbName}"`);
 					log.error(error);
 
