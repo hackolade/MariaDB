@@ -42,19 +42,11 @@ module.exports = ({
 		return keys.map(key => _.trim(key.name)).join(', ');
 	};
 	
-	const createKeyConstraint = (templates, isParentActivated) => keyData => {
-		const columnMapToString = ({ name, order }) => `\`${name}\` ${order}`.trim();
-	
-		const isAllColumnsDeactivated = checkAllKeysDeactivated(keyData.columns);
-		const dividedColumns = divideIntoActivatedAndDeactivated(keyData.columns, columnMapToString);
-		const deactivatedColumnsAsString = dividedColumns?.deactivatedItems?.length
-			? commentIfDeactivated(dividedColumns.deactivatedItems.join(', '), { isActivated: false, isPartOfLine: true })
-			: '';
-	
-		const columns =
-			!isAllColumnsDeactivated && isParentActivated
-				? ' (' + dividedColumns.activatedItems.join(', ') + deactivatedColumnsAsString + ')'
-				: ' (' + keyData.columns.map(columnMapToString).join(', ') + ')';
+	const createKeyConstraint = (templates, isParentActivated) => keyData => {	
+		const isAllColumnsDeactivated = checkAllKeysDeactivated(keyData.columns || []);
+
+		const columns = getKeyColumns(isAllColumnsDeactivated, isParentActivated, keyData.columns);
+
 		const using = keyData.category ? ` USING ${keyData.category}` : '';
 		const ignore = keyData.ignore ? ` IGNORED` : '';
 		const comment = keyData.comment ? ` COMMENT '${escapeQuotes(keyData.comment)}'` : '';
@@ -73,6 +65,22 @@ module.exports = ({
 			isActivated: !isAllColumnsDeactivated,
 		};
 	};
+
+	const getKeyColumns = (isAllColumnsDeactivated, isParentActivated, columns) => {
+		if(!columns) {
+			return '';
+		}
+
+		const columnMapToString = ({ name, order }) => `\`${name}\` ${order}`.trim();
+		const dividedColumns = divideIntoActivatedAndDeactivated(columns, columnMapToString);
+		const deactivatedColumnsAsString = dividedColumns?.deactivatedItems?.length
+			? commentIfDeactivated(dividedColumns.deactivatedItems.join(', '), { isActivated: false, isPartOfLine: true })
+			: '';
+
+		return !isAllColumnsDeactivated && isParentActivated
+			? ' (' + dividedColumns.activatedItems.join(', ') + deactivatedColumnsAsString + ')'
+			: ' (' + columns.map(columnMapToString).join(', ') + ')';
+	}
 	
 	return {
 		generateConstraintsString,

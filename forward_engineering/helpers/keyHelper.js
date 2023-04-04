@@ -14,8 +14,12 @@ module.exports = (_, clean) => {
 	};
 
 	const isInlineUnique = column => {
-		return isUniqueKey(column) && _.isEmpty(column.uniqueKeyOptions);
-	};	
+		return (
+			isUniqueKey(column) &&
+			((column.uniqueKeyOptions?.length === 1 && !_.first(column.uniqueKeyOptions)?.constraintName) ||
+				_.isEmpty(column.uniqueKeyOptions))
+		);
+	};
 
 	const isPrimaryKey = column => {
 		if (column.compositeUniqueKey) {
@@ -30,9 +34,9 @@ module.exports = (_, clean) => {
 	};
 
 	const isInlinePrimaryKey = column => {
-		return isPrimaryKey(column) && _.isEmpty(column.primaryKeyOptions);
+		return isPrimaryKey(column) && !column.primaryKeyOptions?.constraintName;
 	};
-	
+
 	const getOrder = order => {
 		if (_.toLower(order) === 'asc') {
 			return 'ASC';
@@ -42,7 +46,7 @@ module.exports = (_, clean) => {
 			return '';
 		}
 	};
-	
+
 	const hydrateUniqueOptions = (options, columnName, isActivated) =>
 		clean({
 			keyType: 'UNIQUE',
@@ -59,7 +63,7 @@ module.exports = (_, clean) => {
 			comment: options['indexComment'],
 			blockSize: options['indexBlockSize'],
 		});
-	
+
 	const hydratePrimaryKeyOptions = (options, columnName, isActivated) =>
 		clean({
 			keyType: 'PRIMARY KEY',
@@ -76,11 +80,11 @@ module.exports = (_, clean) => {
 			comment: options['indexComment'],
 			blockSize: options['indexBlockSize'],
 		});
-	
+
 	const findName = (keyId, properties) => {
 		return Object.keys(properties).find(name => properties[name].GUID === keyId);
 	};
-	
+
 	const checkIfActivated = (keyId, properties) => {
 		return _.get(
 			Object.values(properties).find(prop => prop.GUID === keyId),
@@ -88,7 +92,7 @@ module.exports = (_, clean) => {
 			true,
 		);
 	};
-	
+
 	const getKeys = (keys, jsonSchema) => {
 		return keys.map(key => {
 			return {
@@ -98,12 +102,12 @@ module.exports = (_, clean) => {
 			};
 		});
 	};
-	
+
 	const getCompositePrimaryKeys = jsonSchema => {
 		if (!Array.isArray(jsonSchema.primaryKey)) {
 			return [];
 		}
-	
+
 		return jsonSchema.primaryKey
 			.filter(primaryKey => !_.isEmpty(primaryKey.compositePrimaryKey))
 			.map(primaryKey => ({
@@ -111,12 +115,12 @@ module.exports = (_, clean) => {
 				columns: getKeys(primaryKey.compositePrimaryKey, jsonSchema),
 			}));
 	};
-	
+
 	const getCompositeUniqueKeys = jsonSchema => {
 		if (!Array.isArray(jsonSchema.uniqueKey)) {
 			return [];
 		}
-	
+
 		return jsonSchema.uniqueKey
 			.filter(uniqueKey => !_.isEmpty(uniqueKey.compositeUniqueKey))
 			.map(uniqueKey => ({
@@ -124,34 +128,32 @@ module.exports = (_, clean) => {
 				columns: getKeys(uniqueKey.compositeUniqueKey, jsonSchema),
 			}));
 	};
-	
+
 	const getTableKeyConstraints = ({ jsonSchema }) => {
 		if (!jsonSchema.properties) {
 			return [];
 		}
 
-		const primaryKeyConstraints = mapProperties(jsonSchema, ([ name, schema ]) => {
-			if (!isPrimaryKey(schema)) {
-				return;
-			} else if (_.isEmpty(schema.primaryKeyOptions)) {
+		const primaryKeyConstraints = mapProperties(jsonSchema, ([name, schema]) => {
+			if (!isPrimaryKey(schema) || isInlinePrimaryKey(schema)) {
 				return;
 			}
 
 			return hydratePrimaryKeyOptions(schema.primaryKeyOptions, name, schema.isActivated);
 		}).filter(Boolean);
 
-		const uniqueKeyConstraints = _.flatten(mapProperties(jsonSchema, ([ name, schema ]) => {
-			if (!isUniqueKey(schema)) {
-				return [];
-			} else if (_.isEmpty(schema.uniqueKeyOptions) || !Array.isArray(schema.uniqueKeyOptions)) {
-				return [];
-			}
+		const uniqueKeyConstraints = _.flatten(
+			mapProperties(jsonSchema, ([name, schema]) => {
+				if (!isUniqueKey(schema) || isInlineUnique(schema)) {
+					return [];
+				}
 
-			return schema.uniqueKeyOptions.map(uniqueKey => (
-				hydrateUniqueOptions(uniqueKey, name, schema.isActivated)
-			));
-		})).filter(Boolean);
-	
+				return (schema.uniqueKeyOptions || []).map(uniqueKey =>
+					hydrateUniqueOptions(uniqueKey, name, schema.isActivated),
+				);
+			}),
+		).filter(Boolean);
+
 		return [
 			...primaryKeyConstraints,
 			...getCompositePrimaryKeys(jsonSchema),
@@ -159,10 +161,12 @@ module.exports = (_, clean) => {
 			...getCompositeUniqueKeys(jsonSchema),
 		];
 	};
-	
+
 	return {
 		getTableKeyConstraints,
 		isInlineUnique,
 		isInlinePrimaryKey,
+		hydratePrimaryKeyOptions,
+		hydrateUniqueOptions,
 	};
 };
