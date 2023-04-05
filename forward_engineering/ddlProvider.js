@@ -123,8 +123,12 @@ module.exports = (baseProvider, options, app) => {
 		convertColumnDefinition(columnDefinition) {
 			const type = _.toUpper(columnDefinition.type);
 			const notNull = columnDefinition.nullable ? '' : ' NOT NULL';
-			const primaryKey = columnDefinition.primaryKey ? ' PRIMARY KEY' : '';
-			const unique = columnDefinition.unique ? ' UNIQUE' : '';
+			const primaryKey = columnDefinition.primaryKey
+				? ' ' + createKeyConstraint(templates, true)(columnDefinition.primaryKeyOptions).statement
+				: '';
+			const unique = columnDefinition.unique
+				? ' ' + createKeyConstraint(templates, true)(columnDefinition.uniqueKeyOptions).statement
+				: '';
 			const zeroFill = columnDefinition.zerofill ? ' ZEROFILL' : '';
 			const autoIncrement = columnDefinition.autoIncrement ? ' AUTO_INCREMENT' : '';
 			const invisible = columnDefinition.invisible ? ' INVISIBLE' : '';
@@ -329,7 +333,9 @@ module.exports = (baseProvider, options, app) => {
 				name: columnDefinition.name,
 				type: columnDefinition.type,
 				primaryKey: keyHelper.isInlinePrimaryKey(jsonSchema),
+				primaryKeyOptions: _.omit(keyHelper.hydratePrimaryKeyOptions(jsonSchema.primaryKeyOptions || {}), 'columns'),
 				unique: keyHelper.isInlineUnique(jsonSchema),
+				uniqueKeyOptions: _.omit(keyHelper.hydrateUniqueOptions(_.first(jsonSchema.uniqueKeyOptions) || {}), 'columns'),
 				nullable: columnDefinition.nullable,
 				default: columnDefinition.default,
 				comment: columnDefinition.description || jsonSchema.refDescription || jsonSchema.description,
