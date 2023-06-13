@@ -30,10 +30,9 @@ const getDeleteViewScript = app => view => {
 
 const getModifiedViewScript = app => view => {
 	const _ = app.require('lodash');
-	const { checkCompModEqual } = require('./common')(_);
 	const { commentIfDeactivated } = app.require('@hackolade/ddl-fe-utils').general;
 	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
-	const { getTableName } = require('../../utils/general')({ _ });
+	const { getTableName, checkCompModEqual } = require('../../utils/general')({ _ });
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 	const viewSchema = { ...view, ...(view.role ?? {}) };
 	const viewData = {

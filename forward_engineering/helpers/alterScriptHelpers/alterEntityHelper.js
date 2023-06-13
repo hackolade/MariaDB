@@ -45,7 +45,7 @@ const getDeleteCollectionScript = app => collection => {
 
 const getModifyCollectionScript = app => collection => {
 	const _ = app.require('lodash');
-	const { modifyGroupItems, getCompMod } = require('./common')(_);
+	const { modifyGroupItems, getCompMod } = require('../../utils/general')({ _ });
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 	const { generateIdToNameHashTable, generateIdToActivatedHashTable } = app.require('@hackolade/ddl-fe-utils');
 
@@ -139,8 +139,10 @@ const getDeleteColumnScript = app => collection => {
 
 const getModifyColumnScript = app => collection => {
 	const _ = app.require('lodash');
-	const { checkFieldPropertiesChanged } = require('./common')(_);
-	const { getTableName } = require('../../utils/general')({ _ });
+	const {
+		getTableName,
+		checkFieldPropertiesChanged
+	} = require('../../utils/general')({ _ });
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 
