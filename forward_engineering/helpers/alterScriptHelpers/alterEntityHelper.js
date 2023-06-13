@@ -1,7 +1,7 @@
 const getAddCollectionScript = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 
 	const databaseName = collection.compMod.keyspaceName;
 	const dbData = { databaseName };
@@ -46,7 +46,7 @@ const getDeleteCollectionScript = app => collection => {
 const getModifyCollectionScript = app => collection => {
 	const _ = app.require('lodash');
 	const { modifyGroupItems, getCompMod } = require('../../utils/general')({ _ });
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const { generateIdToNameHashTable, generateIdToActivatedHashTable } = app.require('@hackolade/ddl-fe-utils');
 
 	const jsonData = { ...collection, ...(collection?.role || {}) };
@@ -99,7 +99,7 @@ const modifyTableOptions = (tableData, dbData, getCompMod) => {
 const getAddColumnScript = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const { getTableName } = require('../../utils/general')({ _ });
 
 	const collectionSchema = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
@@ -144,7 +144,7 @@ const getModifyColumnScript = app => collection => {
 		checkFieldPropertiesChanged
 	} = require('../../utils/general')({ _ });
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 
 	const collectionSchema = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
 	const tableName = collectionSchema?.code || collectionSchema?.collectionName || collectionSchema?.name;

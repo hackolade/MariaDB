@@ -5,7 +5,7 @@ module.exports = app => {
 		getCompMod,
 		modifyGroupItems
 	} = require('../../utils/general')({ _ });
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const { getDbData } = app.require('@hackolade/ddl-fe-utils').general;
 
 	const getAddContainerScript = containerData => {

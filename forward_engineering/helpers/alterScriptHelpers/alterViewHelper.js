@@ -1,8 +1,6 @@
-const templates = require('../../configs/templates');
-
 const getAddViewScript = app => view => {
 	const _ = app.require('lodash');
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const viewSchema = { ...view, ...(view.role ?? {}) };
 
 	const viewData = {
@@ -31,9 +29,8 @@ const getDeleteViewScript = app => view => {
 const getModifiedViewScript = app => view => {
 	const _ = app.require('lodash');
 	const { commentIfDeactivated } = app.require('@hackolade/ddl-fe-utils').general;
-	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
 	const { getTableName, checkCompModEqual } = require('../../utils/general')({ _ });
-	const ddlProvider = require('../../ddlProvider')(null, null, app);
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const viewSchema = { ...view, ...(view.role ?? {}) };
 	const viewData = {
 		name: viewSchema.code || viewSchema.name,
@@ -60,12 +57,15 @@ const getModifiedViewScript = app => view => {
 			: 'ALGORITHM UNDEFINED';
 	const sqlSecurity = viewData.sqlSecurity ? ` SQL SECURITY ${viewData.sqlSecurity}` : '';
 
+	const ddlViewName = getTableName(viewData.name, viewData.dbData.databaseName);
+	const ddlSqlSecurity = isSqlSecurityChanged ? sqlSecurity : undefined;
+	const ddlAlgorithm = isAlgorithmChanged ? algorithm : undefined;
 	return commentIfDeactivated(
-		assignTemplates(templates.alterView, {
-			name: getTableName(viewData.name, viewData.dbData.databaseName),
-			selectStatement,
-			...(isSqlSecurityChanged && { sqlSecurity }),
-			...(isAlgorithmChanged && { algorithm }),
+		ddlProvider.alterView({
+			sqlSecurity: ddlSqlSecurity,
+			algorithm: ddlAlgorithm,
+			viewName: ddlViewName,
+			selectStatement
 		}),
 		{ isActivated: !deactivatedWholeStatement },
 	);
