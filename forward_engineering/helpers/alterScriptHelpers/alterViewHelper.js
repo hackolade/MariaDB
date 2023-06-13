@@ -22,7 +22,7 @@ const getAddViewScript = app => view => {
 
 const getDeleteViewScript = app => view => {
 	const _ = app.require('lodash');
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 	const viewName = getTableName(view.code || view.name, view?.role?.compMod?.keyspaceName);
 
 	return `DROP VIEW IF EXISTS ${viewName};`;
@@ -33,7 +33,7 @@ const getModifiedViewScript = app => view => {
 	const { checkCompModEqual } = require('./common')(_);
 	const { commentIfDeactivated } = app.require('@hackolade/ddl-fe-utils').general;
 	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 	const viewSchema = { ...view, ...(view.role ?? {}) };
 	const viewData = {

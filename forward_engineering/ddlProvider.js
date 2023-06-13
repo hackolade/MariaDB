@@ -19,7 +19,7 @@ module.exports = (baseProvider, options, app) => {
 		wrap,
 	);
 	const { getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes } =
-		require('./helpers/general')(_, wrap);
+		require('./utils/general')({_, wrap});
 	const { generateConstraintsString, foreignKeysToString, foreignActiveKeysToString, createKeyConstraint } =
 		require('./helpers/constraintsHelper')({
 			_,

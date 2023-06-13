@@ -33,7 +33,7 @@ const getAddCollectionScript = app => collection => {
 
 const getDeleteCollectionScript = app => collection => {
 	const _ = app.require('lodash');
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 
 	const jsonData = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
 	const tableName = jsonData?.code || jsonData?.collectionName || jsonSchema?.name;
@@ -76,7 +76,7 @@ const getModifyCollectionScript = app => collection => {
 };
 
 const modifyTableOptions = (tableData, dbData, getCompMod) => {
-	const { getTableName } = require('../general')({});
+	const { getTableName } = require('../../utils/general')({});
 	const compMod = getCompMod(tableData);
 	const isDefaultModified = compMod.tableOptions?.new?.defaultCharSet !== compMod.tableOptions?.old?.defaultCharSet;
 	const isCharacterSetModified = compMod.tableOptions?.new?.characterSet !== compMod.tableOptions?.old?.characterSet;
@@ -100,7 +100,7 @@ const getAddColumnScript = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 
 	const collectionSchema = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
 	const tableName = collectionSchema?.code || collectionSchema?.collectionName || collectionSchema?.name;
@@ -125,7 +125,7 @@ const getAddColumnScript = app => collection => {
 
 const getDeleteColumnScript = app => collection => {
 	const _ = app.require('lodash');
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 
 	const collectionSchema = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
 	const tableName = collectionSchema?.code || collectionSchema?.collectionName || collectionSchema?.name;
@@ -140,7 +140,7 @@ const getDeleteColumnScript = app => collection => {
 const getModifyColumnScript = app => collection => {
 	const _ = app.require('lodash');
 	const { checkFieldPropertiesChanged } = require('./common')(_);
-	const { getTableName } = require('../general')({ _ });
+	const { getTableName } = require('../../utils/general')({ _ });
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
 	const ddlProvider = require('../../ddlProvider')(null, null, app);
 
