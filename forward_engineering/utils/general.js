@@ -386,6 +386,14 @@ module.exports = ({_, wrap}) => {
         return viewSchema.code || viewSchema.name;
     }
 
+    /**
+     * @param name {string}
+     * @return {string}
+     * */
+    const wrapInTics = (name) => {
+        return `\`${name}\``;
+    };
+
     return {
         getTableName,
         wrapDbName,
@@ -404,5 +412,6 @@ module.exports = ({_, wrap}) => {
         checkCompModEqual,
         getViewSchema,
         getViewName,
+        wrapInTics,
     };
 }

@@ -663,6 +663,17 @@ module.exports = (baseProvider, options, app) => {
                 viewName
             }
             return assignTemplates(templates.dropView, templateConfig);
-        }
+        },
+
+        /**
+         * @param tableName {string}
+         * @return {string}
+         * */
+        dropTable(tableName) {
+            const templateConfig = {
+                tableName,
+            }
+            return assignTemplates(templates.dropTable, templateConfig);
+        },
     };
 };

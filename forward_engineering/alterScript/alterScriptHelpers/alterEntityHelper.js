@@ -1,3 +1,4 @@
+const {AlterScriptDto} = require("../types/AlterScriptDto");
 const getAddCollectionScript = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
@@ -31,8 +32,9 @@ const getAddCollectionScript = app => collection => {
 	return ddlProvider.createTable(hydratedTable, jsonSchema.isActivated);
 };
 
-const getDeleteCollectionScript = app => collection => {
+const getDeleteCollectionScriptDto = app => collection => {
 	const _ = app.require('lodash');
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const { getTableName } = require('../../utils/general')({ _ });
 
 	const jsonData = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
@@ -40,7 +42,8 @@ const getDeleteCollectionScript = app => collection => {
 	const databaseName = collection.compMod.keyspaceName;
 	const fullName = getTableName(tableName, databaseName);
 
-	return `DROP TABLE IF EXISTS ${fullName};`;
+	const script = ddlProvider.dropTable(fullName);
+	return AlterScriptDto.getInstance([script], true, true);
 };
 
 const getModifyCollectionScript = app => collection => {
@@ -202,7 +205,7 @@ const setIndexKeys = (idToNameHashTable, idToActivatedHashTable, index) => {
 
 module.exports = {
 	getAddCollectionScript,
-	getDeleteCollectionScript,
+	getDeleteCollectionScriptDto,
 	getModifyCollectionScript,
 	getAddColumnScript,
 	getDeleteColumnScript,
