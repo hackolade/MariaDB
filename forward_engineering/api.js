@@ -11,7 +11,7 @@ module.exports = {
 				getAlterContainersScripts,
 				getAlterCollectionsScripts,
 				getAlterViewScripts,
-			} = require('./helpers/alterScriptFromDeltaHelper');
+			} = require('./alterScript/alterScriptFromDeltaHelper');
 
 			const collection = JSON.parse(data.jsonSchema);
 			if (!collection) {

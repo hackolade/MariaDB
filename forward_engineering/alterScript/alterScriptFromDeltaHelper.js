@@ -11,12 +11,10 @@ const {
 	getDeleteViewScript,
 	getModifiedViewScript,
 } = require('./alterScriptHelpers/alterViewHelper');
+const {getScriptOptions} = require("../helpers/getScriptOptions");
 
-const getComparisonModelCollection = collections => {
-	return collections
-		.map(collection => JSON.parse(collection))
-		.find(collection => collection.collectionName === 'comparisonModelCollection');
-};
+const {AlterScriptDto, ModificationScript} = require("./types/AlterScriptDto");
+const {App, CoreData} = require("../types/coreApplicationTypes");
 
 const getAlterContainersScripts = (collection, app, { skipModified } = {}) => {
 	const { getAddContainerScript, getDeleteContainerScript, getModifyContainerScript } =
@@ -122,9 +120,60 @@ const getAlterViewScripts = (collection, app) => {
 	return [...deleteViewsScripts, ...createViewsScripts, ...modifiedViewsScripts].map(script => script.trim());
 };
 
+/**
+ * @param dto {AlterScriptDto}
+ * @return {AlterScriptDto | undefined}
+ */
+const prettifyAlterScriptDto = (dto) => {
+	if (!dto) {
+		return undefined;
+	}
+	/**
+	 * @type {Array<ModificationScript>}
+	 * */
+	const nonEmptyScriptModificationDtos = dto.scripts
+		.map((scriptDto) => ({
+			...scriptDto,
+			script: (scriptDto.script || '').trim()
+		}))
+		.filter((scriptDto) => Boolean(scriptDto.script));
+	if (!nonEmptyScriptModificationDtos.length) {
+		return undefined;
+	}
+	return {
+		...dto,
+		scripts: nonEmptyScriptModificationDtos
+	}
+}
+
+/**
+ * @param data {CoreData}
+ * @param app {App}
+ * @return {Array<AlterScriptDto>}
+ * */
+const getAlterScriptDtos = (data, app) => {
+	const collection = JSON.parse(data.jsonSchema);
+	if (!collection) {
+		throw new Error(
+			'"comparisonModelCollection" is not found. Alter script can be generated only from Delta model',
+		);
+	}
+
+	const scriptOptions = getScriptOptions(data);
+	const containersScripts = getAlterContainersScripts(collection, app, scriptOptions.containers);
+	const collectionsScripts = getAlterCollectionsScripts(collection, app);
+	const viewScripts = getAlterViewScripts(collection, app);
+
+	return [
+		...containersScripts,
+		...collectionsScripts,
+		...viewScripts
+	]
+		.filter(Boolean)
+		.map((dto) => prettifyAlterScriptDto(dto))
+		.filter(Boolean);
+};
+
 module.exports = {
-	getComparisonModelCollection,
-	getAlterContainersScripts,
-	getAlterCollectionsScripts,
-	getAlterViewScripts,
+	getAlterScriptDtos
 };

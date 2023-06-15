@@ -1,5 +1,4 @@
 const getAddViewScript = app => view => {
-	const _ = app.require('lodash');
 	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const viewSchema = { ...view, ...(view.role ?? {}) };
 
