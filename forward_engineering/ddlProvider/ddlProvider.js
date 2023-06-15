@@ -675,5 +675,18 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.dropTable, templateConfig);
         },
+
+        /**
+         * @param tableName {string}
+         * @param columnName {string}
+         * @return {string}
+         * */
+        dropColumn(tableName, columnName) {
+            const templateConfig = {
+                tableName,
+                columnName
+            }
+            return assignTemplates(templates.dropColumn, templateConfig);
+        },
     };
 };

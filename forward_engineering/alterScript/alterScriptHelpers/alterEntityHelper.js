@@ -32,6 +32,9 @@ const getAddCollectionScript = app => collection => {
 	return ddlProvider.createTable(hydratedTable, jsonSchema.isActivated);
 };
 
+/**
+ * @return {(collection: Object) => AlterScriptDto}
+ * */
 const getDeleteCollectionScriptDto = app => collection => {
 	const _ = app.require('lodash');
 	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
@@ -126,9 +129,13 @@ const getAddColumnScript = app => collection => {
 		.map(script => `ALTER TABLE IF EXISTS ${fullName} ADD COLUMN IF NOT EXISTS ${script};`);
 };
 
-const getDeleteColumnScript = app => collection => {
+/**
+ * @return {(collection: Object) => AlterScriptDto[]}
+ * */
+const getDeleteColumnScriptDtos = app => collection => {
 	const _ = app.require('lodash');
-	const { getTableName } = require('../../utils/general')({ _ });
+	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
+	const { getTableName, wrapInTics } = require('../../utils/general')({ _ });
 
 	const collectionSchema = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
 	const tableName = collectionSchema?.code || collectionSchema?.collectionName || collectionSchema?.name;
@@ -137,7 +144,12 @@ const getDeleteColumnScript = app => collection => {
 
 	return _.toPairs(collection.properties)
 		.filter(([name, jsonSchema]) => !jsonSchema.compMod)
-		.map(([name]) => `ALTER TABLE IF EXISTS ${fullName} DROP COLUMN IF EXISTS \`${name}\`;`);
+		.map(([name]) => {
+			const ddlName = wrapInTics(name);
+			return ddlProvider.dropColumn(fullName, ddlName);
+		})
+		.map(script => AlterScriptDto.getInstance([script], true, true))
+		.filter(Boolean);
 };
 
 const getModifyColumnScript = app => collection => {
@@ -208,6 +220,6 @@ module.exports = {
 	getDeleteCollectionScriptDto,
 	getModifyCollectionScript,
 	getAddColumnScript,
-	getDeleteColumnScript,
+	getDeleteColumnScriptDtos,
 	getModifyColumnScript,
 };
