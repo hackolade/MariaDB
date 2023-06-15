@@ -1,68 +1,63 @@
+const {AlterScriptDto} = require('../types/AlterScriptDto');
+const {getModifyProcedureScriptDtos} = require("./alterProcedureHelper");
+const {getModifyUdfsScriptDtos} = require("./alterUdfHelper");
+const {getModifyCollationScriptDto} = require("./containerHelpers/alterCollationHelper");
+
 module.exports = app => {
-	const _ = app.require('lodash');
-	const {
-		getTableName,
-		getCompMod,
-		modifyGroupItems
-	} = require('../../utils/general')({ _ });
-	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
-	const { getDbData } = app.require('@hackolade/ddl-fe-utils').general;
+    const _ = app.require('lodash');
+    const {
+        wrapDbName,
+    } = require('../../utils/general')({_});
+    const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
+    const {getDbData} = app.require('@hackolade/ddl-fe-utils').general;
 
-	const getAddContainerScript = containerData => {
-		const constructedDbData = getDbData([containerData]);
-		const dbData = ddlProvider.hydrateDatabase(constructedDbData, {
-			udfs: containerData.role?.UDFs,
-			procedures: containerData.role?.Procedures,
-			useDb: false
-		});
+    /**
+     * @param containerData {Object}
+     * @return {AlterScriptDto}
+     * */
+    const getAddContainerScriptDto = containerData => {
+        const constructedDbData = getDbData([containerData]);
+        const dbData = ddlProvider.hydrateDatabase(constructedDbData, {
+            udfs: containerData.role?.UDFs,
+            procedures: containerData.role?.Procedures,
+            useDb: false
+        });
 
-		return _.trim(ddlProvider.createDatabase(dbData));
-	};
+        const script = _.trim(ddlProvider.createDatabase(dbData));
+        return AlterScriptDto.getInstance([script], true, false);
+    };
 
-	const getDeleteContainerScript = containerName => {
-		return `DROP DATABASE IF EXISTS \`${containerName}\`;`;
-	};
+    /**
+     * @param containerName {string}
+     * @return {AlterScriptDto}
+     * */
+    const getDeleteContainerScriptDto = containerName => {
+        const ddlDbName = wrapDbName(containerName);
+        const script = ddlProvider.dropDatabase(ddlDbName);
+        return AlterScriptDto.getInstance([script], true, true);
+    };
 
-	const getModifyContainerScript = containerData => {
-		return [modifyCollation(containerData), modifyUdf(containerData), modifyProcedures(containerData)]
-			.filter(Boolean)
-			.join('\n\n');
-	};
+    /**
+     * @param containerData {Object}
+     * @return {AlterScriptDto[]}
+     * */
+    const getModifyContainerScriptDtos = containerData => {
+        const modifyCollationScript = getModifyCollationScriptDto(_, ddlProvider)(containerData);
+        const modifyProceduresScriptDtos = getModifyProcedureScriptDtos(_, ddlProvider)(containerData);
+        const modifyUdfsScriptDtos = getModifyUdfsScriptDtos(_, ddlProvider)(containerData);
 
-	const modifyCollation = containerData => {
-		const compMod = getCompMod(containerData);
-		const isCharacterSetModified = compMod.characterSet?.new !== compMod.characterSet?.old;
-		const isCollationModified = compMod.collation?.new !== compMod.collation?.old;
+        return [
+            modifyCollationScript,
+            ...modifyUdfsScriptDtos,
+            ...modifyProceduresScriptDtos,
+        ]
+            .filter(Boolean);
+    };
 
-		if (isCharacterSetModified || isCollationModified) {
-			return `ALTER DATABASE \`${containerData.name}\` CHARACTER SET='${containerData.role?.characterSet}' COLLATE='${containerData.role?.collation}';`;
-		} else {
-			return '';
-		}
-	};
 
-	const modifyUdf = containerData =>
-		modifyGroupItems({
-			data: containerData,
-			key: 'UDFs',
-			hydrate: ddlProvider.hydrateUdf,
-			create: ddlProvider.createUdf,
-			drop: (databaseName, udf) => `DROP FUNCTION IF EXISTS ${getTableName(udf.name, databaseName)};`,
-		});
-
-	const modifyProcedures = containerData =>
-		modifyGroupItems({
-			data: containerData,
-			key: 'Procedures',
-			hydrate: ddlProvider.hydrateProcedure,
-			create: ddlProvider.createProcedure,
-			drop: (databaseName, procedure) =>
-				`DROP PROCEDURE IF EXISTS ${getTableName(procedure.name, databaseName)};`,
-		});
-
-	return {
-		getAddContainerScript,
-		getDeleteContainerScript,
-		getModifyContainerScript,
-	};
+    return {
+        getAddContainerScriptDto,
+        getDeleteContainerScriptDto,
+        getModifyContainerScriptDtos,
+    };
 };

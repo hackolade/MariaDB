@@ -469,6 +469,9 @@ module.exports = (baseProvider, options, app) => {
             };
         },
 
+        /**
+         * @return {string}
+         * */
         createUdf(databaseName, udf) {
             const characteristics = getCharacteristics(udf.characteristics);
             let startDelimiter = udf.delimiter ? `DELIMITER ${udf.delimiter}\n` : '';
@@ -491,6 +494,9 @@ module.exports = (baseProvider, options, app) => {
             );
         },
 
+        /**
+         * @return {string}
+         * */
         createProcedure(databaseName, procedure) {
             const characteristics = getCharacteristics(procedure.characteristics);
             let startDelimiter = procedure.delimiter ? `DELIMITER ${procedure.delimiter}\n` : '';
@@ -559,6 +565,54 @@ module.exports = (baseProvider, options, app) => {
                 algorithm,
             }
             return assignTemplates(templates.alterView, templateConfig)
-        }
+        },
+
+        /**
+         * @param databaseName {string}
+         * @return {string}
+         * */
+        dropDatabase(databaseName) {
+            const templateConfig = {
+                databaseName,
+            }
+            return assignTemplates(templates.dropDatabase, templateConfig);
+        },
+
+        /**
+         * @param procedureName {string}
+         * @return {string}
+         * */
+        dropProcedure(procedureName) {
+            const templateConfig = {
+                procedureName,
+            }
+            return assignTemplates(templates.dropProcedure, templateConfig);
+        },
+
+        /**
+         * @param udfName {string}
+         * @return {string}
+         * */
+        dropUdf(udfName) {
+            const templateConfig = {
+                functionName: udfName,
+            }
+            return assignTemplates(templates.dropFunction, templateConfig);
+        },
+
+        /**
+         * @param databaseName {string}
+         * @param characterSet {string}
+         * @param collation {string}
+         * @return {string}
+         * */
+        alterCollation(databaseName, characterSet, collation) {
+            const templateConfig = {
+                databaseName,
+                characterSet,
+                collation,
+            }
+            return assignTemplates(templates.alterCollation, templateConfig);
+        },
     };
 };

@@ -21,6 +21,14 @@ module.exports = {
 	createForeignKey:
 		'ALTER TABLE ${foreignTable} ADD CONSTRAINT `${name}` FOREIGN KEY (${foreignKey}) REFERENCES ${primaryTable}(${primaryKey});',
 
+	dropDatabase: 'DROP DATABASE IF EXISTS ${databaseName};',
+
+	dropProcedure: 'DROP PROCEDURE IF EXISTS ${procedureName};',
+
+	dropFunction: 'DROP FUNCTION IF EXISTS ${functionName};',
+
+	alterCollation: 'ALTER DATABASE ${databaseName} CHARACTER SET=${characterSet} COLLATE=${collation};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',

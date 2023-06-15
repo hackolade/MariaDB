@@ -1,12 +1,53 @@
 const {TableOptionsByEngine, TableOptions} = require("../enums/tableOptions");
 
 module.exports = ({_, wrap}) => {
-    const getTableName = (tableName, schemaName) => {
+
+    /**
+     * @param schemaName {string}
+     * @param name {string}
+     * @return {string}
+     * */
+    const getNamePrefixedWithSchemaName = (name, schemaName) => {
         if (schemaName) {
-            return `\`${schemaName}\`.\`${tableName}\``;
+            return `\`${schemaName}\`.\`${name}\``;
         } else {
-            return `\`${tableName}\``;
+            return `\`${name}\``;
         }
+    };
+
+    /**
+     * @param schemaName {string}
+     * @param tableName {string}
+     * @return {string}
+     * */
+    const getTableName = (tableName, schemaName) => {
+        return getNamePrefixedWithSchemaName(tableName, schemaName);
+    };
+
+    /**
+     * @param schemaName {string}
+     * @param procedureName {string}
+     * @return {string}
+     * */
+    const getProcedureName = (procedureName, schemaName) => {
+        return getNamePrefixedWithSchemaName(procedureName, schemaName);
+    };
+
+    /**
+     * @param schemaName {string}
+     * @param udfName {string}
+     * @return {string}
+     * */
+    const getUdfName = (udfName, schemaName) => {
+        return getNamePrefixedWithSchemaName(udfName, schemaName);
+    };
+
+    /**
+     * @param schemaName {string}
+     * @return {string}
+     * */
+    const wrapDbName = (schemaName) => {
+        return `\`${schemaName}\``;
     };
 
     const getOptionValue = (keyword, value) => {
@@ -249,7 +290,12 @@ module.exports = ({_, wrap}) => {
         const addedScripts = added.map(item => create(parentName, item));
         const modifiedScripts = modified.map(item => create(parentName, { ...item, orReplace: true }));
 
-        return [].concat(modifiedScripts).concat(removedScripts).concat(addedScripts).filter(Boolean).join('\n\n');
+        return []
+            .concat(modifiedScripts)
+            .concat(removedScripts)
+            .concat(addedScripts)
+            .filter(Boolean)
+            .join('\n\n');
     };
 
     const getModifiedGroupItems = ({ new: newItems = [], old: oldItems = [] }, hydrate) => {
@@ -289,14 +335,48 @@ module.exports = ({_, wrap}) => {
         return { removed, added, modified };
     };
 
+    const getModifiedGroupItemsByName = (newItems = [], oldItems = []) => {
+        const addedHydratedItems = newItems.filter(newItem => !oldItems.some(item => item.name === newItem.name));
+        const removedHydratedItems = [];
+        const modifiedHydratedItems = [];
+
+        for (const oldItem of oldItems) {
+            const newItem = newItems.find(item => item.name === oldItem.name);
+            if (!newItem) {
+                removedHydratedItems.push(oldItem);
+                continue;
+            }
+
+            const itemsAreNotEqual = !_.isEqual(newItem, oldItem);
+            if (itemsAreNotEqual) {
+                modifiedHydratedItems.push(newItem);
+            }
+        }
+
+        return {
+            added: addedHydratedItems,
+            removed: removedHydratedItems,
+            modified: modifiedHydratedItems,
+        };
+    };
+
     const isGroupItemsEqual = (leftItem, rightItem) => _.isEqual(leftItem, rightItem);
 
     const getCompMod = containerData => containerData.role?.compMod ?? {};
+
+    const getContainerName = containerData => containerData.code
+        || containerData.name
+        || containerData.collectionName;
 
     const checkCompModEqual = ({ new: newItem, old: oldItem } = {}, _) => _.isEqual(newItem, oldItem);
 
     return {
         getTableName,
+        wrapDbName,
+        getContainerName,
+        getModifiedGroupItemsByName,
+        getProcedureName,
+        getUdfName,
         getTableOptions,
         getPartitions,
         getViewData,
