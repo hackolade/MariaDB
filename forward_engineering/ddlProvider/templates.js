@@ -29,6 +29,8 @@ module.exports = {
 
 	alterCollation: 'ALTER DATABASE ${databaseName} CHARACTER SET=${characterSet} COLLATE=${collation};',
 
+	dropView: 'DROP VIEW IF EXISTS ${viewName};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',

@@ -288,6 +288,45 @@ module.exports = (baseProvider, options, app) => {
             };
         },
 
+        /**
+         * @param viewData {{
+         *      keys: any[],
+         *      orReplace: boolean,
+         *      name: string,
+         *      ifNotExist: boolean,
+         *      checkOption: string,
+         *      selectStatement: string,
+         *      sqlSecurity: string,
+         *      tableName: string,
+         *      algorithm: string
+         * }}
+         * @param databaseName {string}
+         * @return {{
+         *     deactivatedWholeStatement: boolean,
+         *     statement: string,
+         * }}
+         * */
+        createViewForAlterScript(viewData, databaseName) {
+            const {deactivatedWholeStatement, selectStatement} = this.viewSelectStatement(viewData);
+            const algorithm =
+                viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
+
+            const script = assignTemplates(templates.createView, {
+                name: getTableName(viewData.name, databaseName),
+                orReplace: viewData.orReplace ? 'OR REPLACE ' : '',
+                ifNotExist: viewData.ifNotExist ? 'IF NOT EXISTS ' : '',
+                sqlSecurity: viewData.sqlSecurity ? `SQL SECURITY ${viewData.sqlSecurity} ` : '',
+                checkOption: viewData.checkOption ? `\nWITH ${viewData.checkOption} CHECK OPTION` : '',
+                selectStatement,
+                algorithm,
+            });
+
+            return {
+                deactivatedWholeStatement,
+                statement: script,
+            }
+        },
+
         createView(viewData, dbData, isActivated) {
             const {deactivatedWholeStatement, selectStatement} = this.viewSelectStatement(viewData, isActivated);
 
@@ -561,8 +600,8 @@ module.exports = (baseProvider, options, app) => {
             const templateConfig = {
                 name: viewName,
                 selectStatement,
-                sqlSecurity,
-                algorithm,
+                sqlSecurity: sqlSecurity ? ` ${sqlSecurity}` : '',
+                algorithm: algorithm ? ` ${algorithm}` : '',
             }
             return assignTemplates(templates.alterView, templateConfig)
         },
@@ -614,5 +653,16 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.alterCollation, templateConfig);
         },
+
+        /**
+         * @param viewName {string}
+         * @return {string}
+         * */
+        dropView(viewName) {
+            const templateConfig = {
+                viewName
+            }
+            return assignTemplates(templates.dropView, templateConfig);
+        }
     };
 };

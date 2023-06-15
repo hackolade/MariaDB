@@ -7,9 +7,9 @@ const {
     getModifyCollectionScript,
 } = require('./alterScriptHelpers/alterEntityHelper');
 const {
-    getAddViewScript,
-    getDeleteViewScript,
-    getModifiedViewScript,
+    getAddViewScriptDto,
+    getDeleteViewScriptDto,
+    getModifiedViewScriptDto,
 } = require('./alterScriptHelpers/alterViewHelper');
 const {getScriptOptions} = require("../helpers/getScriptOptions");
 
@@ -106,32 +106,37 @@ const getAlterCollectionsScripts = (collection, app) => {
     ].map(script => script.trim());
 };
 
-const getAlterViewScripts = (collection, app) => {
-    const createViewsScripts = []
+const getAlterViewScriptDtos = (collection, app) => {
+    const createViewsScriptDtos = []
         .concat(collection.properties?.views?.properties?.added?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
         .map(view => ({...view, ...(view.role || {})}))
         .filter(view => view.compMod?.created)
-        .map(getAddViewScript(app));
+        .map(getAddViewScriptDto(app));
 
-    const deleteViewsScripts = []
+    const deleteViewsScriptDtos = []
         .concat(collection.properties?.views?.properties?.deleted?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
         .map(view => ({...view, ...(view.role || {})}))
         .filter(view => view.compMod?.deleted)
-        .map(getDeleteViewScript(app));
+        .map(getDeleteViewScriptDto(app));
 
-    const modifiedViewsScripts = []
+    const modifiedViewsScriptDtos = []
         .concat(collection.properties?.views?.properties?.modified?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
         .map(view => ({...view, ...(view.role || {})}))
         .filter(view => !view.compMod?.created && !view.compMod?.deleted)
-        .map(getModifiedViewScript(app));
+        .map(getModifiedViewScriptDto(app));
 
-    return [...deleteViewsScripts, ...createViewsScripts, ...modifiedViewsScripts].map(script => script.trim());
+    return [
+        ...deleteViewsScriptDtos,
+        ...createViewsScriptDtos,
+        ...modifiedViewsScriptDtos
+    ]
+        .filter(Boolean);
 };
 
 /**
@@ -176,12 +181,12 @@ const getAlterScriptDtos = (data, app) => {
     const scriptOptions = getScriptOptions(data);
     const containersScriptDtos = getAlterContainersScriptDtos(collection, app, scriptOptions.containers);
     const collectionsScripts = getAlterCollectionsScripts(collection, app);
-    const viewScripts = getAlterViewScripts(collection, app);
+    const viewScriptDtos = getAlterViewScriptDtos(collection, app);
 
     return [
         ...containersScriptDtos,
         ...collectionsScripts,
-        ...viewScripts
+        ...viewScriptDtos
     ]
         .filter(Boolean)
         .map((dto) => prettifyAlterScriptDto(dto))

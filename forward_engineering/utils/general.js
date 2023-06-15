@@ -370,6 +370,22 @@ module.exports = ({_, wrap}) => {
 
     const checkCompModEqual = ({ new: newItem, old: oldItem } = {}, _) => _.isEqual(newItem, oldItem);
 
+    /**
+     * @param view {Object}
+     * @return {Object}
+     * */
+    const getViewSchema = (view) => {
+        return { ...view, ...(view.role ?? {}) };
+    }
+
+    /**
+     * @param viewSchema {Object}
+     * @return {string}
+     * */
+    const getViewName = (viewSchema) => {
+        return viewSchema.code || viewSchema.name;
+    }
+
     return {
         getTableName,
         wrapDbName,
@@ -386,5 +402,7 @@ module.exports = ({_, wrap}) => {
         getCompMod,
         modifyGroupItems,
         checkCompModEqual,
+        getViewSchema,
+        getViewName,
     };
 }
