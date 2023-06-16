@@ -102,7 +102,10 @@ const modifyTableOptions = (tableData, dbData, getCompMod) => {
 	}
 };
 
-const getAddColumnScript = app => collection => {
+/**
+ * @return {(collection: Object) => AlterScriptDto[]}
+ * */
+const getAddColumnScriptDto = app => collection => {
 	const _ = app.require('lodash');
 	const { createColumnDefinitionBySchema } = require('./createColumnDefinition')(_);
 	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
@@ -126,7 +129,8 @@ const getAddColumnScript = app => collection => {
 			}),
 		)
 		.map(ddlProvider.convertColumnDefinition)
-		.map(script => `ALTER TABLE IF EXISTS ${fullName} ADD COLUMN IF NOT EXISTS ${script};`);
+		.map(columnDefinition => ddlProvider.addColumn(fullName, columnDefinition))
+		.map(script => AlterScriptDto.getInstance([script], true, false));
 };
 
 /**
@@ -219,7 +223,7 @@ module.exports = {
 	getAddCollectionScript,
 	getDeleteCollectionScriptDto,
 	getModifyCollectionScript,
-	getAddColumnScript,
+	getAddColumnScriptDto,
 	getDeleteColumnScriptDtos,
 	getModifyColumnScript,
 };

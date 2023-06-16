@@ -33,6 +33,8 @@ module.exports = {
 
 	dropColumn: 'ALTER TABLE IF EXISTS ${tableName} DROP COLUMN IF EXISTS ${columnName};',
 
+	addColumn: 'ALTER TABLE IF EXISTS ${tableName} ADD COLUMN IF NOT EXISTS ${columnDefinition};',
+
 	dropView: 'DROP VIEW IF EXISTS ${viewName};',
 
 	index:
