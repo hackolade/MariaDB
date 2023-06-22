@@ -1,6 +1,7 @@
 const defaultTypes = require('../configs/defaultTypes');
 const types = require('../configs/types');
 const templates = require('./templates');
+const {HydateColumn} = require('./types/hydateColumn');
 
 module.exports = (baseProvider, options, app) => {
     const _ = app.require('lodash');
@@ -61,6 +62,9 @@ module.exports = (baseProvider, options, app) => {
             return [databaseStatement, ...udfStatements, ...procStatements].join('\n');
         },
 
+        /**
+         * @return {string}
+         * */
         createTable(
             {
                 name,
@@ -103,7 +107,7 @@ module.exports = (baseProvider, options, app) => {
             const dividedForeignKeys = divideIntoActivatedAndDeactivated(foreignKeyConstraints, key => key.statement);
             const foreignKeyConstraintsString = generateConstraintsString(dividedForeignKeys, isActivated);
 
-            const tableStatement = assignTemplates(templates.createTable, {
+            return assignTemplates(templates.createTable, {
                 name: tableName,
                 column_definitions: columns.join(',\n\t'),
                 selectStatement: selectStatement ? ` ${selectStatement}` : '',
@@ -116,10 +120,11 @@ module.exports = (baseProvider, options, app) => {
                 foreignKeyConstraints: foreignKeyConstraintsString,
                 keyConstraints: keyConstraintsString,
             });
-
-            return tableStatement;
         },
 
+        /**
+         * @return {string}
+         * */
         convertColumnDefinition(columnDefinition) {
             const type = _.toUpper(columnDefinition.type);
             const notNull = columnDefinition.nullable ? '' : ' NOT NULL';
@@ -235,6 +240,9 @@ module.exports = (baseProvider, options, app) => {
             }
         },
 
+        /**
+         * @return {string}
+         * */
         createCheckConstraint(checkConstraint) {
             return assignTemplates(templates.checkConstraint, {
                 name: checkConstraint.name ? `${wrap(checkConstraint.name, '`', '`')} ` : '',
@@ -367,6 +375,9 @@ module.exports = (baseProvider, options, app) => {
             return hasType(types, type);
         },
 
+        /**
+         * @return {HydateColumn}
+         * */
         hydrateColumn({columnDefinition, jsonSchema, dbData}) {
             return {
                 name: columnDefinition.name,
@@ -379,7 +390,6 @@ module.exports = (baseProvider, options, app) => {
                 default: columnDefinition.default,
                 comment: columnDefinition.description || jsonSchema.refDescription || jsonSchema.description,
                 isActivated: columnDefinition.isActivated,
-                length: columnDefinition.enum,
                 scale: columnDefinition.scale,
                 precision: columnDefinition.precision,
                 length: columnDefinition.length,

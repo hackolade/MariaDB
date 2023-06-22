@@ -1,14 +1,24 @@
 const {AlterScriptDto} = require("../types/AlterScriptDto");
 const {getRenameColumnScriptDtos} = require("./columnHelpers/renameColumnHelper");
 const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
-const getAddCollectionScript = app => collection => {
+const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
+
+
+/**
+ * @return {(collection: Object) => AlterScriptDto}
+ * */
+const getAddCollectionScriptDto = app => collection => {
     const _ = app.require('lodash');
+    const { getDatabaseName, } = require('../../utils/general')({_});
     const {createColumnDefinitionBySchema} = require('./createColumnDefinition')(_);
     const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 
-    const databaseName = collection.compMod.keyspaceName;
+    const databaseName = getDatabaseName(collection);
     const dbData = {databaseName};
     const jsonSchema = {...collection, ...(collection?.role || {})};
+    /**
+     * @type {HydateColumn[]}
+     * */
     const columnDefinitions = _.toPairs(jsonSchema.properties).map(([name, column]) =>
         createColumnDefinitionBySchema({
             name,
@@ -31,7 +41,8 @@ const getAddCollectionScript = app => collection => {
     };
     const hydratedTable = ddlProvider.hydrateTable({tableData, entityData: [jsonSchema], jsonSchema});
 
-    return ddlProvider.createTable(hydratedTable, jsonSchema.isActivated);
+    const script = ddlProvider.createTable(hydratedTable, jsonSchema.isActivated);
+    return AlterScriptDto.getInstance([script], true, false);
 };
 
 /**
@@ -191,7 +202,7 @@ const setIndexKeys = (idToNameHashTable, idToActivatedHashTable, index) => {
 };
 
 module.exports = {
-    getAddCollectionScript,
+    getAddCollectionScriptDto,
     getDeleteCollectionScriptDto,
     getModifyCollectionScript,
     getAddColumnScriptDto,

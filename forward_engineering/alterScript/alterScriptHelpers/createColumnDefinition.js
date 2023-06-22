@@ -1,3 +1,5 @@
+const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
+
 module.exports = _ => {
 	const createColumnDefinition = data => {
 		return Object.assign(
@@ -80,6 +82,9 @@ module.exports = _ => {
 		return jsonSchema.mode || jsonSchema.childType || jsonSchema.type;
 	};
 
+	/**
+	 * @return {HydateColumn}
+	 * */
 	const createColumnDefinitionBySchema = ({ name, jsonSchema, parentJsonSchema, ddlProvider, schemaData }) => {
 		const columnDefinition = createColumnDefinition({
 			name: name,
