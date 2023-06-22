@@ -37,6 +37,8 @@ module.exports = {
 
 	dropView: 'DROP VIEW IF EXISTS ${viewName};',
 
+	renameColumn: 'ALTER TABLE IF EXISTS ${tableName} RENAME COLUMN ${oldName} TO ${newName};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',

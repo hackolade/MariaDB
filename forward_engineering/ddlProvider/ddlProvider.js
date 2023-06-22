@@ -701,5 +701,20 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.addColumn, templateConfig);
         },
+
+        /**
+         * @param tableName {string}
+         * @param oldName {string}
+         * @param newName {string}
+         * @return {string}
+         * */
+        renameColumn(tableName, oldName, newName) {
+            const templateConfig = {
+                tableName,
+                oldName,
+                newName,
+            }
+            return assignTemplates(templates.renameColumn, templateConfig);
+        },
     };
 };

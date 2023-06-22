@@ -387,6 +387,30 @@ module.exports = ({_, wrap}) => {
     }
 
     /**
+     * @param collectionSchema {Object}
+     * @return {string}
+     * */
+    const getCollectionName = (collectionSchema) => {
+        return collectionSchema?.code || collectionSchema?.collectionName || collectionSchema?.name;
+    }
+
+    /**
+     * @param collection {Object}
+     * @return {Object}
+     * */
+    const getCollectionSchema = (collection) => {
+        return {...collection, ...(_.omit(collection?.role, 'properties') || {})}
+    }
+
+    /**
+     * @param collectionSchema {Object}
+     * @return {string}
+     * */
+    const getDatabaseName = (collectionSchema) => {
+        return collectionSchema.compMod?.keyspaceName;
+    }
+
+    /**
      * @param name {string}
      * @return {string}
      * */
@@ -396,6 +420,9 @@ module.exports = ({_, wrap}) => {
 
     return {
         getTableName,
+        getCollectionName,
+        getCollectionSchema,
+        getDatabaseName,
         wrapDbName,
         getContainerName,
         getModifiedGroupItemsByName,
