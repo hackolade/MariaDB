@@ -2,6 +2,7 @@ const {AlterScriptDto} = require("../types/AlterScriptDto");
 const {getRenameColumnScriptDtos} = require("./columnHelpers/renameColumnHelper");
 const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
 const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
+const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHelper");
 
 
 /**
@@ -64,18 +65,18 @@ const getDeleteCollectionScriptDto = app => collection => {
 
 const getModifyCollectionScript = app => collection => {
     const _ = app.require('lodash');
-    const {modifyGroupItems, getCompMod} = require('../../utils/general')({_});
+    const {modifyGroupItems} = require('../../utils/general')({_});
     const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
     const {generateIdToNameHashTable, generateIdToActivatedHashTable} = app.require('@hackolade/ddl-fe-utils');
 
-    const jsonData = {...collection, ...(collection?.role || {})};
+    const tableData = {...collection, ...(collection?.role || {})};
     const databaseName = collection.compMod.keyspaceName;
     const dbData = {databaseName};
-    const idToNameHashTable = generateIdToNameHashTable(jsonData);
-    const idToActivatedHashTable = generateIdToActivatedHashTable(jsonData);
+    const idToNameHashTable = generateIdToNameHashTable(tableData);
+    const idToActivatedHashTable = generateIdToActivatedHashTable(tableData);
 
     const indexesScripts = modifyGroupItems({
-        data: jsonData,
+        data: tableData,
         key: 'Indxs',
         hydrate: hydrateIndex(idToNameHashTable, idToActivatedHashTable, ddlProvider),
         create: (tableName, index) =>
@@ -89,30 +90,13 @@ const getModifyCollectionScript = app => collection => {
         drop: (tableName, index) => ddlProvider.dropIndex(tableName, dbData, index),
     });
 
-    const modifyTableOptionsScript = modifyTableOptions(jsonData, dbData, getCompMod);
+    const modifyTableOptionsScriptDto = getModifyTableOptionsDto(_, ddlProvider)(collection);
 
     return [].concat(modifyTableOptionsScript).concat(indexesScripts).join('\n\n');
-};
 
-const modifyTableOptions = (tableData, dbData, getCompMod) => {
-    const {getTableName} = require('../../utils/general')({});
-    const compMod = getCompMod(tableData);
-    const isDefaultModified = compMod.tableOptions?.new?.defaultCharSet !== compMod.tableOptions?.old?.defaultCharSet;
-    const isCharacterSetModified = compMod.tableOptions?.new?.characterSet !== compMod.tableOptions?.old?.characterSet;
-    const isCollationModified = compMod.tableOptions?.new?.collation !== compMod.tableOptions.collation?.old?.collation;
-
-    if (isCharacterSetModified || isCollationModified || isDefaultModified) {
-        const fullTableName = getTableName(tableData?.code || tableData.name, dbData.databaseName);
-        const defaultStr = tableData.tableOptions?.defaultCharSet ? 'DEFAULT ' : '';
-        const characterSet = tableData.tableOptions?.characterSet
-            ? `CHARACTER SET='${tableData.tableOptions?.characterSet}' `
-            : '';
-        const collate = tableData.tableOptions?.collation ? `COLLATE='${tableData.tableOptions?.collation}'` : '';
-
-        return `ALTER TABLE ${fullTableName} ${defaultStr}${characterSet}${collate};`.trim();
-    } else {
-        return '';
-    }
+    return [
+        modifyTableOptionsScriptDto,
+    ].filter(Boolean);
 };
 
 /**

@@ -39,6 +39,8 @@ module.exports = {
 
 	renameColumn: 'ALTER TABLE IF EXISTS ${tableName} RENAME COLUMN ${oldName} TO ${newName};',
 
+	modifyTableOptions: 'ALTER TABLE ${tableName} ${defaultKeyword}${characterSetDefinition}${collateDefinition};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',

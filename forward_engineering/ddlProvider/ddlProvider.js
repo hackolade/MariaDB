@@ -726,5 +726,30 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.renameColumn, templateConfig);
         },
+
+        /**
+         * @param tableName {string}
+         * @param tableOptions {{
+         *     defaultCharSet?: boolean,
+         *     characterSet?: string,
+         *     collation?: string,
+         * } | undefined}
+         * @return {string}
+         * */
+        modifyTableOptions(tableName, tableOptions) {
+            const defaultKeyword = tableOptions?.defaultCharSet ? 'DEFAULT ' : '';
+            const characterSetDefinition = tableOptions?.characterSet
+                ? `CHARACTER SET='${tableOptions?.characterSet}' `
+                : '';
+            const collateDefinition = tableOptions?.collation ? `COLLATE='${tableOptions?.collation}'` : '';
+
+            const templateConfig = {
+                tableName,
+                defaultKeyword,
+                characterSetDefinition,
+                collateDefinition,
+            }
+            return assignTemplates(templates.modifyTableOptions, templateConfig).trim();
+        },
     };
 };
