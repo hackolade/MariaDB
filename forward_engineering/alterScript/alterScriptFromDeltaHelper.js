@@ -103,7 +103,7 @@ const getAlterCollectionsScripts = (collection, app) => {
         ...addColumnScripts,
         ...deleteColumnScripts,
         ...modifyColumnScript,
-    ].map(script => script.trim());
+    ].filter(Boolean);
 };
 
 const getAlterViewScriptDtos = (collection, app) => {
