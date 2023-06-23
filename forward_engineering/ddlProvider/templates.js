@@ -45,6 +45,8 @@ module.exports = {
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',
 
+	dropIndex: 'ALTER TABLE ${tableName} DROP INDEX IF EXISTS ${indexName};',
+
 	createView:
 		'CREATE ${orReplace}${algorithm}${sqlSecurity}VIEW ${ifNotExist}${name} AS ${selectStatement}${checkOption};\n',
 

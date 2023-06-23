@@ -19,7 +19,7 @@ module.exports = (baseProvider, options, app) => {
         _,
         wrap,
     );
-    const {getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes} =
+    const {getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes, wrapInTics} =
         require('../utils/general')({_, wrap});
     const {generateConstraintsString, foreignKeysToString, foreignActiveKeysToString, createKeyConstraint} =
         require('../helpers/constraintsHelper')({
@@ -176,6 +176,15 @@ module.exports = (baseProvider, options, app) => {
             );
         },
 
+        /**
+         * @param tableName {string}
+         * @param index {Object}
+         * @param dbData {{
+         *     databaseName: string,
+         * }}
+         * @param isParentActivated {boolean}
+         * @return {string}
+         * */
         createIndex(tableName, index, dbData, isParentActivated = true) {
             if (_.isEmpty(index.indxKey) || !index.indxName) {
                 return '';
@@ -565,11 +574,26 @@ module.exports = (baseProvider, options, app) => {
             );
         },
 
+        /**
+         * @param tableName {string}
+         * @param dbData {{
+         *     databaseName: string,
+         * }}
+         * @param index {{
+         *     name: string
+         * }}
+         * @return {string}
+         * */
         dropIndex(tableName, dbData, index) {
-            const table = getTableName(tableName, dbData.databaseName);
+            const ddlTableName = getTableName(tableName, dbData.databaseName);
             const indexName = index.name;
+            const ddlIndexName = wrapInTics(indexName);
 
-            return `ALTER TABLE ${table} DROP INDEX IF EXISTS \`${indexName}\`;`;
+            const templatesConfig = {
+                tableName: ddlTableName,
+                indexName: ddlIndexName,
+            };
+            return assignTemplates(templates.dropIndex, templatesConfig);
         },
 
         viewSelectStatement(viewData, isActivated = true) {

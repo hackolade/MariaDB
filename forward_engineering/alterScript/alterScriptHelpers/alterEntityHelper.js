@@ -1,11 +1,14 @@
 const {AlterScriptDto} = require("../types/AlterScriptDto");
+const {App} = require('../../types/coreApplicationTypes');
 const {getRenameColumnScriptDtos} = require("./columnHelpers/renameColumnHelper");
 const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
 const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
 const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHelper");
+const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
 
 
 /**
+ * @param app {App}
  * @return {(collection: Object) => AlterScriptDto}
  * */
 const getAddCollectionScriptDto = app => collection => {
@@ -47,6 +50,7 @@ const getAddCollectionScriptDto = app => collection => {
 };
 
 /**
+ * @param app {App}
  * @return {(collection: Object) => AlterScriptDto}
  * */
 const getDeleteCollectionScriptDto = app => collection => {
@@ -63,43 +67,25 @@ const getDeleteCollectionScriptDto = app => collection => {
     return AlterScriptDto.getInstance([script], true, true);
 };
 
-const getModifyCollectionScript = app => collection => {
+/**
+ * @param app {App}
+ * @return {(collection: Object) => AlterScriptDto[]}
+ * */
+const getModifyCollectionScriptDtos = app => collection => {
     const _ = app.require('lodash');
-    const {modifyGroupItems} = require('../../utils/general')({_});
     const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
-    const {generateIdToNameHashTable, generateIdToActivatedHashTable} = app.require('@hackolade/ddl-fe-utils');
 
-    const tableData = {...collection, ...(collection?.role || {})};
-    const databaseName = collection.compMod.keyspaceName;
-    const dbData = {databaseName};
-    const idToNameHashTable = generateIdToNameHashTable(tableData);
-    const idToActivatedHashTable = generateIdToActivatedHashTable(tableData);
-
-    const indexesScripts = modifyGroupItems({
-        data: tableData,
-        key: 'Indxs',
-        hydrate: hydrateIndex(idToNameHashTable, idToActivatedHashTable, ddlProvider),
-        create: (tableName, index) =>
-            index.orReplace
-                ? `${ddlProvider.dropIndex(tableName, index, dbData)}\n\n${ddlProvider.createIndex(
-                    tableName,
-                    index,
-                    dbData,
-                )}`
-                : ddlProvider.createIndex(tableName, index, dbData), // TODO: fix indexed fields
-        drop: (tableName, index) => ddlProvider.dropIndex(tableName, dbData, index),
-    });
-
+    const modifyIndexesScriptDtos = getModifyIndexesDtos(app)(collection);
     const modifyTableOptionsScriptDto = getModifyTableOptionsDto(_, ddlProvider)(collection);
-
-    return [].concat(modifyTableOptionsScript).concat(indexesScripts).join('\n\n');
 
     return [
         modifyTableOptionsScriptDto,
+        ...modifyIndexesScriptDtos,
     ].filter(Boolean);
 };
 
 /**
+ * @param app {App}
  * @return {(collection: Object) => AlterScriptDto[]}
  * */
 const getAddColumnScriptDto = app => collection => {
@@ -132,6 +118,7 @@ const getAddColumnScriptDto = app => collection => {
 };
 
 /**
+ * @param app {App}
  * @return {(collection: Object) => AlterScriptDto[]}
  * */
 const getDeleteColumnScriptDtos = app => collection => {
@@ -155,6 +142,7 @@ const getDeleteColumnScriptDtos = app => collection => {
 };
 
 /**
+ * @param app {App}
  * @return {(collection: Object) => AlterScriptDto[]}
  * */
 const getModifyColumnScriptDtos = app => collection => {
@@ -167,28 +155,10 @@ const getModifyColumnScriptDtos = app => collection => {
     return [...renameColumnScriptDtos, ...changeTypeScriptDtos];
 };
 
-const hydrateIndex = (idToNameHashTable, idToActivatedHashTable, ddlProvider) => index => {
-    index = setIndexKeys(idToNameHashTable, idToActivatedHashTable, index);
-
-    return ddlProvider.hydrateIndex(index);
-};
-
-const setIndexKeys = (idToNameHashTable, idToActivatedHashTable, index) => {
-    return {
-        ...index,
-        indxKey:
-            index.indxKey?.map(key => ({
-                ...key,
-                name: idToNameHashTable[key.keyId],
-                isActivated: idToActivatedHashTable[key.keyId],
-            })) || [],
-    };
-};
-
 module.exports = {
     getAddCollectionScriptDto,
     getDeleteCollectionScriptDto,
-    getModifyCollectionScript,
+    getModifyCollectionScriptDtos,
     getAddColumnScriptDto,
     getDeleteColumnScriptDtos,
     getModifyColumnScriptDtos,
