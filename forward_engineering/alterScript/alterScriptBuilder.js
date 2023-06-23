@@ -1,6 +1,16 @@
 const {getAlterScriptDtos} = require("./alterScriptFromDeltaHelper");
-
+const {CoreData, Option} = require('../types/coreApplicationTypes')
 const {AlterScriptDto} = require('./types/AlterScriptDto');
+
+/**
+ * @param options {{additionalOptions: Option[]} | undefined}
+ * @return {boolean}
+ * */
+const getShouldApplyDropStatements = (options) => {
+    return options?.additionalOptions?.some(
+        option => option.id === 'applyDropStatements' && option.value,
+    );
+}
 
 /**
  * @return {(dtos: AlterScriptDto[], shouldApplyDropStatements: boolean) => string}
@@ -39,10 +49,7 @@ const joinAlterScriptDtosIntoScript = (_) => (dtos, shouldApplyDropStatements) =
 const buildEntityLevelAlterScript = (data, app) => {
     const _ = app.require('lodash');
     const alterScriptDtos = getAlterScriptDtos(data, app);
-    const shouldApplyDropStatements = data.options?.additionalOptions?.some(
-        option => option.id === 'applyDropStatements' && option.value,
-    );
-
+    const shouldApplyDropStatements = getShouldApplyDropStatements(data.options);
     return joinAlterScriptDtosIntoScript(_)(alterScriptDtos, shouldApplyDropStatements);
 }
 
@@ -62,7 +69,6 @@ const mapCoreDataForContainerLevelScripts = (data) => {
     return {
         ...data,
         jsonSchema: data.collections[0],
-        internalDefinitions: Object.values(data.internalDefinitions)[0],
     }
 }
 
@@ -75,9 +81,7 @@ const buildContainerLevelAlterScript = (data, app) => {
     const preparedData = mapCoreDataForContainerLevelScripts(data);
     const _ = app.require('lodash');
     const alterScriptDtos = getAlterScriptDtos(preparedData, app);
-    const shouldApplyDropStatements = preparedData.options?.additionalOptions?.some(
-        option => option.id === 'applyDropStatements' && option.value,
-    );
+    const shouldApplyDropStatements = getShouldApplyDropStatements(preparedData.options);
 
     return joinAlterScriptDtosIntoScript(_)(alterScriptDtos, shouldApplyDropStatements);
 }

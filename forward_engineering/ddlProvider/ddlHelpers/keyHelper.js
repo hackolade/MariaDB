@@ -6,11 +6,8 @@ module.exports = (_, clean) => {
 	const isUniqueKey = column => {
 		if (column.compositeUniqueKey) {
 			return false;
-		} else if (!column.unique) {
-			return false;
-		} else {
-			return true;
 		}
+		return column.unique;
 	};
 
 	const isInlineUnique = column => {
@@ -24,13 +21,11 @@ module.exports = (_, clean) => {
 	const isPrimaryKey = column => {
 		if (column.compositeUniqueKey) {
 			return false;
-		} else if (column.compositePrimaryKey) {
-			return false;
-		} else if (!column.primaryKey) {
-			return false;
-		} else {
-			return true;
 		}
+		if (column.compositePrimaryKey) {
+			return false;
+		}
+		return column.primaryKey;
 	};
 
 	const isInlinePrimaryKey = column => {

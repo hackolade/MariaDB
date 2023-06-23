@@ -15,14 +15,14 @@ module.exports = (baseProvider, options, app) => {
         clean,
     } = app.require('@hackolade/ddl-fe-utils').general;
     const {assignTemplates} = app.require('@hackolade/ddl-fe-utils');
-    const {decorateDefault, decorateType, canBeNational, getSign} = require('../helpers/columnDefinitionHelper')(
+    const {decorateDefault, decorateType, canBeNational, getSign} = require('./ddlHelpers/columnDefinitionHelper')(
         _,
         wrap,
     );
     const {getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes, wrapInTics} =
         require('../utils/general')({_, wrap});
     const {generateConstraintsString, foreignKeysToString, foreignActiveKeysToString, createKeyConstraint} =
-        require('../helpers/constraintsHelper')({
+        require('./ddlHelpers/constraintsHelper')({
             _,
             commentIfDeactivated,
             checkAllKeysDeactivated,
@@ -30,7 +30,7 @@ module.exports = (baseProvider, options, app) => {
             assignTemplates,
             escapeQuotes,
         });
-    const keyHelper = require('../helpers/keyHelper')(_, clean);
+    const keyHelper = require('./ddlHelpers/keyHelper')(_, clean);
 
     return {
         createDatabase({

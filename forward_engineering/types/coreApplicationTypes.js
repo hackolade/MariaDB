@@ -31,6 +31,18 @@ class Logger {
     clear
 }
 
+class Option {
+    /**
+     * @type {string}
+     */
+    id
+
+    /**
+     * @type {any}
+     */
+    value
+}
+
 class CoreData {
     /**
      * @type {string}
@@ -128,10 +140,7 @@ class CoreData {
     hiddenKeys
 
     /**
-     * @type {Array<{
-     *     id: string,
-     *     value: any,
-     * }> | {separateBucket: boolean}}
+     * @type {Array<Option> | {separateBucket: boolean} | {additionalOptions: Array<Option>}}
      */
     options
 
@@ -152,6 +161,7 @@ class CoreData {
 
 module.exports = {
     App,
+    Option,
     CoreData,
     Logger,
     PluginError,
