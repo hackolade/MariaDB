@@ -361,6 +361,26 @@ module.exports = ({_, wrap}) => {
         return `\`${name}\``;
     };
 
+    /**
+     * @param statement {string}
+     * @param isPartOfLine {boolean | undefined}
+     * @param isActivated {boolean | undefined}
+     * @param inlineComment {string | undefined}
+     * @return {string}
+     * */
+    const commentIfDeactivated = (statement, { isActivated, isPartOfLine, inlineComment = '--' }) => {
+        if (isActivated !== false) {
+            return statement;
+        }
+        if (isPartOfLine) {
+            return '/* ' + statement + ' */';
+        } else if (statement.includes('\n')) {
+            return '/*\n' + statement + ' */\n';
+        } else {
+            return inlineComment + ' ' + statement;
+        }
+    };
+
     return {
         getTableName,
         getCollectionName,
@@ -382,5 +402,6 @@ module.exports = ({_, wrap}) => {
         getViewSchema,
         getViewName,
         wrapInTics,
+        commentIfDeactivated,
     };
 }

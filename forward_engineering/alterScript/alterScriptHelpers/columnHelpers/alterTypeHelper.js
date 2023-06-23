@@ -41,7 +41,8 @@ const getUpdateTypesScriptDtos = (_, ddlProvider) => (collection) => {
                 AlterScriptDto.getInstance([dropScript], true, true),
                 AlterScriptDto.getInstance([createScript], true, false),
             ];
-        });
+        })
+        .flat();
 }
 
 module.exports = {

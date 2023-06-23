@@ -76,8 +76,7 @@ const getModifiedViewScriptDto = app => view => {
 
 	const { deactivatedWholeStatement, selectStatement } = ddlProvider.viewSelectStatement(viewData);
 
-	const algorithm =
-		viewSchema.algorithm && viewSchema.algorithm !== 'UNDEFINED'
+	const algorithm = viewSchema.algorithm
 			? `ALGORITHM ${viewSchema.algorithm}`
 			: 'ALGORITHM UNDEFINED';
 	const sqlSecurity = viewData.sqlSecurity ? `SQL SECURITY ${viewData.sqlSecurity}` : '';

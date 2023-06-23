@@ -88,7 +88,7 @@ const getModifyCollectionScriptDtos = app => collection => {
  * @param app {App}
  * @return {(collection: Object) => AlterScriptDto[]}
  * */
-const getAddColumnScriptDto = app => collection => {
+const getAddColumnScriptDtos = app => collection => {
     const _ = app.require('lodash');
     const {createColumnDefinitionBySchema} = require('./createColumnDefinition')(_);
     const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
@@ -159,7 +159,7 @@ module.exports = {
     getAddCollectionScriptDto,
     getDeleteCollectionScriptDto,
     getModifyCollectionScriptDtos,
-    getAddColumnScriptDto,
+    getAddColumnScriptDtos,
     getDeleteColumnScriptDtos,
     getModifyColumnScriptDtos,
 };

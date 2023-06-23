@@ -1,7 +1,7 @@
 const {
     getAddCollectionScriptDto,
     getDeleteCollectionScriptDto,
-    getAddColumnScriptDto,
+    getAddColumnScriptDtos,
     getDeleteColumnScriptDtos,
     getModifyColumnScriptDtos,
     getModifyCollectionScriptDtos,
@@ -49,7 +49,7 @@ const getAlterContainersScriptDtos = (collection, app, {skipModified} = {}) => {
         .concat(modifiedContainers)
         .filter(Boolean)
         .map(container => ({...Object.values(container.properties)[0], name: Object.keys(container.properties)[0]}))
-        .map(getModifyContainerScriptDtos);
+        .flatMap(getModifyContainerScriptDtos);
 
     return [
         ...addContainersScriptDtos,
@@ -77,13 +77,13 @@ const getAlterCollectionsScripts = (collection, app) => {
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
         .filter(collection => collection.compMod?.modified)
-        .map(getModifyCollectionScriptDtos(app));
+        .flatMap(getModifyCollectionScriptDtos(app));
     const addColumnScripts = []
         .concat(collection.properties?.entities?.properties?.added?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
         .filter(collection => !collection.compMod?.created)
-        .flatMap(getAddColumnScriptDto(app));
+        .flatMap(getAddColumnScriptDtos(app));
     const deleteColumnScripts = []
         .concat(collection.properties?.entities?.properties?.deleted?.items)
         .filter(Boolean)

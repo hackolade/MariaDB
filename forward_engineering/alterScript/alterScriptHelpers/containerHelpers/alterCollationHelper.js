@@ -1,7 +1,7 @@
 const {AlterScriptDto} = require("../../types/AlterScriptDto");
 
 /**
- * @return {(data: Object) => AlterScriptDto}
+ * @return {(data: Object) => AlterScriptDto | undefined}
  * */
 const getModifyCollationScriptDto = (_, ddlProvider) => (containerData) => {
     const {
