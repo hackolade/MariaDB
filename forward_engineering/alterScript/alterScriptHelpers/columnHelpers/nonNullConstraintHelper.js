@@ -5,11 +5,12 @@ const {HydratedColumn} = require('../../../ddlProvider/types/hydratedColumn');
  * @return {(collection: Object) => AlterScriptDto[]}
  * */
 const getModifyNonNullColumnsScriptDtos = (_, ddlProvider) => (collection) => {
-    const {getCollectionName, getTableName, getDatabaseName, wrapInTics} = require('../../../utils/general')(_);
+    const {getCollectionName, getTableName, getDatabaseName, wrapInTics, getCollectionSchema} = require('../../../utils/general')(_);
     const {createColumnDefinitionBySchema} = require('../createColumnDefinition')(_);
 
-    const collectionName = getCollectionName(collection);
-    const databaseName = getDatabaseName(collection);
+    const collectionSchema = getCollectionSchema(collection);
+    const collectionName = getCollectionName(collectionSchema);
+    const databaseName = getDatabaseName(collectionSchema);
     const fullTableName = getTableName(collectionName, databaseName);
 
     const currentRequiredColumnNames = collection.required || [];

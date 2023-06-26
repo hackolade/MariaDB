@@ -5,6 +5,7 @@ const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
 const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
 const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHelper");
 const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
+const {getModifyNonNullColumnsScriptDtos} = require("./columnHelpers/nonNullConstraintHelper");
 
 
 /**
@@ -151,8 +152,14 @@ const getModifyColumnScriptDtos = app => collection => {
 
     const renameColumnScriptDtos = getRenameColumnScriptDtos(_, ddlProvider)(collection);
     const changeTypeScriptDtos = getUpdateTypesScriptDtos(_, ddlProvider)(collection);
+    const modifyNotNullScriptDtos = getModifyNonNullColumnsScriptDtos(_, ddlProvider)(collection);
 
-    return [...renameColumnScriptDtos, ...changeTypeScriptDtos];
+    return [
+        ...renameColumnScriptDtos,
+        ...changeTypeScriptDtos,
+        ...modifyNotNullScriptDtos
+    ]
+        .filter(Boolean);
 };
 
 module.exports = {

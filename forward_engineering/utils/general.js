@@ -10,9 +10,8 @@ module.exports = ({_, wrap}) => {
     const getNamePrefixedWithSchemaName = (name, schemaName) => {
         if (schemaName) {
             return `\`${schemaName}\`.\`${name}\``;
-        } else {
-            return `\`${name}\``;
         }
+        return `\`${name}\``;
     };
 
     /**
