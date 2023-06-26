@@ -1,6 +1,13 @@
-const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
+const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
+const {ColumnDefinition} = require('../../ddlProvider/types/columnDefinition');
+
 
 module.exports = _ => {
+
+	/**
+	 * @param data {ColumnDefinition}
+	 * @return {ColumnDefinition}
+	 * */
 	const createColumnDefinition = data => {
 		return Object.assign(
 			{
@@ -18,6 +25,10 @@ module.exports = _ => {
 		);
 	};
 
+	/**
+	 * @param propertyName {string}
+	 * @return {boolean}
+	 * */
 	const isNullable = (parentSchema, propertyName) => {
 		if (!Array.isArray(parentSchema.required)) {
 			return true;
@@ -26,54 +37,67 @@ module.exports = _ => {
 		return !parentSchema.required.includes(propertyName);
 	};
 
+	/**
+	 * @return {any}
+	 * */
 	const getDefault = jsonSchema => {
 		const defaultValue = jsonSchema.default;
 
-		if (_.isBoolean(defaultValue)) {
-			return defaultValue;
-		} else if (jsonSchema.default === null) {
+		if (jsonSchema.default === null) {
 			return 'NULL';
-		} else {
-			return defaultValue;
 		}
+		return defaultValue;
 	};
 
+	/**
+	 * @return {number | string}
+	 * */
 	const getLength = jsonSchema => {
 		if (_.isNumber(jsonSchema.length)) {
 			return jsonSchema.length;
-		} else if (_.isNumber(jsonSchema.maxLength)) {
-			return jsonSchema.maxLength;
-		} else {
-			return '';
 		}
+		if (_.isNumber(jsonSchema.maxLength)) {
+			return jsonSchema.maxLength;
+		}
+		return '';
 	};
 
+	/**
+	 * @return {number | string}
+	 * */
 	const getScale = jsonSchema => {
 		if (_.isNumber(jsonSchema.scale)) {
 			return jsonSchema.scale;
-		} else {
-			return '';
 		}
+		return '';
 	};
 
+	/**
+	 * @return {number | string}
+	 * */
 	const getPrecision = jsonSchema => {
 		if (_.isNumber(jsonSchema.precision)) {
 			return jsonSchema.precision;
-		} else if (_.isNumber(jsonSchema.fractSecPrecision)) {
-			return jsonSchema.fractSecPrecision;
-		} else {
-			return '';
 		}
+		if (_.isNumber(jsonSchema.fractSecPrecision)) {
+			return jsonSchema.fractSecPrecision;
+		}
+		return '';
 	};
 
+	/**
+	 * @return {boolean | string}
+	 * */
 	const hasMaxLength = jsonSchema => {
 		if (jsonSchema.hasMaxLength) {
 			return jsonSchema.hasMaxLength;
-		} else {
-			return '';
 		}
+		return '';
 	};
 
+	/**
+	 * @return {string}
+	 * */
 	const getType = jsonSchema => {
 		if (jsonSchema.$ref) {
 			return jsonSchema.$ref.split('/').pop();
@@ -83,7 +107,12 @@ module.exports = _ => {
 	};
 
 	/**
-	 * @return {HydateColumn}
+	 * @param name {string}
+	 * @param jsonSchema {Object}
+	 * @param parentJsonSchema {Object}
+	 * @param ddlProvider {any}
+	 * @param schemaData {any | undefined}
+	 * @return {HydratedColumn}
 	 * */
 	const createColumnDefinitionBySchema = ({ name, jsonSchema, parentJsonSchema, ddlProvider, schemaData }) => {
 		const columnDefinition = createColumnDefinition({
@@ -102,7 +131,7 @@ module.exports = _ => {
 		return ddlProvider.hydrateColumn({
 			columnDefinition,
 			jsonSchema,
-			schemaData,
+			dbData: schemaData,
 		});
 	};
 

@@ -2,7 +2,7 @@ const {AlterScriptDto} = require("../types/AlterScriptDto");
 const {App} = require('../../types/coreApplicationTypes');
 const {getRenameColumnScriptDtos} = require("./columnHelpers/renameColumnHelper");
 const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
-const {HydateColumn} = require('../../ddlProvider/types/hydateColumn');
+const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
 const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHelper");
 const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
 
@@ -21,7 +21,7 @@ const getAddCollectionScriptDto = app => collection => {
     const dbData = {databaseName};
     const jsonSchema = {...collection, ...(collection?.role || {})};
     /**
-     * @type {HydateColumn[]}
+     * @type {HydratedColumn[]}
      * */
     const columnDefinitions = _.toPairs(jsonSchema.properties).map(([name, column]) =>
         createColumnDefinitionBySchema({

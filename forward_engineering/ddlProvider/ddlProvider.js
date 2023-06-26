@@ -1,7 +1,8 @@
 const defaultTypes = require('../configs/defaultTypes');
 const types = require('../configs/types');
 const templates = require('./templates');
-const {HydateColumn} = require('./types/hydateColumn');
+const {HydratedColumn} = require('./types/hydratedColumn');
+const {ColumnDefinition} = require('./types/columnDefinition');
 
 module.exports = (baseProvider, options, app) => {
     const _ = app.require('lodash');
@@ -123,6 +124,7 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
+         * @param columnDefinition {ColumnDefinition}
          * @return {string}
          * */
         convertColumnDefinition(columnDefinition) {
@@ -385,7 +387,9 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
-         * @return {HydateColumn}
+         * @param columnDefinition {ColumnDefinition}
+         * @param dbData {any | undefined}
+         * @return {HydratedColumn}
          * */
         hydrateColumn({columnDefinition, jsonSchema, dbData}) {
             return {
@@ -774,6 +778,48 @@ module.exports = (baseProvider, options, app) => {
                 collateDefinition,
             }
             return assignTemplates(templates.modifyTableOptions, templateConfig).trim();
+        },
+
+        /**
+         * @param tableName {string}
+         * @param columnName {string}
+         * @param columnDefinition {HydratedColumn}
+         * @return {string}
+         * */
+        setNotNullConstraint(
+            tableName,
+            columnName,
+            columnDefinition,
+        ) {
+            const type = _.toUpper(columnDefinition.type);
+            const columnTypeDefinition = decorateType(type, columnDefinition);
+            const templateConfig = {
+                tableName,
+                columnName,
+                columnTypeDefinition,
+            }
+            return assignTemplates(templates.setNotNullConstraint, templateConfig)
+        },
+
+        /**
+         * @param tableName {string}
+         * @param columnName {string}
+         * @param columnDefinition {HydratedColumn}
+         * @return {string}
+         * */
+        dropNotNullConstraint(
+            tableName,
+            columnName,
+            columnDefinition,
+        ) {
+            const type = _.toUpper(columnDefinition.type);
+            const columnTypeDefinition = decorateType(type, columnDefinition);
+            const templateConfig = {
+                tableName,
+                columnName,
+                columnTypeDefinition,
+            }
+            return assignTemplates(templates.dropNotNullConstraint, templateConfig)
         },
     };
 };

@@ -41,6 +41,10 @@ module.exports = {
 
 	modifyTableOptions: 'ALTER TABLE ${tableName} ${defaultKeyword}${characterSetDefinition}${collateDefinition};',
 
+	setNotNullConstraint: 'ALTER TABLE ${tableName} MODIFY ${columnName} ${columnTypeDefinition} NOT NULL;',
+
+	dropNotNullConstraint: 'ALTER TABLE ${tableName} MODIFY ${columnName} ${columnTypeDefinition};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',

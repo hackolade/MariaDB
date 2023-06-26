@@ -1,4 +1,4 @@
-class HydateColumn {
+class HydratedColumn {
 
     /**
      * @type {string}
@@ -66,22 +66,22 @@ class HydateColumn {
     length
 
     /**
-     * @type {any}
+     * @type {boolean | undefined}
      * */
     national
 
     /**
-     * @type {any}
+     * @type {boolean | undefined}
      * */
     autoIncrement
 
     /**
-     * @type {any}
+     * @type {boolean | undefined}
      * */
     zerofill
 
     /**
-     * @type {any}
+     * @type {boolean | undefined}
      * */
     invisible
 
@@ -91,7 +91,7 @@ class HydateColumn {
     compressionMethod
 
     /**
-     * @type {any}
+     * @type {Array<string> | undefined}
      * */
     enum
 
@@ -101,27 +101,27 @@ class HydateColumn {
     synonym
 
     /**
-     * @type {any}
+     * @type {boolean | undefined}
      * */
     signed
 
     /**
-     * @type {any}
+     * @type {number | undefined}
      * */
     microSecPrecision
 
     /**
-     * @type {any}
+     * @type {string | undefined}
      * */
     charset
 
     /**
-     * @type {any}
+     * @type {string | undefined}
      * */
     collation
 
 }
 
 module.exports = {
-    HydateColumn,
+    HydratedColumn,
 }
