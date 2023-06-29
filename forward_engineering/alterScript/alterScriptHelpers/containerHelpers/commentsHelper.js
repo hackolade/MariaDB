@@ -8,13 +8,16 @@ const extractDescription = (container) => {
  * @return {(collection: Object) => AlterScriptDto | undefined}
  * */
 const getUpsertCommentsScriptDto = (_, ddlProvider) => (container) => {
-    const {wrapComment, wrapInQuotes} = require('../../../utils/general')(_);
+    const {
+        escapeQuotes,
+        wrapInTics
+    } = require('../../../utils/general')({_});
 
     const description = extractDescription(container);
     if (description.new && description.new !== description.old) {
-        const wrappedComment = wrapComment(description.new);
-        const wrappedSchemaName = wrapInQuotes(container.role.name);
-        const script = ddlProvider.updateSchemaComment(wrappedSchemaName, wrappedComment);
+        const escapedComment = escapeQuotes(description.new);
+        const wrappedSchemaName = wrapInTics(container.role.name);
+        const script = ddlProvider.updateSchemaComment(wrappedSchemaName, escapedComment);
         return AlterScriptDto.getInstance([script], true, false);
     }
     return undefined;
@@ -24,11 +27,13 @@ const getUpsertCommentsScriptDto = (_, ddlProvider) => (container) => {
  * @return {(collection: Object) => AlterScriptDto | undefined}
  * */
 const getDropCommentsScriptDto = (_, ddlProvider) => (container) => {
-    const {wrapInQuotes} = require('../../../utils/general')(_);
+    const {
+        wrapInTics
+    } = require('../../../utils/general')({_});
 
     const description = extractDescription(container);
     if (description.old && !description.new) {
-        const wrappedSchemaName = wrapInQuotes(container.role.name);
+        const wrappedSchemaName = wrapInTics(container.role.name);
         const script = ddlProvider.dropSchemaComment(wrappedSchemaName);
         return AlterScriptDto.getInstance([script], true, true);
     }

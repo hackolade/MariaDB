@@ -29,6 +29,8 @@ module.exports = {
 
 	updateCommentOnTable: 'ALTER TABLE ${tableName} COMMENT ${comment};',
 
+	updateCommentOnSchema: 'ALTER SCHEMA ${schemaName} COMMENT = ${comment};',
+
 	alterCollation: 'ALTER DATABASE ${databaseName} CHARACTER SET=${characterSet} COLLATE=${collation};',
 
 	dropTable: 'DROP TABLE IF EXISTS ${tableName};',

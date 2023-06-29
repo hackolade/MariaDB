@@ -825,5 +825,30 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.updateCommentOnTable, templateConfig);
         },
+
+        /**
+         * @param schemaName {string}
+         * @param comment {string}
+         * @return string
+         * */
+        updateSchemaComment(schemaName, comment) {
+            const templateConfig = {
+                schemaName,
+                comment
+            }
+            return assignTemplates(templates.updateCommentOnSchema, templateConfig);
+        },
+
+        /**
+         * @param schemaName {string}
+         * @return string
+         * */
+        dropSchemaComment(schemaName) {
+            const templateConfig = {
+                schemaName,
+                comment: ''
+            }
+            return assignTemplates(templates.updateCommentOnSchema, templateConfig);
+        },
     };
 };
