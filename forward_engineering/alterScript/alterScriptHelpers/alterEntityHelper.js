@@ -1,11 +1,11 @@
 const {AlterScriptDto} = require("../types/AlterScriptDto");
 const {App} = require('../../types/coreApplicationTypes');
 const {getRenameColumnScriptDtos} = require("./columnHelpers/renameColumnHelper");
-const {getUpdateTypesScriptDtos} = require("./columnHelpers/alterTypeHelper");
 const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
 const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHelper");
 const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
-const {getModifyNonNullColumnsScriptDtos} = require("./columnHelpers/nonNullConstraintHelper");
+const {getModifyEntityCommentsScriptDtos} = require("./entityHelpers/commentsHelper");
+const {getModifyColumnDefinitionScriptDtos} = require("./columnHelpers/modifyColumnDefinitionHelper");
 
 
 /**
@@ -78,10 +78,12 @@ const getModifyCollectionScriptDtos = app => collection => {
 
     const modifyIndexesScriptDtos = getModifyIndexesDtos(app)(collection);
     const modifyTableOptionsScriptDto = getModifyTableOptionsDto(_, ddlProvider)(collection);
+    const modifyTableCommentsScriptDtos = getModifyEntityCommentsScriptDtos(_, ddlProvider)(collection);
 
     return [
         modifyTableOptionsScriptDto,
         ...modifyIndexesScriptDtos,
+        ...modifyTableCommentsScriptDtos,
     ].filter(Boolean);
 };
 
@@ -151,13 +153,11 @@ const getModifyColumnScriptDtos = app => collection => {
     const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 
     const renameColumnScriptDtos = getRenameColumnScriptDtos(_, ddlProvider)(collection);
-    const changeTypeScriptDtos = getUpdateTypesScriptDtos(_, ddlProvider)(collection);
-    const modifyNotNullScriptDtos = getModifyNonNullColumnsScriptDtos(_, ddlProvider)(collection);
+    const modifyColumnDefinitionScriptDtos = getModifyColumnDefinitionScriptDtos(_, ddlProvider)(collection);
 
     return [
         ...renameColumnScriptDtos,
-        ...changeTypeScriptDtos,
-        ...modifyNotNullScriptDtos
+        ...modifyColumnDefinitionScriptDtos,
     ]
         .filter(Boolean);
 };

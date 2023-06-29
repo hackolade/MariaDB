@@ -35,15 +35,13 @@ module.exports = {
 
 	addColumn: 'ALTER TABLE IF EXISTS ${tableName} ADD COLUMN IF NOT EXISTS ${columnDefinition};',
 
+	modifyColumn: 'ALTER TABLE ${tableName} MODIFY COLUMN IF EXISTS ${columnDefinition};',
+
 	dropView: 'DROP VIEW IF EXISTS ${viewName};',
 
 	renameColumn: 'ALTER TABLE IF EXISTS ${tableName} RENAME COLUMN ${oldName} TO ${newName};',
 
 	modifyTableOptions: 'ALTER TABLE ${tableName} ${defaultKeyword}${characterSetDefinition}${collateDefinition};',
-
-	setNotNullConstraint: 'ALTER TABLE ${tableName} MODIFY ${columnName} ${columnTypeDefinition} NOT NULL;',
-
-	dropNotNullConstraint: 'ALTER TABLE ${tableName} MODIFY ${columnName} ${columnTypeDefinition};',
 
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +

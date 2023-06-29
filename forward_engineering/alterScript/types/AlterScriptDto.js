@@ -8,6 +8,11 @@ class ModificationScript {
      * @type boolean
      * */
     isDropScript
+
+    /**
+     * @type boolean
+     * */
+    isDangerousScript
 }
 
 class AlterScriptDto {
@@ -66,7 +71,11 @@ class AlterScriptDto {
      * @param isActivated {boolean}
      * @return {AlterScriptDto | undefined}
      * */
-    static getDropAndRecreateInstance(dropScript, createScript, isActivated) {
+    static getDropAndRecreateInstance(
+        dropScript,
+        createScript,
+        isActivated
+    ) {
         /**
          * @type {ModificationScript[]}
          * */

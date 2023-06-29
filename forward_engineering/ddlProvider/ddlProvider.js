@@ -124,10 +124,10 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
-         * @param columnDefinition {ColumnDefinition}
+         * @param columnDefinition {HydratedColumn}
          * @return {string}
          * */
-        convertColumnDefinition(columnDefinition) {
+        mapColumnToColumnDefinitionDdl(columnDefinition) {
             const type = _.toUpper(columnDefinition.type);
             const notNull = columnDefinition.nullable ? '' : ' NOT NULL';
             const primaryKey = columnDefinition.primaryKey
@@ -154,28 +154,35 @@ module.exports = (baseProvider, options, app) => {
                 : '';
             const signed = getSign(type, columnDefinition.signed);
 
-            return commentIfDeactivated(
-                assignTemplates(templates.columnDefinition, {
-                    name: columnDefinition.name,
-                    type: decorateType(type, columnDefinition),
-                    not_null: notNull,
-                    primary_key: primaryKey,
-                    unique_key: unique,
-                    default: defaultValue,
-                    autoIncrement,
-                    compressed,
-                    signed,
-                    zeroFill,
-                    invisible,
-                    comment,
-                    national,
-                    charset,
-                    collate,
-                }),
-                {
-                    isActivated: columnDefinition.isActivated,
-                },
-            );
+            return assignTemplates(templates.columnDefinition, {
+                name: columnDefinition.name,
+                type: decorateType(type, columnDefinition),
+                not_null: notNull,
+                primary_key: primaryKey,
+                unique_key: unique,
+                default: defaultValue,
+                autoIncrement,
+                compressed,
+                signed,
+                zeroFill,
+                invisible,
+                comment,
+                national,
+                charset,
+                collate,
+            })
+        },
+
+        /**
+         * @param columnDefinition {HydratedColumn}
+         * @return {string}
+         * */
+        convertColumnDefinition(columnDefinition) {
+            const columnDefinitionAsDDL = this.mapColumnToColumnDefinitionDdl(columnDefinition);
+            const activationConfig = {
+                isActivated: columnDefinition.isActivated,
+            };
+            return commentIfDeactivated(columnDefinitionAsDDL, activationConfig);
         },
 
         /**
@@ -757,6 +764,20 @@ module.exports = (baseProvider, options, app) => {
 
         /**
          * @param tableName {string}
+         * @param hydratedColumn {HydratedColumn}
+         * @return {string}
+         * */
+        modifyColumn(tableName, hydratedColumn,) {
+            const columnDefinitionAsDDL = this.mapColumnToColumnDefinitionDdl(hydratedColumn);
+            const templateConfig = {
+                tableName,
+                columnDefinition: columnDefinitionAsDDL,
+            }
+            return assignTemplates(templates.modifyColumn, templateConfig)
+        },
+
+        /**
+         * @param tableName {string}
          * @param tableOptions {{
          *     defaultCharSet?: boolean,
          *     characterSet?: string,
@@ -780,46 +801,5 @@ module.exports = (baseProvider, options, app) => {
             return assignTemplates(templates.modifyTableOptions, templateConfig).trim();
         },
 
-        /**
-         * @param tableName {string}
-         * @param columnName {string}
-         * @param columnDefinition {HydratedColumn}
-         * @return {string}
-         * */
-        setNotNullConstraint(
-            tableName,
-            columnName,
-            columnDefinition,
-        ) {
-            const type = _.toUpper(columnDefinition.type);
-            const columnTypeDefinition = decorateType(type, columnDefinition);
-            const templateConfig = {
-                tableName,
-                columnName,
-                columnTypeDefinition,
-            }
-            return assignTemplates(templates.setNotNullConstraint, templateConfig)
-        },
-
-        /**
-         * @param tableName {string}
-         * @param columnName {string}
-         * @param columnDefinition {HydratedColumn}
-         * @return {string}
-         * */
-        dropNotNullConstraint(
-            tableName,
-            columnName,
-            columnDefinition,
-        ) {
-            const type = _.toUpper(columnDefinition.type);
-            const columnTypeDefinition = decorateType(type, columnDefinition);
-            const templateConfig = {
-                tableName,
-                columnName,
-                columnTypeDefinition,
-            }
-            return assignTemplates(templates.dropNotNullConstraint, templateConfig)
-        },
     };
 };

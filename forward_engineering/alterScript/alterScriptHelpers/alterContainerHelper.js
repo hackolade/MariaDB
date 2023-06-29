@@ -2,6 +2,7 @@ const {AlterScriptDto} = require('../types/AlterScriptDto');
 const {getModifyProcedureScriptDtos} = require("./alterProcedureHelper");
 const {getModifyUdfsScriptDtos} = require("./alterUdfHelper");
 const {getModifyCollationScriptDto} = require("./containerHelpers/alterCollationHelper");
+const {getModifySchemaCommentsScriptDtos} = require("./containerHelpers/commentsHelper");
 
 module.exports = app => {
     const _ = app.require('lodash');
@@ -45,11 +46,13 @@ module.exports = app => {
         const modifyCollationScript = getModifyCollationScriptDto(_, ddlProvider)(containerData);
         const modifyProceduresScriptDtos = getModifyProcedureScriptDtos(_, ddlProvider)(containerData);
         const modifyUdfsScriptDtos = getModifyUdfsScriptDtos(_, ddlProvider)(containerData);
+        const modifyCommentsScriptDtos = getModifySchemaCommentsScriptDtos(_, ddlProvider)(containerData);
 
         return [
             modifyCollationScript,
             ...modifyUdfsScriptDtos,
             ...modifyProceduresScriptDtos,
+            ...modifyCommentsScriptDtos,
         ]
             .filter(Boolean);
     };
