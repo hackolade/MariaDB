@@ -140,7 +140,7 @@ module.exports = (baseProvider, options, app) => {
             const autoIncrement = columnDefinition.autoIncrement ? ' AUTO_INCREMENT' : '';
             const invisible = columnDefinition.invisible ? ' INVISIBLE' : '';
             const national = columnDefinition.national && canBeNational(type) ? 'NATIONAL ' : '';
-            const comment = columnDefinition.comment ? ` COMMENT='${escapeQuotes(columnDefinition.comment)}'` : '';
+            const comment = columnDefinition.comment ? ` COMMENT '${escapeQuotes(columnDefinition.comment)}'` : '';
             const charset = type !== 'JSON' && columnDefinition.charset ? ` CHARSET ${columnDefinition.charset}` : '';
             const collate =
                 type !== 'JSON' && columnDefinition.charset && columnDefinition.collation
@@ -821,7 +821,7 @@ module.exports = (baseProvider, options, app) => {
         dropTableComment(tableName) {
             const templateConfig = {
                 tableName,
-                comment: ''
+                comment: "''"
             }
             return assignTemplates(templates.updateCommentOnTable, templateConfig);
         },
@@ -846,7 +846,7 @@ module.exports = (baseProvider, options, app) => {
         dropSchemaComment(schemaName) {
             const templateConfig = {
                 schemaName,
-                comment: ''
+                comment: "''"
             }
             return assignTemplates(templates.updateCommentOnSchema, templateConfig);
         },

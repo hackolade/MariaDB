@@ -361,6 +361,14 @@ module.exports = ({_, wrap}) => {
     };
 
     /**
+     * @param str {string}
+     * @return {string}
+     * */
+    const wrapInSingleQuotes = (str) => {
+        return `'${str}'`;
+    };
+
+    /**
      * @param statement {string}
      * @param isPartOfLine {boolean | undefined}
      * @param isActivated {boolean | undefined}
@@ -404,6 +412,7 @@ module.exports = ({_, wrap}) => {
         getViewSchema,
         getViewName,
         wrapInTics,
+        wrapInSingleQuotes,
         commentIfDeactivated,
     };
 }

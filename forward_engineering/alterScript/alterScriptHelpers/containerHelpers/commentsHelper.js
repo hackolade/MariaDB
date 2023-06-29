@@ -10,14 +10,16 @@ const extractDescription = (container) => {
 const getUpsertCommentsScriptDto = (_, ddlProvider) => (container) => {
     const {
         escapeQuotes,
-        wrapInTics
+        wrapInTics,
+        wrapInSingleQuotes
     } = require('../../../utils/general')({_});
 
     const description = extractDescription(container);
     if (description.new && description.new !== description.old) {
         const escapedComment = escapeQuotes(description.new);
+        const wrappedComment = wrapInSingleQuotes(escapedComment);
         const wrappedSchemaName = wrapInTics(container.role.name);
-        const script = ddlProvider.updateSchemaComment(wrappedSchemaName, escapedComment);
+        const script = ddlProvider.updateSchemaComment(wrappedSchemaName, wrappedComment);
         return AlterScriptDto.getInstance([script], true, false);
     }
     return undefined;

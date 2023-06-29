@@ -10,7 +10,8 @@ const getUpdatedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) 
         escapeQuotes,
         getCollectionSchema,
         getCollectionName,
-        getDatabaseName
+        getDatabaseName,
+        wrapInSingleQuotes
     } = require('../../../utils/general')({_});
 
     const descriptionInfo = collection?.role.compMod?.description;
@@ -28,7 +29,7 @@ const getUpdatedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) 
     const databaseName = getDatabaseName(collectionSchema);
     const fullTableName = getTableName(tableName, databaseName);
 
-    const ddlComment = escapeQuotes(newComment);
+    const ddlComment = wrapInSingleQuotes(escapeQuotes(newComment));
 
     const script = ddlProvider.updateTableComment(fullTableName, ddlComment);
     return AlterScriptDto.getInstance([script], true, false);

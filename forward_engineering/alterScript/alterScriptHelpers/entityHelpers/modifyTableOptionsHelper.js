@@ -17,7 +17,7 @@ const getModifyTableOptionsDto = (_, ddlProvider) => (collection) => {
     const compMod = getCompMod(tableData);
     const isDefaultModified = compMod.tableOptions?.new?.defaultCharSet !== compMod.tableOptions?.old?.defaultCharSet;
     const isCharacterSetModified = compMod.tableOptions?.new?.characterSet !== compMod.tableOptions?.old?.characterSet;
-    const isCollationModified = compMod.tableOptions?.new?.collation !== compMod.tableOptions.collation?.old?.collation;
+    const isCollationModified = compMod.tableOptions?.new?.collation !== compMod.tableOptions?.old?.collation;
 
     if (isCharacterSetModified || isCollationModified || isDefaultModified) {
         const collectionSchema = getCollectionSchema(collection);
