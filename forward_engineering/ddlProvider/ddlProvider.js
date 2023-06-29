@@ -801,5 +801,29 @@ module.exports = (baseProvider, options, app) => {
             return assignTemplates(templates.modifyTableOptions, templateConfig).trim();
         },
 
+        /**
+         * @param tableName {string}
+         * @param comment {string}
+         * @return string
+         * */
+        updateTableComment(tableName, comment) {
+            const templateConfig = {
+                tableName,
+                comment
+            }
+            return assignTemplates(templates.updateCommentOnTable, templateConfig);
+        },
+
+        /**
+         * @param tableName {string}
+         * @return string
+         * */
+        dropTableComment(tableName) {
+            const templateConfig = {
+                tableName,
+                comment: ''
+            }
+            return assignTemplates(templates.updateCommentOnTable, templateConfig);
+        },
     };
 };

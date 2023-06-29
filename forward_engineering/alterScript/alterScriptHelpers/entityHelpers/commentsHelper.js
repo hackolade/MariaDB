@@ -5,7 +5,13 @@ const {AlterCollectionDto} = require('../../types/AlterCollectionDto');
  * @return {(collection: AlterCollectionDto) => AlterScriptDto}
  */
 const getUpdatedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) => {
-    const {getFullTableName, wrapComment} = require('../../../utils/general')(_);
+    const {
+        getTableName,
+        escapeQuotes,
+        getCollectionSchema,
+        getCollectionName,
+        getDatabaseName
+    } = require('../../../utils/general')({_});
 
     const descriptionInfo = collection?.role.compMod?.description;
     if (!descriptionInfo) {
@@ -17,10 +23,14 @@ const getUpdatedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) 
         return undefined;
     }
 
-    const tableName = getFullTableName(collection);
-    const comment = wrapComment(newComment);
+    const collectionSchema = getCollectionSchema(collection);
+    const tableName = getCollectionName(collectionSchema);
+    const databaseName = getDatabaseName(collectionSchema);
+    const fullTableName = getTableName(tableName, databaseName);
 
-    const script = ddlProvider.updateTableComment(tableName, comment);
+    const ddlComment = escapeQuotes(newComment);
+
+    const script = ddlProvider.updateTableComment(fullTableName, ddlComment);
     return AlterScriptDto.getInstance([script], true, false);
 }
 
@@ -28,7 +38,12 @@ const getUpdatedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) 
  * @return {(collection: AlterCollectionDto) => AlterScriptDto}
  */
 const getDeletedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) => {
-    const {getFullTableName} = require('../../../utils/general')(_);
+    const {
+        getTableName,
+        getCollectionSchema,
+        getCollectionName,
+        getDatabaseName
+    } = require('../../../utils/general')({_});
 
     const descriptionInfo = collection?.role.compMod?.description;
     if (!descriptionInfo) {
@@ -40,9 +55,12 @@ const getDeletedCommentOnCollectionScriptDto = (_, ddlProvider) => (collection) 
         return undefined;
     }
 
-    const tableName = getFullTableName(collection);
+    const collectionSchema = getCollectionSchema(collection);
+    const tableName = getCollectionName(collectionSchema);
+    const databaseName = getDatabaseName(collectionSchema);
+    const fullTableName = getTableName(tableName, databaseName);
 
-    const script = ddlProvider.dropTableComment(tableName);
+    const script = ddlProvider.dropTableComment(fullTableName);
     return AlterScriptDto.getInstance([script], true, true);
 }
 

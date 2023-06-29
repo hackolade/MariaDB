@@ -27,6 +27,8 @@ module.exports = {
 
 	dropFunction: 'DROP FUNCTION IF EXISTS ${functionName};',
 
+	updateCommentOnTable: 'ALTER TABLE ${tableName} COMMENT ${comment};',
+
 	alterCollation: 'ALTER DATABASE ${databaseName} CHARACTER SET=${characterSet} COLLATE=${collation};',
 
 	dropTable: 'DROP TABLE IF EXISTS ${tableName};',
