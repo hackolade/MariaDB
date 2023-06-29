@@ -1,16 +1,18 @@
 
 
 /**
- * @return {(collection: Object) => boolean}
+ * @return {(columnName: string, columnJsonSchema: Object, collection: Object) => boolean}
  * */
-const hasNotNullAttributeChanged = (_) => (collection) => {
+const hasNotNullAttributeChanged = (_) => (columnName, columnJsonSchema, collection) => {
     const currentRequiredColumnNames = collection.required || [];
     const previousRequiredColumnNames = collection.role.required || [];
 
-    const columnNamesToAddNotNullConstraint = _.difference(currentRequiredColumnNames, previousRequiredColumnNames);
-    const columnNamesToRemoveNotNullConstraint = _.difference(previousRequiredColumnNames, currentRequiredColumnNames);
+    const oldName = columnJsonSchema.compMod.oldField.name;
 
-    return !(columnNamesToAddNotNullConstraint.length === 0 && columnNamesToRemoveNotNullConstraint === 0);
+    const isCurrentlyRequired = currentRequiredColumnNames.includes(columnName);
+    const wasRequired = previousRequiredColumnNames.includes(oldName);
+
+    return isCurrentlyRequired !== wasRequired;
 }
 
 module.exports = {

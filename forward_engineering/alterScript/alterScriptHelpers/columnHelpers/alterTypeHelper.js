@@ -1,5 +1,3 @@
-const {AlterScriptDto} = require("../../types/AlterScriptDto");
-
 /**
  * @return {boolean}
  * */

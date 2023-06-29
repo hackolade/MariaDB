@@ -2,6 +2,7 @@ const {AlterScriptDto} = require("../../types/AlterScriptDto");
 const {ColumnDefinition} = require('../../../ddlProvider/types/columnDefinition');
 const {hasTypeChanged} = require("./alterTypeHelper");
 const {hasNotNullAttributeChanged} = require("./nonNullConstraintHelper");
+const {hasCommentChanged} = require("./commentsHelper");
 
 /**
  * @return {(
@@ -22,7 +23,14 @@ const shouldDropAndRecreateColumn = (_) => (columnName, columnJsonSchema, collec
  *  ) => boolean}
  * */
 const shouldModifyColumn = (_) => (columnName, columnJsonSchema, collection) => {
-    return hasNotNullAttributeChanged(_)(collection);
+    const wasCommentModified = hasCommentChanged(_)(columnJsonSchema, collection);
+    const wasNotNullModified = hasNotNullAttributeChanged(_)(columnName, columnJsonSchema, collection);
+
+    return [
+        wasCommentModified,
+        wasNotNullModified,
+    ]
+        .some(wasModified => wasModified === true);
 }
 
 /**
