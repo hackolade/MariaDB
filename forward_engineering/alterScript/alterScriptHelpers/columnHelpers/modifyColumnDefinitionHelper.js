@@ -56,7 +56,7 @@ const getModifyColumnDefinitionScriptDtos = (_, ddlProvider) => (collection) => 
         return createColumnDefinitionBySchema({
             name: columnName,
             jsonSchema: columnJsonSchema,
-            parentJsonSchema: collectionSchema,
+            parentJsonSchema: collection,
             ddlProvider,
             dbData,
         });

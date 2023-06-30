@@ -26,6 +26,7 @@ module.exports = _ => {
 	};
 
 	/**
+	 * @param parentSchema {Object}
 	 * @param propertyName {string}
 	 * @return {boolean}
 	 * */

@@ -124,39 +124,39 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
-         * @param columnDefinition {HydratedColumn}
+         * @param hydratedColumn {HydratedColumn}
          * @return {string}
          * */
-        mapColumnToColumnDefinitionDdl(columnDefinition) {
-            const type = _.toUpper(columnDefinition.type);
-            const notNull = columnDefinition.nullable ? '' : ' NOT NULL';
-            const primaryKey = columnDefinition.primaryKey
-                ? ' ' + createKeyConstraint(templates, true)(columnDefinition.primaryKeyOptions).statement
+        mapColumnToColumnDefinitionDdl(hydratedColumn) {
+            const type = _.toUpper(hydratedColumn.type);
+            const notNull = hydratedColumn.nullable ? '' : ' NOT NULL';
+            const primaryKey = hydratedColumn.primaryKey
+                ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.primaryKeyOptions).statement
                 : '';
-            const unique = columnDefinition.unique
-                ? ' ' + createKeyConstraint(templates, true)(columnDefinition.uniqueKeyOptions).statement
+            const unique = hydratedColumn.unique
+                ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.uniqueKeyOptions).statement
                 : '';
-            const zeroFill = columnDefinition.zerofill ? ' ZEROFILL' : '';
-            const autoIncrement = columnDefinition.autoIncrement ? ' AUTO_INCREMENT' : '';
-            const invisible = columnDefinition.invisible ? ' INVISIBLE' : '';
-            const national = columnDefinition.national && canBeNational(type) ? 'NATIONAL ' : '';
-            const comment = columnDefinition.comment ? ` COMMENT '${escapeQuotes(columnDefinition.comment)}'` : '';
-            const charset = type !== 'JSON' && columnDefinition.charset ? ` CHARSET ${columnDefinition.charset}` : '';
+            const zeroFill = hydratedColumn.zerofill ? ' ZEROFILL' : '';
+            const autoIncrement = hydratedColumn.autoIncrement ? ' AUTO_INCREMENT' : '';
+            const invisible = hydratedColumn.invisible ? ' INVISIBLE' : '';
+            const national = hydratedColumn.national && canBeNational(type) ? 'NATIONAL ' : '';
+            const comment = hydratedColumn.comment ? ` COMMENT '${escapeQuotes(hydratedColumn.comment)}'` : '';
+            const charset = type !== 'JSON' && hydratedColumn.charset ? ` CHARSET ${hydratedColumn.charset}` : '';
             const collate =
-                type !== 'JSON' && columnDefinition.charset && columnDefinition.collation
-                    ? ` COLLATE ${columnDefinition.collation}`
+                type !== 'JSON' && hydratedColumn.charset && hydratedColumn.collation
+                    ? ` COLLATE ${hydratedColumn.collation}`
                     : '';
-            const defaultValue = !_.isUndefined(columnDefinition.default)
-                ? ' DEFAULT ' + decorateDefault(type, columnDefinition.default)
+            const defaultValue = !_.isUndefined(hydratedColumn.default)
+                ? ' DEFAULT ' + decorateDefault(type, hydratedColumn.default)
                 : '';
-            const compressed = columnDefinition.compressionMethod
-                ? ` COMPRESSED=${columnDefinition.compressionMethod}`
+            const compressed = hydratedColumn.compressionMethod
+                ? ` COMPRESSED=${hydratedColumn.compressionMethod}`
                 : '';
-            const signed = getSign(type, columnDefinition.signed);
+            const signed = getSign(type, hydratedColumn.signed);
 
             return assignTemplates(templates.columnDefinition, {
-                name: columnDefinition.name,
-                type: decorateType(type, columnDefinition),
+                name: hydratedColumn.name,
+                type: decorateType(type, hydratedColumn),
                 not_null: notNull,
                 primary_key: primaryKey,
                 unique_key: unique,
