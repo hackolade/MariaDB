@@ -1,5 +1,6 @@
 const {AlterScriptDto} = require("../../types/AlterScriptDto");
 const {ColumnDefinition} = require('../../../ddlProvider/types/columnDefinition');
+const {HydratedColumn} = require('../../../ddlProvider/types/hydratedColumn');
 const {hasTypeChanged} = require("./alterTypeHelper");
 const {hasNotNullAttributeChanged} = require("./nonNullConstraintHelper");
 const {hasCommentChanged} = require("./commentsHelper");
@@ -31,6 +32,21 @@ const shouldModifyColumn = (_) => (columnName, columnJsonSchema, collection) => 
         wasNotNullModified,
     ]
         .some(wasModified => wasModified === true);
+}
+
+/**
+ * Omits PK and Unique constraints definitions from column JSON schema.
+ * We handle changes of such constraints on entity level
+ * @return {(hydratedColumn: HydratedColumn) => HydratedColumn}
+ * */
+const removeKeysFromHydratedColumn = (_) => (hydratedColumn) => {
+    return _.omit(
+        hydratedColumn,
+        [
+            'primaryKey', 'primaryKeyOptions',
+            'unique', 'uniqueKeyOptions'
+        ]
+    );
 }
 
 /**
@@ -92,7 +108,8 @@ const getModifyColumnDefinitionScriptDtos = (_, ddlProvider) => (collection) => 
             const dropScript = ddlProvider.dropColumn(fullName, dropColumnDdlName);
 
             const hydratedColumn = getColumnDefinition(newColumnName, newColumnJsonSchema);
-            const columnDefinitionDdl = ddlProvider.mapColumnToColumnDefinitionDdl(hydratedColumn);
+            const hydratedColumnWithNoKeyDefinitions = removeKeysFromHydratedColumn(_)(hydratedColumn);
+            const columnDefinitionDdl = ddlProvider.mapColumnToColumnDefinitionDdl(hydratedColumnWithNoKeyDefinitions);
             const createScript = ddlProvider.addColumn(fullName, columnDefinitionDdl);
 
             modifyScriptDtos.push(AlterScriptDto.getInstance([dropScript], isActivated, true));
@@ -103,7 +120,8 @@ const getModifyColumnDefinitionScriptDtos = (_, ddlProvider) => (collection) => 
         const shouldModify = shouldModifyColumn(_)(newColumnName, newColumnJsonSchema, collection);
         if (shouldModify) {
             const hydratedColumn = getColumnDefinition(newColumnName, newColumnJsonSchema);
-            const modifyScript = ddlProvider.modifyColumn(fullName, hydratedColumn);
+            const hydratedColumnWithNoKeyDefinitions = removeKeysFromHydratedColumn(_)(hydratedColumn);
+            const modifyScript = ddlProvider.modifyColumn(fullName, hydratedColumnWithNoKeyDefinitions);
 
             modifyScriptDtos.push(AlterScriptDto.getInstance([modifyScript], isActivated, false));
         }
