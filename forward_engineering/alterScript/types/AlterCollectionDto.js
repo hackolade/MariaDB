@@ -1,3 +1,5 @@
+const {CheckConstraint} = require('./CheckConstraint');
+
 class ColumnCompModField {
 
     /**
@@ -243,6 +245,14 @@ class AlterCollectionRoleCompModDto {
      * }>}
      */
     newProperties
+
+    /**
+     * @type {{
+     *     new: CheckConstraint[],
+     *     old: CheckConstraint[],
+     * }}
+     */
+    chkConstr
 }
 
 class AlterCollectionRoleDto {

@@ -21,6 +21,10 @@ module.exports = {
 	createForeignKey:
 		'ALTER TABLE ${foreignTable} ADD CONSTRAINT `${name}` FOREIGN KEY (${foreignKey}) REFERENCES ${primaryTable}(${primaryKey});',
 
+	addCheckConstraint: 'ALTER TABLE ${tableName} ADD CONSTRAINT ${constraintName} CHECK (${expression});',
+
+	dropConstraint: 'ALTER TABLE ${tableName} DROP CONSTRAINT ${constraintName};',
+
 	dropDatabase: 'DROP DATABASE IF EXISTS ${databaseName};',
 
 	dropProcedure: 'DROP PROCEDURE IF EXISTS ${procedureName};',

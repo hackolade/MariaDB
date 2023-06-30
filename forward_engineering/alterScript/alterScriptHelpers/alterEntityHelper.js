@@ -6,6 +6,7 @@ const {getModifyTableOptionsDto} = require("./entityHelpers/modifyTableOptionsHe
 const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
 const {getModifyEntityCommentsScriptDtos} = require("./entityHelpers/commentsHelper");
 const {getModifyColumnDefinitionScriptDtos} = require("./columnHelpers/modifyColumnDefinitionHelper");
+const {getModifyCheckConstraintScriptDtos} = require("./entityHelpers/checkConstraintHelper");
 
 
 /**
@@ -79,11 +80,14 @@ const getModifyCollectionScriptDtos = app => collection => {
     const modifyIndexesScriptDtos = getModifyIndexesDtos(app)(collection);
     const modifyTableOptionsScriptDto = getModifyTableOptionsDto(_, ddlProvider)(collection);
     const modifyTableCommentsScriptDtos = getModifyEntityCommentsScriptDtos(_, ddlProvider)(collection);
+    const modifyCheckConstraintScriptDtos = getModifyCheckConstraintScriptDtos(_, ddlProvider)(collection);
+
 
     return [
         modifyTableOptionsScriptDto,
         ...modifyIndexesScriptDtos,
         ...modifyTableCommentsScriptDtos,
+        ...modifyCheckConstraintScriptDtos,
     ].filter(Boolean);
 };
 

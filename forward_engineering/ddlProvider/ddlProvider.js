@@ -850,5 +850,33 @@ module.exports = (baseProvider, options, app) => {
             }
             return assignTemplates(templates.updateCommentOnSchema, templateConfig);
         },
+
+        /**
+         * @param tableName {string}
+         * @param constraintName {string}
+         * @return string
+         * */
+        dropConstraint(tableName, constraintName) {
+            const templateConfig = {
+                tableName,
+                constraintName
+            }
+            return assignTemplates(templates.dropConstraint, templateConfig);
+        },
+
+        /**
+         * @param tableName {string}
+         * @param constraintName {string}
+         * @param expression {expression}
+         * @return string
+         * */
+        addCheckConstraint(tableName, constraintName, expression) {
+            const templateConfig = {
+                tableName,
+                constraintName,
+                expression
+            };
+            return assignTemplates(templates.addCheckConstraint, templateConfig);
+        },
     };
 };
