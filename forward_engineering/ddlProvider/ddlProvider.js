@@ -281,8 +281,12 @@ module.exports = (baseProvider, options, app) => {
          * @param foreignTableActivated {boolean}
          * @param foreignKey {Array<KeyJsonSchema>}
          * @param primaryKey {Array<KeyJsonSchema>}
+         * @param primarySchemaName {string}
          * @param dbData {{
          *     databaseName: string,
+         * }}
+         * @param schemaData {{
+         *     schemaName: string
          * }}
          * @return {{
          *     statement: string,
@@ -290,8 +294,17 @@ module.exports = (baseProvider, options, app) => {
          * }}
          * */
         createForeignKeyConstraint(
-            {name, foreignKey, primaryTable, primaryKey, primaryTableActivated, foreignTableActivated},
+            {
+                name,
+                foreignKey,
+                primaryTable,
+                primaryKey,
+                primaryTableActivated,
+                foreignTableActivated,
+                primarySchemaName
+            },
             dbData,
+            schemaData,
         ) {
             const isAllPrimaryKeysDeactivated = checkAllKeysDeactivated(primaryKey);
             const isAllForeignKeysDeactivated = checkAllKeysDeactivated(foreignKey);
@@ -303,7 +316,7 @@ module.exports = (baseProvider, options, app) => {
 
             return {
                 statement: assignTemplates(templates.createForeignKeyConstraint, {
-                    primaryTable: getTableName(primaryTable, dbData.databaseName),
+                    primaryTable: getTableName(primaryTable, primarySchemaName || schemaData.schemaName),
                     name,
                     foreignKey: isActivated ? foreignKeysToString(foreignKey) : foreignActiveKeysToString(foreignKey),
                     primaryKey: isActivated ? foreignKeysToString(primaryKey) : foreignActiveKeysToString(primaryKey),
@@ -320,8 +333,13 @@ module.exports = (baseProvider, options, app) => {
          * @param foreignTableActivated {boolean}
          * @param foreignKey {Array<KeyJsonSchema>}
          * @param primaryKey {Array<KeyJsonSchema>}
+         * @param foreignSchemaName {string}
+         * @param primarySchemaName {string}
          * @param dbData {{
          *     databaseName: string,
+         * }}
+         * @param schemaData {{
+         *     schemaName: string
          * }}
          * @return {{
          *     statement: string,
@@ -329,16 +347,27 @@ module.exports = (baseProvider, options, app) => {
          * }}
          * */
         createForeignKey(
-            {name, foreignTable, foreignKey, primaryTable, primaryKey, primaryTableActivated, foreignTableActivated},
+            {
+                name,
+                foreignTable,
+                foreignKey,
+                primaryTable,
+                primaryKey,
+                primaryTableActivated,
+                foreignTableActivated,
+                foreignSchemaName,
+                primarySchemaName,
+            },
             dbData,
+            schemaData,
         ) {
             const isAllPrimaryKeysDeactivated = checkAllKeysDeactivated(primaryKey);
             const isAllForeignKeysDeactivated = checkAllKeysDeactivated(foreignKey);
 
             return {
                 statement: assignTemplates(templates.createForeignKey, {
-                    primaryTable: getTableName(primaryTable, dbData.databaseName),
-                    foreignTable: getTableName(foreignTable, dbData.databaseName),
+                    primaryTable: getTableName(primaryTable, primarySchemaName || schemaData.schemaName),
+                    foreignTable: getTableName(foreignTable, foreignSchemaName || schemaData.schemaName),
                     name,
                     foreignKey: foreignKeysToString(foreignKey),
                     primaryKey: foreignKeysToString(primaryKey),
