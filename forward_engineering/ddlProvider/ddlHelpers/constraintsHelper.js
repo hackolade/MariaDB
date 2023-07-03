@@ -1,3 +1,4 @@
+const { KeyJsonSchema } = require('../types/keyJsonSchema');
 
 module.exports = ({
 	_,
@@ -15,14 +16,18 @@ module.exports = ({
 		const activatedConstraints = dividedConstraints?.activatedItems?.length
 			? ',\n\t' + dividedConstraints.activatedItems.join(',\n\t')
 			: '';
-	
+
 		const deactivatedConstraints = dividedConstraints?.deactivatedItems?.length
 			? '\n\t' + deactivatedItemsAsString
 			: '';
-	
+
 		return activatedConstraints + deactivatedConstraints;
 	};
-	
+
+	/**
+	 * @param keys {string | Array<KeyJsonSchema>}
+	 * @return {string}
+	 * */
 	const foreignKeysToString = keys => {
 		if (Array.isArray(keys)) {
 			const activatedKeys = keys.filter(key => _.get(key, 'isActivated', true)).map(key => `\`${_.trim(key.name)}\``);
@@ -32,17 +37,21 @@ module.exports = ({
 			const deactivatedKeysAsString = deactivatedKeys.length
 				? commentIfDeactivated(deactivatedKeys, { isActivated: false, isPartOfLine: true })
 				: '';
-	
+
 			return activatedKeys.join(', ') + deactivatedKeysAsString;
 		}
 		return keys;
 	};
-	
+
+	/**
+	 * @param keys {Array<KeyJsonSchema>}
+	 * @return {string}
+	 * */
 	const foreignActiveKeysToString = keys => {
 		return keys.map(key => _.trim(key.name)).join(', ');
 	};
-	
-	const createKeyConstraint = (templates, isParentActivated) => keyData => {	
+
+	const createKeyConstraint = (templates, isParentActivated) => keyData => {
 		const isAllColumnsDeactivated = checkAllKeysDeactivated(keyData.columns || []);
 
 		const columns = getKeyColumns(isAllColumnsDeactivated, isParentActivated, keyData.columns);
@@ -51,7 +60,7 @@ module.exports = ({
 		const ignore = keyData.ignore ? ` IGNORED` : '';
 		const comment = keyData.comment ? ` COMMENT '${escapeQuotes(keyData.comment)}'` : '';
 		const blockSize = keyData.blockSize ? ` KEY_BLOCK_SIZE=${keyData.blockSize}` : '';
-	
+
 		return {
 			statement: assignTemplates(templates.createKeyConstraint, {
 				constraintName: keyData.name ? `CONSTRAINT \`${_.trim(keyData.name)}\` ` : '',
@@ -81,7 +90,7 @@ module.exports = ({
 			? ' (' + dividedColumns.activatedItems.join(', ') + deactivatedColumnsAsString + ')'
 			: ' (' + columns.map(columnMapToString).join(', ') + ')';
 	}
-	
+
 	return {
 		generateConstraintsString,
 		foreignKeysToString,

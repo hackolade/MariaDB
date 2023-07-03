@@ -1,8 +1,10 @@
 const defaultTypes = require('../configs/defaultTypes');
-const types = require('../configs/types');
+const descriptors = require('../configs/descriptors');
 const templates = require('./templates');
 const {HydratedColumn} = require('./types/hydratedColumn');
 const {ColumnDefinition} = require('./types/columnDefinition');
+const { KeyJsonSchema } = require('./types/keyJsonSchema');
+
 
 module.exports = (baseProvider, options, app) => {
     const _ = app.require('lodash');
@@ -32,6 +34,56 @@ module.exports = (baseProvider, options, app) => {
             escapeQuotes,
         });
     const keyHelper = require('./ddlHelpers/keyHelper')(_, clean);
+
+    /**
+     * @param hydratedColumn {HydratedColumn}
+     * @return {string}
+     * */
+    const mapColumnToColumnDefinitionDdl = (hydratedColumn) => {
+        const type = _.toUpper(hydratedColumn.type);
+        const notNull = hydratedColumn.nullable ? '' : ' NOT NULL';
+        const primaryKey = hydratedColumn.primaryKey
+            ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.primaryKeyOptions).statement
+            : '';
+        const unique = hydratedColumn.unique
+            ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.uniqueKeyOptions).statement
+            : '';
+        const zeroFill = hydratedColumn.zerofill ? ' ZEROFILL' : '';
+        const autoIncrement = hydratedColumn.autoIncrement ? ' AUTO_INCREMENT' : '';
+        const invisible = hydratedColumn.invisible ? ' INVISIBLE' : '';
+        const national = hydratedColumn.national && canBeNational(type) ? 'NATIONAL ' : '';
+        const comment = hydratedColumn.comment ? ` COMMENT '${escapeQuotes(hydratedColumn.comment)}'` : '';
+        const charset = type !== 'JSON' && hydratedColumn.charset ? ` CHARSET ${hydratedColumn.charset}` : '';
+        const collate =
+            type !== 'JSON' && hydratedColumn.charset && hydratedColumn.collation
+                ? ` COLLATE ${hydratedColumn.collation}`
+                : '';
+        const defaultValue = !_.isUndefined(hydratedColumn.default)
+            ? ' DEFAULT ' + decorateDefault(type, hydratedColumn.default)
+            : '';
+        const compressed = hydratedColumn.compressionMethod
+            ? ` COMPRESSED=${hydratedColumn.compressionMethod}`
+            : '';
+        const signed = getSign(type, hydratedColumn.signed);
+
+        return assignTemplates(templates.columnDefinition, {
+            name: hydratedColumn.name,
+            type: decorateType(type, hydratedColumn),
+            not_null: notNull,
+            primary_key: primaryKey,
+            unique_key: unique,
+            default: defaultValue,
+            autoIncrement,
+            compressed,
+            signed,
+            zeroFill,
+            invisible,
+            comment,
+            national,
+            charset,
+            collate,
+        })
+    }
 
     return {
         createDatabase({
@@ -124,61 +176,11 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
-         * @param hydratedColumn {HydratedColumn}
-         * @return {string}
-         * */
-        mapColumnToColumnDefinitionDdl(hydratedColumn) {
-            const type = _.toUpper(hydratedColumn.type);
-            const notNull = hydratedColumn.nullable ? '' : ' NOT NULL';
-            const primaryKey = hydratedColumn.primaryKey
-                ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.primaryKeyOptions).statement
-                : '';
-            const unique = hydratedColumn.unique
-                ? ' ' + createKeyConstraint(templates, true)(hydratedColumn.uniqueKeyOptions).statement
-                : '';
-            const zeroFill = hydratedColumn.zerofill ? ' ZEROFILL' : '';
-            const autoIncrement = hydratedColumn.autoIncrement ? ' AUTO_INCREMENT' : '';
-            const invisible = hydratedColumn.invisible ? ' INVISIBLE' : '';
-            const national = hydratedColumn.national && canBeNational(type) ? 'NATIONAL ' : '';
-            const comment = hydratedColumn.comment ? ` COMMENT '${escapeQuotes(hydratedColumn.comment)}'` : '';
-            const charset = type !== 'JSON' && hydratedColumn.charset ? ` CHARSET ${hydratedColumn.charset}` : '';
-            const collate =
-                type !== 'JSON' && hydratedColumn.charset && hydratedColumn.collation
-                    ? ` COLLATE ${hydratedColumn.collation}`
-                    : '';
-            const defaultValue = !_.isUndefined(hydratedColumn.default)
-                ? ' DEFAULT ' + decorateDefault(type, hydratedColumn.default)
-                : '';
-            const compressed = hydratedColumn.compressionMethod
-                ? ` COMPRESSED=${hydratedColumn.compressionMethod}`
-                : '';
-            const signed = getSign(type, hydratedColumn.signed);
-
-            return assignTemplates(templates.columnDefinition, {
-                name: hydratedColumn.name,
-                type: decorateType(type, hydratedColumn),
-                not_null: notNull,
-                primary_key: primaryKey,
-                unique_key: unique,
-                default: defaultValue,
-                autoIncrement,
-                compressed,
-                signed,
-                zeroFill,
-                invisible,
-                comment,
-                national,
-                charset,
-                collate,
-            })
-        },
-
-        /**
          * @param columnDefinition {HydratedColumn}
          * @return {string}
          * */
         convertColumnDefinition(columnDefinition) {
-            const columnDefinitionAsDDL = this.mapColumnToColumnDefinitionDdl(columnDefinition);
+            const columnDefinitionAsDDL = mapColumnToColumnDefinitionDdl(columnDefinition);
             const activationConfig = {
                 isActivated: columnDefinition.isActivated,
             };
@@ -259,6 +261,10 @@ module.exports = (baseProvider, options, app) => {
         },
 
         /**
+         * @param checkConstraint {{
+         *     name?: string,
+         *     expression: string,
+         * }}
          * @return {string}
          * */
         createCheckConstraint(checkConstraint) {
@@ -268,6 +274,21 @@ module.exports = (baseProvider, options, app) => {
             });
         },
 
+        /**
+         * @param name {string}
+         * @param primaryTable {string}
+         * @param primaryTableActivated {boolean}
+         * @param foreignTableActivated {boolean}
+         * @param foreignKey {Array<KeyJsonSchema>}
+         * @param primaryKey {Array<KeyJsonSchema>}
+         * @param dbData {{
+         *     databaseName: string,
+         * }}
+         * @return {{
+         *     statement: string,
+         *     isActivated: boolean
+         * }}
+         * */
         createForeignKeyConstraint(
             {name, foreignKey, primaryTable, primaryKey, primaryTableActivated, foreignTableActivated},
             dbData,
@@ -291,6 +312,22 @@ module.exports = (baseProvider, options, app) => {
             };
         },
 
+        /**
+         * @param name {string}
+         * @param primaryTable {string}
+         * @param foreignTable {string}
+         * @param primaryTableActivated {boolean}
+         * @param foreignTableActivated {boolean}
+         * @param foreignKey {Array<KeyJsonSchema>}
+         * @param primaryKey {Array<KeyJsonSchema>}
+         * @param dbData {{
+         *     databaseName: string,
+         * }}
+         * @return {{
+         *     statement: string,
+         *     isActivated: boolean,
+         * }}
+         * */
         createForeignKey(
             {name, foreignTable, foreignKey, primaryTable, primaryKey, primaryTableActivated, foreignTableActivated},
             dbData,
@@ -386,11 +423,11 @@ module.exports = (baseProvider, options, app) => {
         },
 
         getTypesDescriptors() {
-            return types;
+            return descriptors;
         },
 
         hasType(type) {
-            return hasType(types, type);
+            return hasType(descriptors, type);
         },
 
         /**
@@ -768,7 +805,7 @@ module.exports = (baseProvider, options, app) => {
          * @return {string}
          * */
         modifyColumn(tableName, hydratedColumn,) {
-            const columnDefinitionAsDDL = this.mapColumnToColumnDefinitionDdl(hydratedColumn);
+            const columnDefinitionAsDDL = mapColumnToColumnDefinitionDdl(hydratedColumn);
             const templateConfig = {
                 tableName,
                 columnDefinition: columnDefinitionAsDDL,

@@ -414,5 +414,6 @@ module.exports = ({_, wrap}) => {
         wrapInTics,
         wrapInSingleQuotes,
         commentIfDeactivated,
+        getNamePrefixedWithSchemaName,
     };
 }
