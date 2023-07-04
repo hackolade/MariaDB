@@ -39,26 +39,34 @@ class AlterCollectionColumnPrimaryKeyOptionDto {
     id
 
     /**
-     * @type {string}
+     * @type {string | undefined}
      * */
     constraintName
 
     /**
-     * @type {string}
+     * @type {string | undefined}
      * */
-    indexStorageParameters
+    indexCategory
 
     /**
-     * @type {string}
+     * @type {"ASC" | "DESC" | undefined}
      * */
-    indexTablespace
+    indexOrder
 
     /**
-     * @type {Array<{
-     *     keyId: string
-     * }>}
+     * @type {number | undefined}
      * */
-    indexInclude
+    indexBlockSize
+
+    /**
+     * @type {boolean | undefined}
+     * */
+    indexIgnore
+
+    /**
+     * @type {string | undefined}
+     * */
+    comment
 }
 
 class AlterCollectionColumnDto {

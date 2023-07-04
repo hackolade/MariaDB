@@ -7,6 +7,7 @@ const {getModifyIndexesDtos} = require("./entityHelpers/modifyIndexesHelper");
 const {getModifyEntityCommentsScriptDtos} = require("./entityHelpers/commentsHelper");
 const {getModifyColumnDefinitionScriptDtos} = require("./columnHelpers/modifyColumnDefinitionHelper");
 const {getModifyCheckConstraintScriptDtos} = require("./entityHelpers/checkConstraintHelper");
+const {getModifyPkConstraintsScriptDtos} = require("./entityHelpers/primaryKeyHelper");
 
 
 /**
@@ -81,6 +82,7 @@ const getModifyCollectionScriptDtos = app => collection => {
     const modifyTableOptionsScriptDto = getModifyTableOptionsDto(_, ddlProvider)(collection);
     const modifyTableCommentsScriptDtos = getModifyEntityCommentsScriptDtos(_, ddlProvider)(collection);
     const modifyCheckConstraintScriptDtos = getModifyCheckConstraintScriptDtos(_, ddlProvider)(collection);
+    const modifyPKConstraintDtos = getModifyPkConstraintsScriptDtos(_, ddlProvider)(collection);
 
 
     return [
@@ -88,6 +90,7 @@ const getModifyCollectionScriptDtos = app => collection => {
         ...modifyIndexesScriptDtos,
         ...modifyTableCommentsScriptDtos,
         ...modifyCheckConstraintScriptDtos,
+        ...modifyPKConstraintDtos,
     ].filter(Boolean);
 };
 

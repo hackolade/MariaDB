@@ -81,7 +81,6 @@ const getAlterCollectionsScripts = (collection, app) => {
         .concat(collection.properties?.entities?.properties?.modified?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
-        .filter(collection => collection.compMod?.modified)
         .flatMap(getModifyCollectionScriptDtos(app));
     const addColumnScripts = []
         .concat(collection.properties?.entities?.properties?.added?.items)
@@ -99,6 +98,7 @@ const getAlterCollectionsScripts = (collection, app) => {
         .concat(collection.properties?.entities?.properties?.modified?.items)
         .filter(Boolean)
         .map(item => Object.values(item.properties)[0])
+        .filter(collection => !collection.compMod)
         .flatMap(getModifyColumnScriptDtos(app));
 
     return [

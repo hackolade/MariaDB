@@ -3,7 +3,7 @@ const descriptors = require('../configs/descriptors');
 const templates = require('./templates');
 const {HydratedColumn} = require('./types/hydratedColumn');
 const {ColumnDefinition} = require('./types/columnDefinition');
-const { KeyJsonSchema } = require('./types/keyJsonSchema');
+const {KeyJsonSchema} = require('./types/keyJsonSchema');
 
 
 module.exports = (baseProvider, options, app) => {
@@ -943,6 +943,55 @@ module.exports = (baseProvider, options, app) => {
                 expression
             };
             return assignTemplates(templates.addCheckConstraint, templateConfig);
+        },
+
+        /**
+         * @param tableName {string}
+         * @param isParentActivated {boolean}
+         * @param keyData {{
+         *         columns: Array<{
+         *     			name: string,
+         *     			order: number | string,
+         *     		    isActivated: boolean,
+         * 			}>,
+         *         category?: string,
+         *         ignore?: boolean,
+         *         comment?: string,
+         *         blockSize?: number | string,
+         *         name?: string,
+         *         keyType: string,
+         * }}
+         * @return {{
+         *     statement: string,
+         *     isActivated: boolean,
+         * }}
+         * */
+        addPrimaryKey(
+            tableName,
+            isParentActivated,
+            keyData
+        ) {
+            const constraintStatementDto = createKeyConstraint(templates, isParentActivated)(keyData);
+            const templatesConfig = {
+                tableName,
+                constraintStatement: constraintStatementDto.statement,
+            }
+            const addPkStatement = assignTemplates(templates.addPkConstraint, templatesConfig);
+            return {
+                statement: addPkStatement,
+                isActivated: isParentActivated && constraintStatementDto.isActivated,
+            }
+        },
+
+        /**
+         * @param tableName {string}
+         * @return {string}
+         * */
+        dropPrimaryKey(tableName) {
+            const templatesConfig = {
+                tableName
+            };
+            return assignTemplates(templates.dropPrimaryKey, templatesConfig);
         },
     };
 };
