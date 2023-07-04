@@ -8,6 +8,7 @@ const {
 } = require('../../types/AlterCollectionDto');
 
 const amountOfColumnsInRegularPk = 1;
+const defaultDDLCompositePkIndexOrder = 'ASC';
 
 class PkTransitionDto {
 
@@ -100,11 +101,30 @@ const extractOptionsForComparisonWithRegularPkOptions = (optionHolder) => {
 }
 
 /**
+ * @param pkType {'ascending' | 'descending' | undefined}
+ * @return string | undefined;
+ * */
+const shortenPkType = (pkType) => {
+    if (pkType === 'ascending') {
+        return 'ASC';
+    }
+    if (pkType === 'descending') {
+        return 'DESC';
+    }
+    return defaultDDLCompositePkIndexOrder;
+}
+
+/**
  * @param columnJsonSchema {AlterCollectionColumnDto}
  * @return {Partial<AlterCollectionColumnPrimaryKeyOptionDto>}
  * */
 const getCustomPropertiesOfRegularPkForComparisonWithRegularPkOptions = (columnJsonSchema) => {
-    return extractOptionsForComparisonWithRegularPkOptions(columnJsonSchema.primaryKeyOptions || {});
+    const options = columnJsonSchema.primaryKeyOptions || {};
+    const keyType = shortenPkType(options.indexOrder);
+    return extractOptionsForComparisonWithRegularPkOptions({
+        ...options,
+        indexOrder: keyType,
+    });
 }
 
 /**
@@ -112,7 +132,15 @@ const getCustomPropertiesOfRegularPkForComparisonWithRegularPkOptions = (columnJ
  * @return {Partial<AlterCollectionColumnPrimaryKeyOptionDto>}
  * */
 const getCustomPropertiesOfCompositePkForComparisonWithRegularPkOptions = (compositePk) => {
-    return extractOptionsForComparisonWithRegularPkOptions(compositePk || {});
+    let keyType = undefined;
+    if (compositePk?.compositePrimaryKey?.length === 1) {
+        const keyDto = compositePk.compositePrimaryKey[0];
+        keyType = shortenPkType(keyDto.type);
+    }
+    return extractOptionsForComparisonWithRegularPkOptions({
+        ...(compositePk || {}),
+        indexOrder: keyType,
+    });
 }
 
 /**
