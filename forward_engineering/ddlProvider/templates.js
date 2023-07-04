@@ -23,7 +23,7 @@ module.exports = {
 
 	addCheckConstraint: 'ALTER TABLE ${tableName} ADD CONSTRAINT ${constraintName} CHECK (${expression});',
 
-	addPkConstraint: 'ALTER TABLE ${tableName} ADD CONSTRAINT ${constraintStatement};',
+	addPkConstraint: 'ALTER TABLE ${tableName} ADD ${constraintStatement};',
 
 	dropPrimaryKey: 'ALTER TABLE ${tableName} DROP PRIMARY KEY;',
 
