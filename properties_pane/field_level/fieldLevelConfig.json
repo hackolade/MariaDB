@@ -2,9 +2,9 @@
 * Copyright © 2016-2017 by IntegrIT S.A. dba Hackolade.  All rights reserved.
 *
 * The copyright to the computer software herein is the property of IntegrIT S.A.
-* The software may be used and/or copied only with the written permission of 
-* IntegrIT S.A. or in accordance with the terms and conditions stipulated in 
-* the agreement/contract under which the software has been supplied. 
+* The software may be used and/or copied only with the written permission of
+* IntegrIT S.A. or in accordance with the terms and conditions stipulated in
+* the agreement/contract under which the software has been supplied.
 
 
 In order to define custom properties for any object's properties pane, you may copy/paste from the following,
@@ -71,8 +71,8 @@ making sure that you maintain a proper JSON format.
 				]
 			},
 // “groupInput” can have the following states - 0 items, 1 item, and many items.
-// “blockInput” has only 2 states - 0 items or 1 item. 
-// This gives us an easy way to represent it as an object and not as an array internally which is beneficial for processing 
+// “blockInput” has only 2 states - 0 items or 1 item.
+// This gives us an easy way to represent it as an object and not as an array internally which is beneficial for processing
 // and forward-engineering in particular.
 			{
 				"propertyName": "Block",
@@ -100,7 +100,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "keyList",
 				"propertyType": "fieldList",
 				"template": "orderedList"
-			}, 
+			},
 			{
 				"propertyName": "List with attribute",
 				"propertyKeyword": "keyListOrder",
@@ -1117,7 +1117,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			"default",
 			{
@@ -1188,7 +1214,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						},
 						{
@@ -1695,7 +1721,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			"default",
 			{
@@ -1737,7 +1789,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						},
 						{
@@ -2243,7 +2295,8 @@ making sure that you maintain a proper JSON format.
 					"key": "mode",
 					"value": "blob"
 				}
-			},			{
+			},
+			{
 				"propertyName": "Synonym",
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
@@ -2313,7 +2366,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			{
 				"propertyName": "Primary key",
@@ -2325,7 +2404,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						},
 						{
@@ -2779,7 +2858,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			"default",
 			{
@@ -2792,7 +2897,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						},
 						{
@@ -3212,7 +3317,8 @@ making sure that you maintain a proper JSON format.
 				],
 				"data": "options",
 				"valueType": "string"
-			},			{
+			},
+			{
 				"propertyName": "Comments",
 				"propertyKeyword": "description",
 				"propertyTooltip": "comments",
@@ -3255,7 +3361,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			{
 				"propertyName": "Primary key",
@@ -3267,7 +3399,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						}
 					]
@@ -3311,7 +3443,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			{
 				"propertyName": "Primary key",
@@ -3323,7 +3481,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						}
 					]
@@ -3367,7 +3525,33 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Not null",
 				"propertyKeyword": "required",
 				"enableForReference": true,
-				"propertyType": "checkbox"
+				"propertyType": "checkbox",
+				"dependency": {
+					"key": "primaryKey",
+					"value": true
+				},
+				"disabled": true,
+				"defaultValue": true
+			},
+			{
+				"propertyName": "Not null",
+				"propertyKeyword": "required",
+				"enableForReference": true,
+				"propertyType": "checkbox",
+				"dependency": {
+					"type": "or",
+					"values": [
+						{
+							"key": "primaryKey",
+							"value": false
+						},
+						{
+							"key": "primaryKey",
+							"exists": false
+						}
+					]
+				},
+				"defaultValue": false
 			},
 			{
 				"propertyName": "Primary key",
@@ -3379,7 +3563,7 @@ making sure that you maintain a proper JSON format.
 							"tooltip": "This column is part of the table composite primary key definition. Please refer to this definition if you want more information or to update the Primary Key definition",
 							"dependency": {
 								"key": "compositePrimaryKey",
-								"value": true 
+								"value": true
 							}
 						},
 						{
@@ -3780,4 +3964,4 @@ making sure that you maintain a proper JSON format.
 			}
 		]
 	}
-} 
+}
