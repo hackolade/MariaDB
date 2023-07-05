@@ -21,9 +21,45 @@ module.exports = {
 	createForeignKey:
 		'ALTER TABLE ${foreignTable} ADD CONSTRAINT `${name}` FOREIGN KEY (${foreignKey}) REFERENCES ${primaryTable}(${primaryKey});',
 
+	addCheckConstraint: 'ALTER TABLE ${tableName} ADD CONSTRAINT ${constraintName} CHECK (${expression});',
+
+	addPkConstraint: 'ALTER TABLE ${tableName} ADD ${constraintStatement};',
+
+	dropPrimaryKey: 'ALTER TABLE ${tableName} DROP PRIMARY KEY;',
+
+	dropConstraint: 'ALTER TABLE ${tableName} DROP CONSTRAINT ${constraintName};',
+
+	dropDatabase: 'DROP DATABASE IF EXISTS ${databaseName};',
+
+	dropProcedure: 'DROP PROCEDURE IF EXISTS ${procedureName};',
+
+	dropFunction: 'DROP FUNCTION IF EXISTS ${functionName};',
+
+	updateCommentOnTable: 'ALTER TABLE ${tableName} COMMENT ${comment};',
+
+	updateCommentOnSchema: 'ALTER SCHEMA ${schemaName} COMMENT = ${comment};',
+
+	alterCollation: 'ALTER DATABASE ${databaseName} CHARACTER SET=${characterSet} COLLATE=${collation};',
+
+	dropTable: 'DROP TABLE IF EXISTS ${tableName};',
+
+	dropColumn: 'ALTER TABLE IF EXISTS ${tableName} DROP COLUMN IF EXISTS ${columnName};',
+
+	addColumn: 'ALTER TABLE IF EXISTS ${tableName} ADD COLUMN IF NOT EXISTS ${columnDefinition};',
+
+	modifyColumn: 'ALTER TABLE ${tableName} MODIFY COLUMN IF EXISTS ${columnDefinition};',
+
+	dropView: 'DROP VIEW IF EXISTS ${viewName};',
+
+	renameColumn: 'ALTER TABLE IF EXISTS ${tableName} RENAME COLUMN ${oldName} TO ${newName};',
+
+	modifyTableOptions: 'ALTER TABLE ${tableName} ${defaultKeyword}${characterSetDefinition}${collateDefinition};',
+
 	index:
 		'CREATE ${indexType}INDEX ${ifNotExist}${name}${indexCategory}\n' +
 		'\tON ${table} ( ${keys} )${indexOptions};\n',
+
+	dropIndex: 'ALTER TABLE ${tableName} DROP INDEX IF EXISTS ${indexName};',
 
 	createView:
 		'CREATE ${orReplace}${algorithm}${sqlSecurity}VIEW ${ifNotExist}${name} AS ${selectStatement}${checkOption};\n',
