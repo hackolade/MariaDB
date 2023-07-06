@@ -175,6 +175,8 @@ module.exports = (baseProvider, options, app) => {
             });
         },
 
+        mapColumnToColumnDefinitionDdl,
+
         /**
          * @param columnDefinition {HydratedColumn}
          * @return {string}
