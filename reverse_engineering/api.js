@@ -168,7 +168,7 @@ module.exports = {
 						log.progress(`Sampling table`, dbName, tableName);
 	
 						const count = await instance.getCount(dbName, tableName);
-						records = await instance.getRecords(dbName, tableName, getLimit(count, data.recordSamplingSettings));
+						records = await instance.getRecords(dbName, tableName, getSampleDocSize(count, data.recordSamplingSettings));
 					}
 					
 					log.info(`Get create table statement "${tableName}"`);
@@ -298,12 +298,14 @@ const getDbCollectionNames = (entities, dbName, includeSystemCollection) => {
 	});
 };
 
-const getLimit = (count, recordSamplingSettings) => {
-	const per = recordSamplingSettings.relative.value;
-	const size = (recordSamplingSettings.active === 'absolute')
-		? recordSamplingSettings.absolute.value
-		: Math.round(count / 100 * per);
-	return size;
+const getSampleDocSize = (count, recordSamplingSettings) => {
+	if (recordSamplingSettings.active === 'absolute') {
+		return Number(recordSamplingSettings.absolute.value);
+	}
+
+	const limit = Math.ceil((count * recordSamplingSettings.relative.value) / 100);
+
+	return Math.min(limit, recordSamplingSettings.maxValue);
 };
 
 const isViewName = (name) => {
