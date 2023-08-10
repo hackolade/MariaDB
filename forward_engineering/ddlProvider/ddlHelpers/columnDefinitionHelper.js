@@ -166,11 +166,22 @@ module.exports = (_, wrap) => {
 		return '';
 	};
 
+	/**
+	 * 
+	 * @param {string} type 
+	 * @returns {boolean}
+	 */
+	const canHaveAutoIncrement = (type) => {
+		const typesAllowedToHaveAutoIncrement = ["tinyint", "smallint", "mediumint", "int", "bigint"]
+		return typesAllowedToHaveAutoIncrement.includes(type)
+	}
+
 	return {
 		decorateType,
 		decorateDefault,
 		canBeNational,
 		isNumeric,
 		getSign,
+		canHaveAutoIncrement,
 	};
 };

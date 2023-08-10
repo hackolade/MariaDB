@@ -18,7 +18,7 @@ module.exports = (baseProvider, options, app) => {
         clean,
     } = app.require('@hackolade/ddl-fe-utils').general;
     const {assignTemplates} = app.require('@hackolade/ddl-fe-utils');
-    const {decorateDefault, decorateType, canBeNational, getSign} = require('./ddlHelpers/columnDefinitionHelper')(
+    const {decorateDefault, decorateType, canBeNational, getSign, canHaveAutoIncrement} = require('./ddlHelpers/columnDefinitionHelper')(
         _,
         wrap,
     );
@@ -482,7 +482,6 @@ module.exports = (baseProvider, options, app) => {
                 precision: columnDefinition.precision,
                 length: columnDefinition.length,
                 national: jsonSchema.national,
-                autoIncrement: jsonSchema.autoincrement,
                 zerofill: jsonSchema.zerofill,
                 invisible: jsonSchema.invisible,
                 compressionMethod: jsonSchema.compressed ? jsonSchema.compression_method : '',
@@ -492,6 +491,7 @@ module.exports = (baseProvider, options, app) => {
                 microSecPrecision: jsonSchema.microSecPrecision,
                 charset: jsonSchema.characterSet,
                 collation: jsonSchema.collation,
+                ...(canHaveAutoIncrement(columnDefinition.type) && {autoIncrement: jsonSchema.autoincrement}),
             };
         },
 
