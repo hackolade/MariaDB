@@ -65,41 +65,27 @@ const getAlterContainersScriptDtos = (collection, app, {skipModified} = {}) => {
 };
 
 const getAlterCollectionsScripts = (collection, app) => {
-    const createCollectionsScripts = []
-        .concat(collection.properties?.entities?.properties?.added?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .filter(collection => collection.compMod?.created)
-        .map(getAddCollectionScriptDto(app));
-    const deleteCollectionScripts = []
-        .concat(collection.properties?.entities?.properties?.deleted?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .filter(collection => collection.compMod?.deleted)
-        .map(getDeleteCollectionScriptDto(app));
-    const modifyCollectionScripts = []
-        .concat(collection.properties?.entities?.properties?.modified?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .flatMap(getModifyCollectionScriptDtos(app));
-    const addColumnScripts = []
-        .concat(collection.properties?.entities?.properties?.added?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .filter(collection => !collection.compMod?.created)
-        .flatMap(getAddColumnScriptDtos(app));
-    const deleteColumnScripts = []
-        .concat(collection.properties?.entities?.properties?.deleted?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .filter(collection => !collection.compMod?.deleted)
-        .flatMap(getDeleteColumnScriptDtos(app));
-    const modifyColumnScript = []
-        .concat(collection.properties?.entities?.properties?.modified?.items)
-        .filter(Boolean)
-        .map(item => Object.values(item.properties)[0])
-        .filter(collection => !collection.compMod)
-        .flatMap(getModifyColumnScriptDtos(app));
+    const createScriptsData = []
+    .concat(collection.properties?.entities?.properties?.added?.items)
+    .filter(Boolean)
+    .map(item => Object.values(item.properties)[0])
+
+    const deleteScriptsData = []
+    .concat(collection.properties?.entities?.properties?.deleted?.items)
+    .filter(Boolean)
+    .map(item => Object.values(item.properties)[0])
+
+    const modifyScriptsData = []
+    .concat(collection.properties?.entities?.properties?.modified?.items)
+    .filter(Boolean)
+    .map(item => Object.values(item.properties)[0])
+
+    const createCollectionsScripts = createScriptsData.filter(collection => collection.compMod?.created).map(getAddCollectionScriptDto(app));
+    const deleteCollectionScripts = deleteScriptsData.filter(collection => collection.compMod?.deleted).map(getDeleteCollectionScriptDto(app));
+    const modifyCollectionScripts = modifyScriptsData.flatMap(getModifyCollectionScriptDtos(app));
+    const addColumnScripts = createScriptsData.filter(collection => !collection.compMod?.created).flatMap(getAddColumnScriptDtos(app));
+    const deleteColumnScripts = deleteScriptsData.filter(collection => !collection.compMod?.deleted).flatMap(getDeleteColumnScriptDtos(app));
+    const modifyColumnScript = modifyScriptsData.flatMap(getModifyColumnScriptDtos(app));
 
     return [
         ...createCollectionsScripts,
