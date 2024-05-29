@@ -1,6 +1,6 @@
-
-const parseFunctionQuery = (query) => {
-	const parseRegexp = /create(?<orReplace>\s+or\s+replace)?(?<definer>\s+definer\s*=[\s\S]+?)?(?<aggregate>\s+aggregate)?\s+function(?<ifNotExists>\s+if not exists)?\s+\`(?<funcName>[\s\S]+?)\`\s*\((?<funcParameters>[\s\S]*?)\)\s+returns\s+(?<returnType>[a-z0-9\(\)]+)(?<characteristics>(\s*language\s+sql)?(\s*(not)?\s+deterministic)?(\s*contains\s+(sql|no\s+sql|reads\s+sql\s+data|modifies\s+sql\s+data))?(\s*sql\s+security\s+(definer|invoker))?(\s*comment\s+\'[\s\S]+?\')?(\s*charset\s+[\S\s]+?)?(\s*COLLATE\s+[\S\s]+?)?)?\s+(?<funcBody>(begin|return)([\s\S]+))/i;
+const parseFunctionQuery = query => {
+	const parseRegexp =
+		/create(?<orReplace>\s+or\s+replace)?(?<definer>\s+definer\s*=[\s\S]+?)?(?<aggregate>\s+aggregate)?\s+function(?<ifNotExists>\s+if not exists)?\s+\`(?<funcName>[\s\S]+?)\`\s*\((?<funcParameters>[\s\S]*?)\)\s+returns\s+(?<returnType>[a-z0-9\(\)]+)(?<characteristics>(\s*language\s+sql)?(\s*(not)?\s+deterministic)?(\s*contains\s+(sql|no\s+sql|reads\s+sql\s+data|modifies\s+sql\s+data))?(\s*sql\s+security\s+(definer|invoker))?(\s*comment\s+\'[\s\S]+?\')?(\s*charset\s+[\S\s]+?)?(\s*COLLATE\s+[\S\s]+?)?)?\s+(?<funcBody>(begin|return)([\s\S]+))/i;
 
 	if (!parseRegexp.test(query)) {
 		return {};
@@ -32,11 +32,11 @@ const parseFunctionQuery = (query) => {
 	};
 };
 
-const getLanguage = (characteristics) => {
+const getLanguage = characteristics => {
 	return /language sql/i.test(characteristics) ? 'SQL' : '';
-}
+};
 
-const getDeterministic = (characteristics) => {
+const getDeterministic = characteristics => {
 	if (/not deterministic/i.test(characteristics)) {
 		return 'NOT DETERMINISTIC';
 	} else if (/deterministic/i.test(characteristics)) {
@@ -46,7 +46,7 @@ const getDeterministic = (characteristics) => {
 	}
 };
 
-const getContains = (characteristics) => {
+const getContains = characteristics => {
 	if (/contains\s+sql/i.test(characteristics)) {
 		return 'SQL';
 	} else if (/contains\s+no\s+sql/i.test(characteristics)) {
@@ -60,7 +60,7 @@ const getContains = (characteristics) => {
 	}
 };
 
-const getDefiner = (characteristics) => {
+const getDefiner = characteristics => {
 	if (/SQL\s+SECURITY\s+DEFINER/i.test(characteristics)) {
 		return 'DEFINER';
 	} else if (/SQL\s+SECURITY\s+INVOKER/i.test(characteristics)) {
@@ -70,7 +70,7 @@ const getDefiner = (characteristics) => {
 	}
 };
 
-const getComment = (characteristics) => {
+const getComment = characteristics => {
 	const commentRegexp = /comment\s\'([\s\S]+?)\'/i;
 
 	if (!commentRegexp.test(characteristics)) {
@@ -80,7 +80,7 @@ const getComment = (characteristics) => {
 	const result = characteristics.match(commentRegexp);
 
 	return result[1] || '';
-}
+};
 
 module.exports = {
 	parseFunctionQuery,

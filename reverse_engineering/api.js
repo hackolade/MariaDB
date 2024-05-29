@@ -5,7 +5,7 @@ const mariadbHelper = require('./helpers/mariadbHelper');
 
 BigInt.prototype.toJSON = function () {
 	return Number(this.valueOf());
-}
+};
 
 const ACCESS_DENIED_ERROR = 1045;
 
@@ -18,7 +18,7 @@ module.exports = {
 
 	disconnect(connectionInfo, logger, callback, app) {
 		connectionHelper.close();
-		
+
 		callback();
 	},
 
@@ -37,21 +37,31 @@ module.exports = {
 			const instance = connectionHelper.createInstance(connection, logger);
 
 			await instance.ping();
-			await new Promise((resolve, reject) => this.getDbCollectionsNames(connectionInfo, logger, (error) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve();
-				}
-			}, app));
+			await new Promise((resolve, reject) =>
+				this.getDbCollectionsNames(
+					connectionInfo,
+					logger,
+					error => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve();
+						}
+					},
+					app,
+				),
+			);
 
 			log.info('Connected successfully');
 
 			callback(null);
-		} catch(error) {
+		} catch (error) {
 			log.error(error);
 			if (error.errno === ACCESS_DENIED_ERROR) {
-				callback({ message: `Access denied for user "${connectionInfo.userName}". Please, check whether the password is correct and the user has enough permissions to connect to the database server.`, stack: error.stack });
+				callback({
+					message: `Access denied for user "${connectionInfo.userName}". Please, check whether the password is correct and the user has enough permissions to connect to the database server.`,
+					stack: error.stack,
+				});
 			} else {
 				callback({ message: error.message, stack: error.stack });
 			}
@@ -68,17 +78,25 @@ module.exports = {
 		try {
 			logger.clear();
 			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
-			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema', 'mysql', 'performance_schema'];
+			const systemDatabases = connectionInfo.includeSystemCollection
+				? []
+				: ['information_schema', 'mysql', 'performance_schema'];
 
 			const connection = await this.connect(connectionInfo);
 			const instance = connectionHelper.createInstance(connection, logger);
-			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await instance.getDatabases(systemDatabases);
-			
+			const databases = connectionInfo.databaseName
+				? [connectionInfo.databaseName]
+				: await instance.getDatabases(systemDatabases);
+
 			const collections = await databases.reduce(async (next, dbName) => {
 				const result = await next;
 				try {
 					const entities = await instance.getTables(dbName);
-					const dbCollections = getDbCollectionNames(entities, dbName, connectionInfo.includeSystemCollection);
+					const dbCollections = getDbCollectionNames(
+						entities,
+						dbName,
+						connectionInfo.includeSystemCollection,
+					);
 
 					return result.concat({
 						dbName,
@@ -105,7 +123,7 @@ module.exports = {
 			log.info('Names retrieved successfully');
 
 			callback(null, collections);
-		} catch(error) {
+		} catch (error) {
 			log.error(error);
 			callback({ message: error.message, stack: error.stack });
 		}
@@ -128,49 +146,47 @@ module.exports = {
 			const connection = await this.connect(data);
 			const instance = await connectionHelper.createInstance(connection, logger);
 
-			log.info('MariaDB version: ' + await instance.serverVersion());
-			log.progress('Start reverse engineering ...');			
+			log.info('MariaDB version: ' + (await instance.serverVersion()));
+			log.progress('Start reverse engineering ...');
 
-			const result = await async.mapSeries(dataBaseNames, async (dbName) => {
+			const result = await async.mapSeries(dataBaseNames, async dbName => {
 				const tables = (collections[dbName] || []).filter(name => !isViewName(name));
 				const views = (collections[dbName] || []).filter(isViewName).map(getViewName);
-	
-				log.info(`Parsing database "${dbName}"`);
-				log.progress(`Parsing database "${dbName}"`, dbName);			
 
-				const containerData = mariadbHelper.parseDatabaseStatement(
-					await instance.describeDatabase(dbName)
-				);
+				log.info(`Parsing database "${dbName}"`);
+				log.progress(`Parsing database "${dbName}"`, dbName);
+
+				const containerData = mariadbHelper.parseDatabaseStatement(await instance.describeDatabase(dbName));
 
 				log.info(`Parsing functions`);
-				log.progress(`Parsing functions`, dbName);	
+				log.progress(`Parsing functions`, dbName);
 
-				const UDFs = mariadbHelper.parseFunctions(
-					await instance.getFunctions(dbName)
-				);
+				const UDFs = mariadbHelper.parseFunctions(await instance.getFunctions(dbName));
 
 				log.info(`Parsing procedures`);
 				log.progress(`Parsing procedures`, dbName);
 
-				const Procedures = mariadbHelper.parseProcedures(
-					await instance.getProcedures(dbName)
-				);
+				const Procedures = mariadbHelper.parseProcedures(await instance.getProcedures(dbName));
 
-				const result = await async.mapSeries(tables, async (tableName) => {
+				const result = await async.mapSeries(tables, async tableName => {
 					log.info(`Get columns "${tableName}"`);
 					log.progress(`Get columns`, dbName, tableName);
 
 					const columns = await instance.getColumns(dbName, tableName);
 					let records = [];
-					
+
 					if (containsJson(columns)) {
 						log.info(`Sampling table "${tableName}"`);
 						log.progress(`Sampling table`, dbName, tableName);
-	
+
 						const count = await instance.getCount(dbName, tableName);
-						records = await instance.getRecords(dbName, tableName, getSampleDocSize(count, data.recordSamplingSettings));
+						records = await instance.getRecords(
+							dbName,
+							tableName,
+							getSampleDocSize(count, data.recordSamplingSettings),
+						);
 					}
-					
+
 					log.info(`Get create table statement "${tableName}"`);
 					log.progress(`Get create table statement`, dbName, tableName);
 
@@ -202,11 +218,11 @@ module.exports = {
 						standardDoc: records[0],
 						ddl: {
 							script: ddl,
-							type: 'mariadb'
+							type: 'mariadb',
 						},
 						emptyBucket: false,
 						validation: {
-							jsonSchema
+							jsonSchema,
 						},
 						bucketInfo: {
 							...containerData,
@@ -215,8 +231,8 @@ module.exports = {
 						},
 					};
 				});
-				
-				const viewData = await async.mapSeries(views, async (viewName) => {
+
+				const viewData = await async.mapSeries(views, async viewName => {
 					log.info(`Getting data from view "${viewName}"`);
 					log.progress(`Getting data from view`, dbName, viewName);
 
@@ -226,25 +242,27 @@ module.exports = {
 						name: viewName,
 						ddl: {
 							script: ddl,
-							type: 'mariadb'
-						}
+							type: 'mariadb',
+						},
 					};
 				});
 
 				if (viewData.length) {
-					return [...result, {
-						dbName: dbName,
-						views: viewData,
-						emptyBucket: false,
-					}];
+					return [
+						...result,
+						{
+							dbName: dbName,
+							views: viewData,
+							emptyBucket: false,
+						},
+					];
 				}
-				
+
 				return result;
 			});
 
-
 			callback(null, result.flat());
-		} catch(error) {
+		} catch (error) {
 			log.error(error);
 			callback({ message: error.message, stack: error.stack });
 		}
@@ -262,40 +280,46 @@ const createLogger = ({ title, logger, hiddenKeys }) => {
 		},
 
 		error(error) {
-			logger.log('error', {
-				message: error.message,
-				stack: error.stack,
-			}, title);
-		}
+			logger.log(
+				'error',
+				{
+					message: error.message,
+					stack: error.stack,
+				},
+				title,
+			);
+		},
 	};
 };
 
 const getDbCollectionNames = (entities, dbName, includeSystemCollection) => {
-	const isView = (type) => {
+	const isView = type => {
 		return ['VIEW'].includes(type);
 	};
 
-	return entities.filter(table => {
-		if (table['Table_type'] === 'SYSTEM VIEW') {
-			return false;
-		}
+	return entities
+		.filter(table => {
+			if (table['Table_type'] === 'SYSTEM VIEW') {
+				return false;
+			}
 
-		if (includeSystemCollection) {
-			return true;
-		}
+			if (includeSystemCollection) {
+				return true;
+			}
 
-		const isSystem = !['BASE TABLE', 'VIEW', 'SEQUENCE'].includes(table['Table_type']);
+			const isSystem = !['BASE TABLE', 'VIEW', 'SEQUENCE'].includes(table['Table_type']);
 
-		return !isSystem;
-	}).map(table => {
-		const name = table[`Tables_in_${dbName}`];
+			return !isSystem;
+		})
+		.map(table => {
+			const name = table[`Tables_in_${dbName}`];
 
-		if (isView(table['Table_type'])) {
-			return `${name} (v)`;
-		} else {
-			return name;
-		}
-	});
+			if (isView(table['Table_type'])) {
+				return `${name} (v)`;
+			} else {
+				return name;
+			}
+		});
 };
 
 const getSampleDocSize = (count, recordSamplingSettings) => {
@@ -308,12 +332,12 @@ const getSampleDocSize = (count, recordSamplingSettings) => {
 	return Math.min(limit, recordSamplingSettings.maxValue);
 };
 
-const isViewName = (name) => {
+const isViewName = name => {
 	return /\ \(v\)$/i.test(name);
 };
 
-const getViewName = (name) => name.replace(/\ \(v\)$/i, '');
+const getViewName = name => name.replace(/\ \(v\)$/i, '');
 
-const containsJson = (columns) => {
+const containsJson = columns => {
 	return columns.some(column => column['Type'] === 'longtext' || column['Type'] === 'json');
 };

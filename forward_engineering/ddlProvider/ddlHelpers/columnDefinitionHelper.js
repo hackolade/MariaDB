@@ -1,8 +1,7 @@
-const {ColumnDefinition} = require('../../ddlProvider/types/columnDefinition');
-const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
+const { ColumnDefinition } = require('../../ddlProvider/types/columnDefinition');
+const { HydratedColumn } = require('../../ddlProvider/types/hydratedColumn');
 
 module.exports = (_, wrap) => {
-
 	/**
 	 * @param type {string}
 	 * @param length {number | string}
@@ -114,7 +113,8 @@ module.exports = (_, wrap) => {
 	 * @param type {string}
 	 * @return {boolean}
 	 * */
-	const isString = type => ['CHAR', 'VARCHAR', 'TEXT', 'TINYTEXT', 'MEDIUMTEXT', 'LONGTEXT'].includes(_.toUpper(type));
+	const isString = type =>
+		['CHAR', 'VARCHAR', 'TEXT', 'TINYTEXT', 'MEDIUMTEXT', 'LONGTEXT'].includes(_.toUpper(type));
 
 	/**
 	 * @param type {string}
@@ -167,14 +167,14 @@ module.exports = (_, wrap) => {
 	};
 
 	/**
-	 * 
-	 * @param {string} type 
+	 *
+	 * @param {string} type
 	 * @returns {boolean}
 	 */
-	const canHaveAutoIncrement = (type) => {
-		const typesAllowedToHaveAutoIncrement = ["tinyint", "smallint", "mediumint", "int", "bigint"]
-		return typesAllowedToHaveAutoIncrement.includes(type)
-	}
+	const canHaveAutoIncrement = type => {
+		const typesAllowedToHaveAutoIncrement = ['tinyint', 'smallint', 'mediumint', 'int', 'bigint'];
+		return typesAllowedToHaveAutoIncrement.includes(type);
+	};
 
 	return {
 		decorateType,

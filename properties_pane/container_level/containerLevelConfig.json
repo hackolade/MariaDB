@@ -172,13 +172,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"big5_chinese_ci",
-					"big5_bin",
-					"big5_chinese_nopad_ci",
-					"big5_nopad_bin"
-				],
+				"options": ["", "big5_chinese_ci", "big5_bin", "big5_chinese_nopad_ci", "big5_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "big5"
@@ -189,13 +183,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"dec8_swedish_ci",
-					"dec8_bin",
-					"dec8_swedish_nopad_ci",
-					"dec8_nopad_bin"
-				],
+				"options": ["", "dec8_swedish_ci", "dec8_bin", "dec8_swedish_nopad_ci", "dec8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "dec8"
@@ -206,13 +194,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp850_general_ci",
-					"cp850_bin",
-					"cp850_general_nopad_ci",
-					"cp850_nopad_bin"
-				],
+				"options": ["", "cp850_general_ci", "cp850_bin", "cp850_general_nopad_ci", "cp850_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp850"
@@ -223,13 +205,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"hp8_english_ci",
-					"hp8_bin",
-					"hp8_english_nopad_ci",
-					"hp8_nopad_bin"
-				],
+				"options": ["", "hp8_english_ci", "hp8_bin", "hp8_english_nopad_ci", "hp8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "hp8"
@@ -240,13 +216,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"koi8r_general_ci",
-					"koi8r_bin",
-					"koi8r_general_nopad_ci",
-					"koi8r_nopad_bin"
-				],
+				"options": ["", "koi8r_general_ci", "koi8r_bin", "koi8r_general_nopad_ci", "koi8r_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "koi8r"
@@ -300,13 +270,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"swe7_swedish_ci",
-					"swe7_bin",
-					"swe7_swedish_nopad_ci",
-					"swe7_nopad_bin"
-				],
+				"options": ["", "swe7_swedish_ci", "swe7_bin", "swe7_swedish_nopad_ci", "swe7_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "swe7"
@@ -317,13 +281,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"ascii_general_ci",
-					"ascii_bin",
-					"ascii_general_nopad_ci",
-					"ascii_nopad_bin"
-				],
+				"options": ["", "ascii_general_ci", "ascii_bin", "ascii_general_nopad_ci", "ascii_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "ascii"
@@ -334,13 +292,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"ujis_japanese_ci",
-					"ujis_bin",
-					"ujis_japanese_nopad_ci",
-					"ujis_nopad_bin"
-				],
+				"options": ["", "ujis_japanese_ci", "ujis_bin", "ujis_japanese_nopad_ci", "ujis_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "ujis"
@@ -351,13 +303,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"sjis_japanese_ci",
-					"sjis_bin",
-					"sjis_japanese_nopad_ci",
-					"sjis_nopad_bin"
-				],
+				"options": ["", "sjis_japanese_ci", "sjis_bin", "sjis_japanese_nopad_ci", "sjis_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "sjis"
@@ -368,13 +314,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"hebrew_general_ci",
-					"hebrew_bin",
-					"hebrew_general_nopad_ci",
-					"hebrew_nopad_bin"
-				],
+				"options": ["", "hebrew_general_ci", "hebrew_bin", "hebrew_general_nopad_ci", "hebrew_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "hebrew"
@@ -385,13 +325,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"tis620_thai_ci",
-					"tis620_bin",
-					"tis620_thai_nopad_ci",
-					"tis620_nopad_bin"
-				],
+				"options": ["", "tis620_thai_ci", "tis620_bin", "tis620_thai_nopad_ci", "tis620_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "tis620"
@@ -402,13 +336,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"euckr_korean_ci",
-					"euckr_bin",
-					"euckr_korean_nopad_ci",
-					"euckr_nopad_bin"
-				],
+				"options": ["", "euckr_korean_ci", "euckr_bin", "euckr_korean_nopad_ci", "euckr_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "euckr"
@@ -419,13 +347,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"koi8u_general_ci",
-					"koi8u_bin",
-					"koi8u_general_nopad_ci",
-					"koi8u_nopad_bin"
-				],
+				"options": ["", "koi8u_general_ci", "koi8u_bin", "koi8u_general_nopad_ci", "koi8u_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "koi8u"
@@ -436,13 +358,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"gb2312_chinese_ci",
-					"gb2312_bin",
-					"gb2312_chinese_nopad_ci",
-					"gb2312_nopad_bin"
-				],
+				"options": ["", "gb2312_chinese_ci", "gb2312_bin", "gb2312_chinese_nopad_ci", "gb2312_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "gb2312"
@@ -453,13 +369,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"greek_general_ci",
-					"greek_bin",
-					"greek_general_nopad_ci",
-					"greek_nopad_bin"
-				],
+				"options": ["", "greek_general_ci", "greek_bin", "greek_general_nopad_ci", "greek_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "greek"
@@ -490,13 +400,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"gbk_chinese_ci",
-					"gbk_bin",
-					"gbk_chinese_nopad_ci",
-					"gbk_nopad_bin"
-				],
+				"options": ["", "gbk_chinese_ci", "gbk_bin", "gbk_chinese_nopad_ci", "gbk_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "gbk"
@@ -507,13 +411,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"latin5_turkish_ci",
-					"latin5_bin",
-					"latin5_turkish_nopad_ci",
-					"latin5_nopad_bin"
-				],
+				"options": ["", "latin5_turkish_ci", "latin5_bin", "latin5_turkish_nopad_ci", "latin5_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "latin5"
@@ -635,13 +533,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp866_general_ci",
-					"cp866_bin",
-					"cp866_general_nopad_ci",
-					"cp866_nopad_bin"
-				],
+				"options": ["", "cp866_general_ci", "cp866_bin", "cp866_general_nopad_ci", "cp866_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp866"
@@ -652,13 +544,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"keybcs2_general_ci",
-					"keybcs2_bin",
-					"keybcs2_general_nopad_ci",
-					"keybcs2_nopad_bin"
-				],
+				"options": ["", "keybcs2_general_ci", "keybcs2_bin", "keybcs2_general_nopad_ci", "keybcs2_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "keybcs2"
@@ -669,13 +555,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"macce_general_ci",
-					"macce_bin",
-					"macce_general_nopad_ci",
-					"macce_nopad_bin"
-				],
+				"options": ["", "macce_general_ci", "macce_bin", "macce_general_nopad_ci", "macce_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "macce"
@@ -703,13 +583,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp852_general_ci",
-					"cp852_bin",
-					"cp852_general_nopad_ci",
-					"cp852_nopad_bin"
-				],
+				"options": ["", "cp852_general_ci", "cp852_bin", "cp852_general_nopad_ci", "cp852_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp852"
@@ -851,13 +725,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"utf16le_general_ci",
-					"utf16le_bin",
-					"utf16le_general_nopad_ci",
-					"utf16le_nopad_bin"
-				],
+				"options": ["", "utf16le_general_ci", "utf16le_bin", "utf16le_general_nopad_ci", "utf16le_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "utf16le"
@@ -868,13 +736,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp1256_general_ci",
-					"cp1256_bin",
-					"cp1256_general_nopad_ci",
-					"cp1256_nopad_bin"
-				],
+				"options": ["", "cp1256_general_ci", "cp1256_bin", "cp1256_general_nopad_ci", "cp1256_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp1256"
@@ -948,10 +810,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"binary"
-				],
+				"options": ["", "binary"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "binary"
@@ -962,13 +821,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"geostd8_general_ci",
-					"geostd8_bin",
-					"geostd8_general_nopad_ci",
-					"geostd8_nopad_bin"
-				],
+				"options": ["", "geostd8_general_ci", "geostd8_bin", "geostd8_general_nopad_ci", "geostd8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "geostd8"
@@ -979,13 +832,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp932_japanese_ci",
-					"cp932_bin",
-					"cp932_japanese_nopad_ci",
-					"cp932_nopad_bin"
-				],
+				"options": ["", "cp932_japanese_ci", "cp932_bin", "cp932_japanese_nopad_ci", "cp932_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp932"
@@ -996,13 +843,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"eucjpms_japanese_ci",
-					"eucjpms_bin",
-					"eucjpms_japanese_nopad_ci",
-					"eucjpms_nopad_bin"
-				],
+				"options": ["", "eucjpms_japanese_ci", "eucjpms_bin", "eucjpms_japanese_nopad_ci", "eucjpms_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "eucjpms"
@@ -1022,232 +863,204 @@ making sure that you maintain a proper JSON format.
 	},
 	{
 		"lowerTab": "Functions",
-		"structure": [{
-			"propertyName": "Functions",
-			"propertyType": "group",
-			"propertyKeyword": "UDFs",
-			"propertyTooltip": "Creates a new scalar user-defined function (UDF) using either a SQL SELECT clause or a Python program.",
-			"structure": [
-				{
-					"propertyName": "Name",
-					"propertyKeyword": "name",
-					"propertyTooltip": "The name of the function.",
-					"propertyType": "text"
-				},
-				{
-					"propertyName": "Comments",
-					"propertyKeyword": "functionDescription",
-					"shouldValidate": false,
-					"propertyTooltip": "description",
-					"propertyType": "details",
-					"template": "textarea"
-				},
-				{
-					"propertyName": "Or replace",
-					"propertyKeyword": "functionOrReplace",
-					"propertyType": "checkbox",
-					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
-				},
-				{
-					"propertyName": "Delimiter",
-					"propertyKeyword": "functionDelimiter",
-					"propertyType": "text",
-					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
-				},
-				{
-					"propertyName": "Aggregate",
-					"propertyKeyword": "functionAggregate",
-					"propertyType": "checkbox",
-					"propertyTooltip": "functions that are computed over a sequence of rows and return one result for the sequence of rows."
-				},
-				{
-					"propertyName": "If not exist",
-					"propertyKeyword": "functionIfNotExist",
-					"propertyTooltip": "The function will only be created if a function with the same name does not already exist. If the function already exists, then a warning will be triggered by default.",
-					"defaultValue": true,
-					"propertyType": "checkbox"
-				},
-				{
-					"propertyName": "Parameters",
-					"propertyKeyword": "functionArguments",
-					"propertyTooltip": "For a Python UDF, a list of input argument names and data types. For a SQL UDF, a list of data types, without argument names.  You can specify a maximum of 32 arguments.",
-					"propertyType": "details",
-					"template": "textarea",
-					"markdown": false
-				},
-				{
-					"propertyName": "Returns data type",
-					"propertyKeyword": "functionReturnType",
-					"propertyTooltip": "Any valid MariaDB data type",
-					"propertyType": "text"
-				},
-				{
-					"propertyName": "Function",
-					"propertyKeyword": "functionBody",
-					"propertyTooltip": "A valid executable Python program that returns a value or a SQL SELECT clause.",
-					"propertyType": "details",
-					"template": "textarea",
-					"markdown": false
-				},
-				{
-					"propertyName": "Language",
-					"propertyKeyword": "functionLanguage",
-					"propertyTooltip": "language",
-					"propertyType": "select",
-					"defaultValue": "SQL",
-					"options": [
-						"SQL"
-					]
-				},
-				{
-					"propertyName": "Deterministic",
-					"propertyKeyword": "functionDeterministic",
-					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"DETERMINISTIC",
-						"NOT DETERMINISTIC"
-					]
-				},
-				{
-					"propertyName": "Contains",
-					"propertyKeyword": "functionContains",
-					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"CONTAINS SQL",
-						"NO SQL",
-						"READS SQL DATA",
-						"MODIFIES SQL DATA"
-					]
-				},
-				{
-					"propertyName": "SQL Security",
-					"propertyKeyword": "functionSqlSecurity",
-					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
-					"propertyType": "select",
-					"defaultValue": "DEFINER",
-					"options": [
-						"",
-						"DEFINER",
-						"INVOKER"
-					]
-				},
-				{
-					"propertyName": "Remarks",
-					"propertyKeyword": "functionComments",
-					"shouldValidate": false,
-					"propertyTooltip": "comments",
-					"addTimestampButton": false,
-					"propertyType": "details",
-					"template": "textarea"
-				}
-			]
-		}]
+		"structure": [
+			{
+				"propertyName": "Functions",
+				"propertyType": "group",
+				"propertyKeyword": "UDFs",
+				"propertyTooltip": "Creates a new scalar user-defined function (UDF) using either a SQL SELECT clause or a Python program.",
+				"structure": [
+					{
+						"propertyName": "Name",
+						"propertyKeyword": "name",
+						"propertyTooltip": "The name of the function.",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Comments",
+						"propertyKeyword": "functionDescription",
+						"shouldValidate": false,
+						"propertyTooltip": "description",
+						"propertyType": "details",
+						"template": "textarea"
+					},
+					{
+						"propertyName": "Or replace",
+						"propertyKeyword": "functionOrReplace",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
+					},
+					{
+						"propertyName": "Delimiter",
+						"propertyKeyword": "functionDelimiter",
+						"propertyType": "text",
+						"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
+					},
+					{
+						"propertyName": "Aggregate",
+						"propertyKeyword": "functionAggregate",
+						"propertyType": "checkbox",
+						"propertyTooltip": "functions that are computed over a sequence of rows and return one result for the sequence of rows."
+					},
+					{
+						"propertyName": "If not exist",
+						"propertyKeyword": "functionIfNotExist",
+						"propertyTooltip": "The function will only be created if a function with the same name does not already exist. If the function already exists, then a warning will be triggered by default.",
+						"defaultValue": true,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "Parameters",
+						"propertyKeyword": "functionArguments",
+						"propertyTooltip": "For a Python UDF, a list of input argument names and data types. For a SQL UDF, a list of data types, without argument names.  You can specify a maximum of 32 arguments.",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false
+					},
+					{
+						"propertyName": "Returns data type",
+						"propertyKeyword": "functionReturnType",
+						"propertyTooltip": "Any valid MariaDB data type",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Function",
+						"propertyKeyword": "functionBody",
+						"propertyTooltip": "A valid executable Python program that returns a value or a SQL SELECT clause.",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false
+					},
+					{
+						"propertyName": "Language",
+						"propertyKeyword": "functionLanguage",
+						"propertyTooltip": "language",
+						"propertyType": "select",
+						"defaultValue": "SQL",
+						"options": ["SQL"]
+					},
+					{
+						"propertyName": "Deterministic",
+						"propertyKeyword": "functionDeterministic",
+						"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": ["", "DETERMINISTIC", "NOT DETERMINISTIC"]
+					},
+					{
+						"propertyName": "Contains",
+						"propertyKeyword": "functionContains",
+						"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": ["", "CONTAINS SQL", "NO SQL", "READS SQL DATA", "MODIFIES SQL DATA"]
+					},
+					{
+						"propertyName": "SQL Security",
+						"propertyKeyword": "functionSqlSecurity",
+						"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
+						"propertyType": "select",
+						"defaultValue": "DEFINER",
+						"options": ["", "DEFINER", "INVOKER"]
+					},
+					{
+						"propertyName": "Remarks",
+						"propertyKeyword": "functionComments",
+						"shouldValidate": false,
+						"propertyTooltip": "comments",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			}
+		]
 	},
 	{
 		"lowerTab": "Procedures",
-		"structure": [{
-			"propertyName": "Procedures",
-			"propertyType": "group",
-			"propertyKeyword": "Procedures",
-			"propertyTooltip": "Creates a new stored procedure or replaces an existing procedure for the current database.",
-			"structure": [
-				{
-					"propertyName": "Name",
-					"propertyKeyword": "name",
-					"propertyTooltip": "The name of the procedure.",
-					"propertyType": "text"
-				},
-				{
-					"propertyName": "Or replace",
-					"propertyKeyword": "orReplace",
-					"propertyType": "checkbox",
-					"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
-				},
-				{
-					"propertyName": "Delimiter",
-					"propertyKeyword": "delimiter",
-					"propertyType": "text",
-					"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
-				},
-				{
-					"propertyName": "Parameters",
-					"propertyKeyword": "inputArgs",
-					"propertyTooltip": "A list of parameter names, modes, and data types. ",
-					"propertyType": "details",
-					"template": "textarea",
-					"markdown": false
-				},
-				{
-					"propertyName": "Procedure body",
-					"propertyKeyword": "body",
-					"propertyTooltip": "Valid SQL procedure statement.",
-					"propertyType": "details",
-					"template": "textarea",
-					"markdown": false
-				},
-				{
-					"propertyName": "Language",
-					"propertyKeyword": "language",
-					"propertyTooltip": "language",
-					"propertyType": "select",
-					"defaultValue": "SQL",
-					"options": [
-						"SQL"
-					]
-				},
-				{
-					"propertyName": "Deterministic",
-					"propertyKeyword": "deterministic",
-					"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"DETERMINISTIC",
-						"NOT DETERMINISTIC"
-					]
-				},
-				{
-					"propertyName": "Contains",
-					"propertyKeyword": "contains",
-					"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"CONTAINS SQL",
-						"NO SQL",
-						"READS SQL DATA",
-						"MODIFIES SQL DATA"
-					]
-				},
-				{
-					"propertyName": "SQL Security",
-					"propertyKeyword": "securityMode",
-					"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
-					"propertyType": "select",
-					"defaultValue": "DEFINER",
-					"options": [
-						"",
-						"DEFINER",
-						"INVOKER"
-					]
-				},
-				{
-					"propertyName": "Comments",
-					"propertyKeyword": "comments",
-					"propertyTooltip": "comments",
-					"addTimestampButton": false,
-					"propertyType": "details",
-					"template": "textarea"
-				}
-			]
-		}]
+		"structure": [
+			{
+				"propertyName": "Procedures",
+				"propertyType": "group",
+				"propertyKeyword": "Procedures",
+				"propertyTooltip": "Creates a new stored procedure or replaces an existing procedure for the current database.",
+				"structure": [
+					{
+						"propertyName": "Name",
+						"propertyKeyword": "name",
+						"propertyTooltip": "The name of the procedure.",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Or replace",
+						"propertyKeyword": "orReplace",
+						"propertyType": "checkbox",
+						"propertyTooltip": "Specifies that if a function with the same name and input argument data types, or signature, as this one already exists, the existing function is replaced. You can only replace a function with a new function that defines an identical set of data types."
+					},
+					{
+						"propertyName": "Delimiter",
+						"propertyKeyword": "delimiter",
+						"propertyType": "text",
+						"propertyTooltip": "redefine delimiter in order to use semicolons in body statement"
+					},
+					{
+						"propertyName": "Parameters",
+						"propertyKeyword": "inputArgs",
+						"propertyTooltip": "A list of parameter names, modes, and data types. ",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false
+					},
+					{
+						"propertyName": "Procedure body",
+						"propertyKeyword": "body",
+						"propertyTooltip": "Valid SQL procedure statement.",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false
+					},
+					{
+						"propertyName": "Language",
+						"propertyKeyword": "language",
+						"propertyTooltip": "language",
+						"propertyType": "select",
+						"defaultValue": "SQL",
+						"options": ["SQL"]
+					},
+					{
+						"propertyName": "Deterministic",
+						"propertyKeyword": "deterministic",
+						"propertyTooltip": "An IN parameter passes a value into a procedure. An OUT parameter passes a value from the procedure back to the caller. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": ["", "DETERMINISTIC", "NOT DETERMINISTIC"]
+					},
+					{
+						"propertyName": "Contains",
+						"propertyKeyword": "contains",
+						"propertyTooltip": "Informative clauses that tell the server what the procedure does. MariaDB does not check in any way whether the specified clause is correct. If none of these clauses are specified, CONTAINS SQL is used by default.",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": ["", "CONTAINS SQL", "NO SQL", "READS SQL DATA", "MODIFIES SQL DATA"]
+					},
+					{
+						"propertyName": "SQL Security",
+						"propertyKeyword": "securityMode",
+						"propertyTooltip": "Clause specifying what privileges are used when a procedure is called. If SQL SECURITY is INVOKER, the procedure body will be evaluated using the privileges of the user calling the procedure. If SQL SECURITY is DEFINER, the procedure body is always evaluated using the privileges of the definer account. DEFINER is the default.",
+						"propertyType": "select",
+						"defaultValue": "DEFINER",
+						"options": ["", "DEFINER", "INVOKER"]
+					},
+					{
+						"propertyName": "Comments",
+						"propertyKeyword": "comments",
+						"propertyTooltip": "comments",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			}
+		]
 	}
 ]

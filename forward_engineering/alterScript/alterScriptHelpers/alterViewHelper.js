@@ -1,4 +1,4 @@
-const {AlterScriptDto} = require("../types/AlterScriptDto");
+const { AlterScriptDto } = require('../types/AlterScriptDto');
 
 /**
  * @return {(view: Object) => AlterScriptDto}
@@ -6,10 +6,7 @@ const {AlterScriptDto} = require("../types/AlterScriptDto");
 const getAddViewScriptDto = app => view => {
 	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const _ = app.require('lodash');
-	const {
-		getViewSchema,
-		getViewName,
-	} = require('../../utils/general')({ _ });
+	const { getViewSchema, getViewName } = require('../../utils/general')({ _ });
 	const viewSchema = getViewSchema(view);
 
 	const databaseName = viewSchema.compMod.keyspaceName;
@@ -52,12 +49,7 @@ const getDeleteViewScriptDto = app => view => {
  * */
 const getModifiedViewScriptDto = app => view => {
 	const _ = app.require('lodash');
-	const {
-		getTableName,
-		checkCompModEqual,
-		getViewSchema,
-		getViewName,
-	} = require('../../utils/general')({ _ });
+	const { getTableName, checkCompModEqual, getViewSchema, getViewName } = require('../../utils/general')({ _ });
 	const ddlProvider = require('../../ddlProvider/ddlProvider')(null, null, app);
 	const viewSchema = getViewSchema(view);
 	const viewData = {
@@ -76,9 +68,7 @@ const getModifiedViewScriptDto = app => view => {
 
 	const { deactivatedWholeStatement, selectStatement } = ddlProvider.viewSelectStatement(viewData);
 
-	const algorithm = viewSchema.algorithm
-			? `ALGORITHM ${viewSchema.algorithm}`
-			: 'ALGORITHM UNDEFINED';
+	const algorithm = viewSchema.algorithm ? `ALGORITHM ${viewSchema.algorithm}` : 'ALGORITHM UNDEFINED';
 	const sqlSecurity = viewData.sqlSecurity ? `SQL SECURITY ${viewData.sqlSecurity}` : '';
 
 	const ddlViewName = getTableName(viewData.name, viewData.dbData.databaseName);
@@ -89,7 +79,7 @@ const getModifiedViewScriptDto = app => view => {
 		sqlSecurity: ddlSqlSecurity,
 		algorithm: ddlAlgorithm,
 		viewName: ddlViewName,
-		selectStatement
+		selectStatement,
 	});
 	const isViewActivated = viewSchema.isActivated && !deactivatedWholeStatement;
 	return AlterScriptDto.getInstance([script], isViewActivated, false);

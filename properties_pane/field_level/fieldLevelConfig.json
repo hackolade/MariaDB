@@ -126,14 +126,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Subtype",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"char",
-					"varchar",
-					"tinytext",
-					"text",
-					"mediumtext",
-					"longtext"
-				],
+				"options": ["char", "varchar", "tinytext", "text", "mediumtext", "longtext"],
 				"data": "options",
 				"valueType": "string",
 				"cleanDependency": true
@@ -191,10 +184,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"json"
-				],
+				"options": ["", "json"],
 				"dependency": {
 					"key": "mode",
 					"value": "longtext"
@@ -277,13 +267,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"big5_chinese_ci",
-					"big5_bin",
-					"big5_chinese_nopad_ci",
-					"big5_nopad_bin"
-				],
+				"options": ["", "big5_chinese_ci", "big5_bin", "big5_chinese_nopad_ci", "big5_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "big5"
@@ -294,13 +278,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"dec8_swedish_ci",
-					"dec8_bin",
-					"dec8_swedish_nopad_ci",
-					"dec8_nopad_bin"
-				],
+				"options": ["", "dec8_swedish_ci", "dec8_bin", "dec8_swedish_nopad_ci", "dec8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "dec8"
@@ -311,13 +289,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp850_general_ci",
-					"cp850_bin",
-					"cp850_general_nopad_ci",
-					"cp850_nopad_bin"
-				],
+				"options": ["", "cp850_general_ci", "cp850_bin", "cp850_general_nopad_ci", "cp850_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp850"
@@ -328,13 +300,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"hp8_english_ci",
-					"hp8_bin",
-					"hp8_english_nopad_ci",
-					"hp8_nopad_bin"
-				],
+				"options": ["", "hp8_english_ci", "hp8_bin", "hp8_english_nopad_ci", "hp8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "hp8"
@@ -345,13 +311,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"koi8r_general_ci",
-					"koi8r_bin",
-					"koi8r_general_nopad_ci",
-					"koi8r_nopad_bin"
-				],
+				"options": ["", "koi8r_general_ci", "koi8r_bin", "koi8r_general_nopad_ci", "koi8r_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "koi8r"
@@ -405,13 +365,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"swe7_swedish_ci",
-					"swe7_bin",
-					"swe7_swedish_nopad_ci",
-					"swe7_nopad_bin"
-				],
+				"options": ["", "swe7_swedish_ci", "swe7_bin", "swe7_swedish_nopad_ci", "swe7_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "swe7"
@@ -422,13 +376,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"ascii_general_ci",
-					"ascii_bin",
-					"ascii_general_nopad_ci",
-					"ascii_nopad_bin"
-				],
+				"options": ["", "ascii_general_ci", "ascii_bin", "ascii_general_nopad_ci", "ascii_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "ascii"
@@ -439,13 +387,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"ujis_japanese_ci",
-					"ujis_bin",
-					"ujis_japanese_nopad_ci",
-					"ujis_nopad_bin"
-				],
+				"options": ["", "ujis_japanese_ci", "ujis_bin", "ujis_japanese_nopad_ci", "ujis_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "ujis"
@@ -456,13 +398,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"sjis_japanese_ci",
-					"sjis_bin",
-					"sjis_japanese_nopad_ci",
-					"sjis_nopad_bin"
-				],
+				"options": ["", "sjis_japanese_ci", "sjis_bin", "sjis_japanese_nopad_ci", "sjis_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "sjis"
@@ -473,13 +409,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"hebrew_general_ci",
-					"hebrew_bin",
-					"hebrew_general_nopad_ci",
-					"hebrew_nopad_bin"
-				],
+				"options": ["", "hebrew_general_ci", "hebrew_bin", "hebrew_general_nopad_ci", "hebrew_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "hebrew"
@@ -490,13 +420,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"tis620_thai_ci",
-					"tis620_bin",
-					"tis620_thai_nopad_ci",
-					"tis620_nopad_bin"
-				],
+				"options": ["", "tis620_thai_ci", "tis620_bin", "tis620_thai_nopad_ci", "tis620_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "tis620"
@@ -507,13 +431,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"euckr_korean_ci",
-					"euckr_bin",
-					"euckr_korean_nopad_ci",
-					"euckr_nopad_bin"
-				],
+				"options": ["", "euckr_korean_ci", "euckr_bin", "euckr_korean_nopad_ci", "euckr_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "euckr"
@@ -524,13 +442,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"koi8u_general_ci",
-					"koi8u_bin",
-					"koi8u_general_nopad_ci",
-					"koi8u_nopad_bin"
-				],
+				"options": ["", "koi8u_general_ci", "koi8u_bin", "koi8u_general_nopad_ci", "koi8u_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "koi8u"
@@ -541,13 +453,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"gb2312_chinese_ci",
-					"gb2312_bin",
-					"gb2312_chinese_nopad_ci",
-					"gb2312_nopad_bin"
-				],
+				"options": ["", "gb2312_chinese_ci", "gb2312_bin", "gb2312_chinese_nopad_ci", "gb2312_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "gb2312"
@@ -558,13 +464,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"greek_general_ci",
-					"greek_bin",
-					"greek_general_nopad_ci",
-					"greek_nopad_bin"
-				],
+				"options": ["", "greek_general_ci", "greek_bin", "greek_general_nopad_ci", "greek_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "greek"
@@ -595,13 +495,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"gbk_chinese_ci",
-					"gbk_bin",
-					"gbk_chinese_nopad_ci",
-					"gbk_nopad_bin"
-				],
+				"options": ["", "gbk_chinese_ci", "gbk_bin", "gbk_chinese_nopad_ci", "gbk_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "gbk"
@@ -612,13 +506,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"latin5_turkish_ci",
-					"latin5_bin",
-					"latin5_turkish_nopad_ci",
-					"latin5_nopad_bin"
-				],
+				"options": ["", "latin5_turkish_ci", "latin5_bin", "latin5_turkish_nopad_ci", "latin5_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "latin5"
@@ -740,13 +628,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp866_general_ci",
-					"cp866_bin",
-					"cp866_general_nopad_ci",
-					"cp866_nopad_bin"
-				],
+				"options": ["", "cp866_general_ci", "cp866_bin", "cp866_general_nopad_ci", "cp866_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp866"
@@ -757,13 +639,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"keybcs2_general_ci",
-					"keybcs2_bin",
-					"keybcs2_general_nopad_ci",
-					"keybcs2_nopad_bin"
-				],
+				"options": ["", "keybcs2_general_ci", "keybcs2_bin", "keybcs2_general_nopad_ci", "keybcs2_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "keybcs2"
@@ -774,13 +650,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"macce_general_ci",
-					"macce_bin",
-					"macce_general_nopad_ci",
-					"macce_nopad_bin"
-				],
+				"options": ["", "macce_general_ci", "macce_bin", "macce_general_nopad_ci", "macce_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "macce"
@@ -808,13 +678,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp852_general_ci",
-					"cp852_bin",
-					"cp852_general_nopad_ci",
-					"cp852_nopad_bin"
-				],
+				"options": ["", "cp852_general_ci", "cp852_bin", "cp852_general_nopad_ci", "cp852_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp852"
@@ -956,13 +820,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"utf16le_general_ci",
-					"utf16le_bin",
-					"utf16le_general_nopad_ci",
-					"utf16le_nopad_bin"
-				],
+				"options": ["", "utf16le_general_ci", "utf16le_bin", "utf16le_general_nopad_ci", "utf16le_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "utf16le"
@@ -973,13 +831,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp1256_general_ci",
-					"cp1256_bin",
-					"cp1256_general_nopad_ci",
-					"cp1256_nopad_bin"
-				],
+				"options": ["", "cp1256_general_ci", "cp1256_bin", "cp1256_general_nopad_ci", "cp1256_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp1256"
@@ -1053,10 +905,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"binary"
-				],
+				"options": ["", "binary"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "binary"
@@ -1067,13 +916,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"geostd8_general_ci",
-					"geostd8_bin",
-					"geostd8_general_nopad_ci",
-					"geostd8_nopad_bin"
-				],
+				"options": ["", "geostd8_general_ci", "geostd8_bin", "geostd8_general_nopad_ci", "geostd8_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "geostd8"
@@ -1084,13 +927,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"cp932_japanese_ci",
-					"cp932_bin",
-					"cp932_japanese_nopad_ci",
-					"cp932_nopad_bin"
-				],
+				"options": ["", "cp932_japanese_ci", "cp932_bin", "cp932_japanese_nopad_ci", "cp932_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "cp932"
@@ -1101,13 +938,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "collation",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"eucjpms_japanese_ci",
-					"eucjpms_bin",
-					"eucjpms_japanese_nopad_ci",
-					"eucjpms_nopad_bin"
-				],
+				"options": ["", "eucjpms_japanese_ci", "eucjpms_bin", "eucjpms_japanese_nopad_ci", "eucjpms_nopad_bin"],
 				"dependency": {
 					"key": "characterSet",
 					"value": "eucjpms"
@@ -1187,10 +1018,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "compression_method",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"zlib"
-				],
+				"options": ["", "zlib"],
 				"dependency": {
 					"key": "compressed",
 					"value": true
@@ -1294,29 +1122,33 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "not",
-							"values": [{
-								"level": "siblings",
-								"value": {
-									"type": "and",
-									"values": [{
-										"key": "primaryKey",
-										"value": true
-									},
-									{
-										"type": "or",
+							"values": [
+								{
+									"level": "siblings",
+									"value": {
+										"type": "and",
 										"values": [
 											{
-												"key": "compositeUniqueKey",
-												"value": false
+												"key": "primaryKey",
+												"value": true
 											},
 											{
-												"key": "compositeUniqueKey",
-												"exist": false
+												"type": "or",
+												"values": [
+													{
+														"key": "compositeUniqueKey",
+														"value": false
+													},
+													{
+														"key": "compositeUniqueKey",
+														"exist": false
+													}
+												]
 											}
 										]
-									}]
+									}
 								}
-							}]
+							]
 						},
 						{
 							"type": "and",
@@ -1367,23 +1199,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -1400,23 +1238,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -1463,23 +1292,29 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				}
@@ -1523,23 +1358,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -1555,23 +1396,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -1624,17 +1456,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Subtype",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"tinyint",
-					"smallint",
-					"mediumint",
-					"int",
-					"bigint",
-					"bit",
-					"float",
-					"double",
-					"decimal"
-				],
+				"options": ["tinyint", "smallint", "mediumint", "int", "bigint", "bit", "float", "double", "decimal"],
 				"data": "options",
 				"valueType": "string"
 			},
@@ -1643,10 +1465,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"integer"
-				],
+				"options": ["", "integer"],
 				"dependency": {
 					"key": "mode",
 					"value": "int"
@@ -1657,13 +1476,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"dec",
-					"fixed",
-					"numeric",
-					"number"
-				],
+				"options": ["", "dec", "fixed", "numeric", "number"],
 				"dependency": {
 					"key": "mode",
 					"value": "decimal"
@@ -1674,11 +1487,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"double precision",
-					"real"
-				],
+				"options": ["", "double precision", "real"],
 				"dependency": {
 					"key": "mode",
 					"value": "double"
@@ -1869,29 +1678,33 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "not",
-							"values": [{
-								"level": "siblings",
-								"value": {
-									"type": "and",
-									"values": [{
-										"key": "primaryKey",
-										"value": true
-									},
-									{
-										"type": "or",
+							"values": [
+								{
+									"level": "siblings",
+									"value": {
+										"type": "and",
 										"values": [
 											{
-												"key": "compositeUniqueKey",
-												"value": false
+												"key": "primaryKey",
+												"value": true
 											},
 											{
-												"key": "compositeUniqueKey",
-												"exist": false
+												"type": "or",
+												"values": [
+													{
+														"key": "compositeUniqueKey",
+														"value": false
+													},
+													{
+														"key": "compositeUniqueKey",
+														"exist": false
+													}
+												]
 											}
 										]
-									}]
+									}
 								}
-							}]
+							]
 						},
 						{
 							"type": "and",
@@ -1942,23 +1755,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -1975,23 +1794,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -2069,23 +1879,29 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				}
@@ -2129,23 +1945,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -2161,23 +1983,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -2237,14 +2050,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Subtype",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"binary",
-					"varbinary",
-					"tinyblob",
-					"blob",
-					"mediumblob",
-					"longblob"
-				],
+				"options": ["binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob"],
 				"data": "options",
 				"valueType": "string"
 			},
@@ -2301,10 +2107,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "synonym",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"char byte"
-				],
+				"options": ["", "char byte"],
 				"dependency": {
 					"key": "mode",
 					"value": "binary"
@@ -2345,10 +2148,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "compression_method",
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
-				"options": [
-					"",
-					"zlib"
-				],
+				"options": ["", "zlib"],
 				"dependency": {
 					"key": "compressed",
 					"value": true
@@ -2484,29 +2284,33 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "not",
-							"values": [{
-								"level": "siblings",
-								"value": {
-									"type": "and",
-									"values": [{
-										"key": "primaryKey",
-										"value": true
-									},
-									{
-										"type": "or",
+							"values": [
+								{
+									"level": "siblings",
+									"value": {
+										"type": "and",
 										"values": [
 											{
-												"key": "compositeUniqueKey",
-												"value": false
+												"key": "primaryKey",
+												"value": true
 											},
 											{
-												"key": "compositeUniqueKey",
-												"exist": false
+												"type": "or",
+												"values": [
+													{
+														"key": "compositeUniqueKey",
+														"value": false
+													},
+													{
+														"key": "compositeUniqueKey",
+														"exist": false
+													}
+												]
 											}
 										]
-									}]
+									}
 								}
-							}]
+							]
 						},
 						{
 							"type": "and",
@@ -2557,23 +2361,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -2590,23 +2400,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -2653,23 +2454,29 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				}
@@ -2713,23 +2520,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -2745,23 +2558,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -2808,13 +2612,7 @@ making sure that you maintain a proper JSON format.
 				"propertyName": "Subtype",
 				"propertyKeyword": "mode",
 				"propertyType": "select",
-				"options": [
-					"date",
-					"time",
-					"datetime",
-					"timestamp",
-					"year"
-				],
+				"options": ["date", "time", "datetime", "timestamp", "year"],
 				"data": "options",
 				"valueType": "string"
 			},
@@ -2977,29 +2775,33 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "not",
-							"values": [{
-								"level": "siblings",
-								"value": {
-									"type": "and",
-									"values": [{
-										"key": "primaryKey",
-										"value": true
-									},
-									{
-										"type": "or",
+							"values": [
+								{
+									"level": "siblings",
+									"value": {
+										"type": "and",
 										"values": [
 											{
-												"key": "compositeUniqueKey",
-												"value": false
+												"key": "primaryKey",
+												"value": true
 											},
 											{
-												"key": "compositeUniqueKey",
-												"exist": false
+												"type": "or",
+												"values": [
+													{
+														"key": "compositeUniqueKey",
+														"value": false
+													},
+													{
+														"key": "compositeUniqueKey",
+														"exist": false
+													}
+												]
 											}
 										]
-									}]
+									}
 								}
-							}]
+							]
 						},
 						{
 							"type": "and",
@@ -3050,23 +2852,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -3083,23 +2891,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -3146,23 +2945,29 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				}
@@ -3206,23 +3011,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -3238,23 +3049,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -3643,29 +3445,33 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "not",
-							"values": [{
-								"level": "siblings",
-								"value": {
-									"type": "and",
-									"values": [{
-										"key": "primaryKey",
-										"value": true
-									},
-									{
-										"type": "or",
+							"values": [
+								{
+									"level": "siblings",
+									"value": {
+										"type": "and",
 										"values": [
 											{
-												"key": "compositeUniqueKey",
-												"value": false
+												"key": "primaryKey",
+												"value": true
 											},
 											{
-												"key": "compositeUniqueKey",
-												"exist": false
+												"type": "or",
+												"values": [
+													{
+														"key": "compositeUniqueKey",
+														"value": false
+													},
+													{
+														"key": "compositeUniqueKey",
+														"exist": false
+													}
+												]
 											}
 										]
-									}]
+									}
 								}
-							}]
+							]
 						},
 						{
 							"type": "and",
@@ -3716,23 +3522,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -3749,23 +3561,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -3812,23 +3615,29 @@ making sure that you maintain a proper JSON format.
 					"values": [
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				}
@@ -3872,23 +3681,29 @@ making sure that you maintain a proper JSON format.
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositePrimaryKey",
-								"value": false
-							}, {
-								"key": "compositePrimaryKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositePrimaryKey",
+									"value": false
+								},
+								{
+									"key": "compositePrimaryKey",
+									"exist": false
+								}
+							]
 						},
 						{
 							"type": "or",
-							"values": [{
-								"key": "compositeUniqueKey",
-								"value": false
-							}, {
-								"key": "compositeUniqueKey",
-								"exist": false
-							}]
+							"values": [
+								{
+									"key": "compositeUniqueKey",
+									"value": false
+								},
+								{
+									"key": "compositeUniqueKey",
+									"exist": false
+								}
+							]
 						}
 					]
 				},
@@ -3904,23 +3719,14 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key order",
 						"propertyKeyword": "indexOrder",
 						"propertyTooltip": "",
 						"propertyType": "select",
-						"options": [
-							"",
-							"ASC",
-							"DESC"
-						]
+						"options": ["", "ASC", "DESC"]
 					},
 					{
 						"propertyName": "Key block size",
