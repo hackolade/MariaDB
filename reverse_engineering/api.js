@@ -10,14 +10,18 @@ BigInt.prototype.toJSON = function () {
 const ACCESS_DENIED_ERROR = 1045;
 
 module.exports = {
-	async connect(connectionInfo) {
-		const connection = await connectionHelper.connect(connectionInfo);
+	async connect(connectionInfo, app) {
+		const sshService = app.require('@hackolade/ssh-service');
+
+		const connection = await connectionHelper.connect(connectionInfo, sshService);
 
 		return connection;
 	},
 
 	disconnect(connectionInfo, logger, callback, app) {
-		connectionHelper.close();
+		const sshService = app.require('@hackolade/ssh-service');
+
+		connectionHelper.close(sshService);
 		
 		callback();
 	},
@@ -33,7 +37,7 @@ module.exports = {
 			logger.clear();
 			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
 
-			const connection = await this.connect(connectionInfo);
+			const connection = await this.connect(connectionInfo, app);
 			const instance = connectionHelper.createInstance(connection, logger);
 
 			await instance.ping();
@@ -70,7 +74,7 @@ module.exports = {
 			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
 			const systemDatabases = connectionInfo.includeSystemCollection ? [] : ['information_schema', 'mysql', 'performance_schema'];
 
-			const connection = await this.connect(connectionInfo);
+			const connection = await this.connect(connectionInfo, app);
 			const instance = connectionHelper.createInstance(connection, logger);
 			const databases = connectionInfo.databaseName ? [connectionInfo.databaseName] : await instance.getDatabases(systemDatabases);
 			
@@ -125,7 +129,7 @@ module.exports = {
 
 			const collections = data.collectionData.collections;
 			const dataBaseNames = data.collectionData.dataBaseNames;
-			const connection = await this.connect(data);
+			const connection = await this.connect(data, app);
 			const instance = await connectionHelper.createInstance(connection, logger);
 
 			log.info('MariaDB version: ' + await instance.serverVersion());
