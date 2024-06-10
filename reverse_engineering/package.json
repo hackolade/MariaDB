@@ -4,8 +4,7 @@
   "description": "",
   "author": "Hackolade",
   "dependencies": {
-    "mysql": "^2.18.1",
-    "tunnel-ssh": "^4.1.6"
+    "mysql": "^2.18.1"
   },
   "installed": true
 }
