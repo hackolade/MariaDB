@@ -119,7 +119,6 @@
 						"type": "jsonObject"
 					},
 					"to": {
-						"mode": "longtext",
 						"subtype": "object"
 					}
 				},
@@ -128,7 +127,6 @@
 						"type": "jsonArray"
 					},
 					"to": {
-						"mode": "longtext",
 						"subtype": "array"
 					}
 				}
