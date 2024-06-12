@@ -61,7 +61,7 @@ const getDeleteCollectionScriptDto = app => collection => {
 	const { getTableName } = require('../../utils/general')({ _ });
 
 	const jsonData = { ...collection, ...(_.omit(collection?.role, 'properties') || {}) };
-	const tableName = jsonData?.code || jsonData?.collectionName || jsonSchema?.name;
+	const tableName = jsonData?.code || jsonData?.collectionName || jsonData?.name;
 	const databaseName = collection.compMod.keyspaceName;
 	const fullName = getTableName(tableName, databaseName);
 
