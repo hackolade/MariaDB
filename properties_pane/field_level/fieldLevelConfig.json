@@ -209,6 +209,24 @@ making sure that you maintain a proper JSON format.
 				"hidden": true
 			},
 			{
+				"propertyName": "Min Properties",
+				"propertyKeyword": "minProperties",
+				"propertyType": "numeric",
+				"dependency": {
+					"key": "subtype",
+					"value": "object"
+				}
+			},
+			{
+				"propertyName": "Max Properties",
+				"propertyKeyword": "maxProperties",
+				"propertyType": "numeric",
+				"dependency": {
+					"key": "subtype",
+					"value": "object"
+				}
+			},
+			{
 				"propertyName": "JSON Types",
 				"propertyKeyword": "subtype",
 				"propertyType": "select",
