@@ -24,7 +24,11 @@ const removeDelimiter = statement => {
 const applyToInstance = async (connectionInfo, logger, app) => {
 	const _ = app.require('lodash');
 	const async = app.require('async');
-	const connection = connectionHelper.createInstance(await connectionHelper.connect(connectionInfo), logger);
+	const sshService = app.require('@hackolade/ssh-service');
+	const connection = connectionHelper.createInstance(
+		await connectionHelper.connect(connectionInfo, sshService),
+		logger,
+	);
 
 	try {
 		const queries = connectionInfo.script
@@ -41,7 +45,7 @@ const applyToInstance = async (connectionInfo, logger, app) => {
 			await connection.query(query);
 		});
 	} catch (e) {
-		connectionHelper.close();
+		connectionHelper.close(sshService);
 		throw e;
 	}
 };

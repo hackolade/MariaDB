@@ -1,49 +1,8 @@
 const mysql = require('mysql');
 const fs = require('fs');
-const ssh = require('tunnel-ssh');
 
 let connection;
-let sshTunnel;
-
-const getSshConfig = info => {
-	const config = {
-		username: info.ssh_user,
-		host: info.ssh_host,
-		port: info.ssh_port,
-		dstHost: info.host,
-		dstPort: info.port,
-		localHost: '127.0.0.1',
-		localPort: info.port,
-		keepAlive: true,
-	};
-
-	if (info.ssh_method === 'privateKey') {
-		return Object.assign({}, config, {
-			privateKey: fs.readFileSync(info.ssh_key_file),
-			passphrase: info.ssh_key_passphrase,
-		});
-	} else {
-		return Object.assign({}, config, {
-			password: info.ssh_password,
-		});
-	}
-};
-
-const connectViaSsh = info =>
-	new Promise((resolve, reject) => {
-		ssh(getSshConfig(info), (err, tunnel) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve({
-					tunnel,
-					info: Object.assign({}, info, {
-						host: '127.0.0.1',
-					}),
-				});
-			}
-		});
-	});
+let isSshTunnel = false;
 
 const getSslOptions = connectionInfo => {
 	if (connectionInfo.sslType === 'Off') {
@@ -71,14 +30,28 @@ const getSslOptions = connectionInfo => {
 	}
 };
 
-const createConnection = async connectionInfo => {
+const createConnection = async (connectionInfo, sshService) => {
 	if (connectionInfo.ssh) {
-		const { info, tunnel } = await connectViaSsh(connectionInfo);
-		sshTunnel = tunnel;
-		connectionInfo = info;
+		const { options } = await sshService.openTunnel({
+			sshAuthMethod: connectionInfo.ssh_method === 'privateKey' ? 'IDENTITY_FILE' : 'USER_PASSWORD',
+			sshTunnelHostname: connectionInfo.ssh_host,
+			sshTunnelPort: connectionInfo.ssh_port,
+			sshTunnelUsername: connectionInfo.ssh_user,
+			sshTunnelPassword: connectionInfo.ssh_password,
+			sshTunnelIdentityFile: connectionInfo.ssh_key_file,
+			sshTunnelPassphrase: connectionInfo.ssh_key_passphrase,
+			host: connectionInfo.host,
+			port: connectionInfo.port,
+		});
+
+		isSshTunnel = true;
+		connectionInfo = {
+			...connectionInfo,
+			...options,
+		};
 	}
 
-	return await mysql.createConnection({
+	return mysql.createConnection({
 		host: connectionInfo.host,
 		user: connectionInfo.userName,
 		password: connectionInfo.userPassword,
@@ -107,12 +80,12 @@ const promisify =
 		});
 	};
 
-const connect = async connectionInfo => {
+const connect = async (connectionInfo, sshService) => {
 	if (connection) {
 		return connection;
 	}
 
-	connection = await createConnection(connectionInfo);
+	connection = await createConnection(connectionInfo, sshService);
 
 	return connection;
 };
@@ -256,15 +229,15 @@ const createInstance = (connection, logger) => {
 	};
 };
 
-const close = () => {
+const close = async sshService => {
 	if (connection) {
 		connection.end();
 		connection = null;
 	}
 
-	if (sshTunnel) {
-		sshTunnel.close();
-		sshTunnel = null;
+	if (isSshTunnel) {
+		await sshService.closeConsumer();
+		isSshTunnel = false;
 	}
 };
 
