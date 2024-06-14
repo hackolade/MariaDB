@@ -116,10 +116,12 @@
 			"field": [
 				{
 					"from": {
-						"type": "jsonObject"
+						"type": "jsonObject"					
 					},
 					"to": {
-						"subtype": "object"
+						"subtype": "object",
+						"mode": "longtext",
+						"synonym": "json"
 					}
 				},
 				{
