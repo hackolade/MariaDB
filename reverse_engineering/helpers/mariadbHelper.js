@@ -1,7 +1,7 @@
-const functionHelper = require("./parsers/functionHelper");
-const procedureHelper = require("./parsers/procedureHelper");
+const functionHelper = require('./parsers/functionHelper');
+const procedureHelper = require('./parsers/procedureHelper');
 
-const parseDatabaseStatement = (statement) => {
+const parseDatabaseStatement = statement => {
 	const characterSetRegExp = /CHARACTER\ SET\ (.+?)\ /i;
 	const collationRegExp = /COLLATE\ (.+?)\ /i;
 	const commentRegExp = /COMMENT\ \'([\s\S]*?)\'/i;
@@ -22,13 +22,13 @@ const parseDatabaseStatement = (statement) => {
 	return data;
 };
 
-const parseFunctions = (functions) => {
+const parseFunctions = functions => {
 	return functions.map(f => {
 		const query = f.data[0]['Create Function'];
 
 		try {
 			const func = functionHelper.parseFunctionQuery(String(query));
-	
+
 			return {
 				name: f.meta['Name'],
 				functionDelimiter: (func.body || '').includes(';') ? '$$' : '',
@@ -53,13 +53,13 @@ const parseFunctions = (functions) => {
 	});
 };
 
-const parseProcedures = (procedures) => {
+const parseProcedures = procedures => {
 	return procedures.map(procedure => {
 		try {
 			const meta = procedure.meta;
 			const procValue = procedure.data[0]['Create Procedure'];
 			const data = procedureHelper.parseProcedure(String(procValue));
-			
+
 			return {
 				name: meta['Name'],
 				delimiter: (data.body || '').includes(';') ? '$$' : '',
@@ -70,7 +70,7 @@ const parseProcedures = (procedures) => {
 				deterministic: data.deterministic,
 				contains: data.contains,
 				securityMode: meta['Security_type'],
-				comments: meta['Comment']
+				comments: meta['Comment'],
 			};
 		} catch (error) {
 			throw {
@@ -109,7 +109,7 @@ const findJsonRecord = (fieldName, records) => {
 
 const getSubtype = (fieldName, record) => {
 	const item = JSON.parse(record[fieldName]);
- 
+
 	if (!item) {
 		return ' ';
 	}
@@ -128,24 +128,27 @@ const getSubtype = (fieldName, record) => {
 const addKeyOptions = (jsonSchema, indexes) => {
 	const primaryIndexes = indexes.filter(index => getIndexType(index) === 'PRIMARY');
 	const uniqueIndexes = indexes.filter(index => getIndexType(index) === 'UNIQUE');
-	const { single } = uniqueIndexes.reduce(({single, composite, hash}, index) => {
-		const indexName = index['Key_name'];
-		if (!hash[indexName]) {
-			hash[indexName] = true;
+	const { single } = uniqueIndexes.reduce(
+		({ single, composite, hash }, index) => {
+			const indexName = index['Key_name'];
+			if (!hash[indexName]) {
+				hash[indexName] = true;
 
-			return {
-				single: single.concat(index),
-				composite,
-				hash,
-			};
-		} else {
-			return {
-				single: single.filter(index => index['Key_name'] !== indexName),
-				composite: composite.concat(index),
-				hash,
-			};
-		}
-	}, {composite: [], single: [], hash: {}});
+				return {
+					single: single.concat(index),
+					composite,
+					hash,
+				};
+			} else {
+				return {
+					single: single.filter(index => index['Key_name'] !== indexName),
+					composite: composite.concat(index),
+					hash,
+				};
+			}
+		},
+		{ composite: [], single: [], hash: {} },
+	);
 
 	jsonSchema = single.reduce((jsonSchema, index) => {
 		const columnName = index['Column_name'];
@@ -161,8 +164,8 @@ const addKeyOptions = (jsonSchema, indexes) => {
 						...((jsonSchema.properties[columnName] || {}).uniqueKeyOptions || []),
 						uniqueKeyOptions,
 					],
-				}
-			}
+				},
+			},
 		};
 	}, jsonSchema);
 
@@ -178,55 +181,60 @@ const addKeyOptions = (jsonSchema, indexes) => {
 				[columnName]: {
 					...(jsonSchema.properties[columnName] || {}),
 					primaryKeyOptions,
-				}
-			}
+				},
+			},
 		};
 	}
 
 	return jsonSchema;
 };
 
-const getIndexData = (index) => {
+const getIndexData = index => {
 	return {
 		constraintName: index['Key_name'],
 		indexCategory: getIndexCategory(index),
 		indexComment: index['Index_comment'],
 		indexOrder: getIndexOrder(index['Collation']),
-		indexIgnore: index['Ignored'] === 'YES'
+		indexIgnore: index['Ignored'] === 'YES',
 	};
 };
 
 const getJsonSchema = ({ columns, constraints, records, indexes }) => {
-	const properties = columns.filter((column) => {
-		return column['Type'] === 'longtext';
-	}).reduce((schema, column) => {
-		const fieldName = column['Field'];
-		const record = findJsonRecord(fieldName, records);
-		const isJsonSynonym = isJson(fieldName, constraints);
-		const subtype = record ? getSubtype(fieldName, record) : ' ';
-		const synonym = isJsonSynonym ? 'json' : '';
+	const properties = columns
+		.filter(column => {
+			return column['Type'] === 'longtext';
+		})
+		.reduce((schema, column) => {
+			const fieldName = column['Field'];
+			const record = findJsonRecord(fieldName, records);
+			const isJsonSynonym = isJson(fieldName, constraints);
+			const subtype = record ? getSubtype(fieldName, record) : ' ';
+			const synonym = isJsonSynonym ? 'json' : '';
 
-		if (!synonym && subtype === ' ') {
-			return schema;
-		}
-
-		return {
-			...schema,
-			[fieldName]: {
-				type: 'char',
-				mode: 'longtext',
-				synonym,
-				subtype,
+			if (!synonym && subtype === ' ') {
+				return schema;
 			}
-		};
-	}, {});
 
-	return addKeyOptions({
-		properties,
-	}, indexes);
+			return {
+				...schema,
+				[fieldName]: {
+					type: 'char',
+					mode: 'longtext',
+					synonym,
+					subtype,
+				},
+			};
+		}, {});
+
+	return addKeyOptions(
+		{
+			properties,
+		},
+		indexes,
+	);
 };
 
-const getIndexOrder = (collation) => {
+const getIndexOrder = collation => {
 	if (collation === 'A') {
 		return 'ASC';
 	} else if (collation === 'D') {
@@ -236,7 +244,7 @@ const getIndexOrder = (collation) => {
 	}
 };
 
-const getIndexType = (index) => {
+const getIndexType = index => {
 	if (index['Key_name'] === 'PRIMARY') {
 		return 'PRIMARY';
 	} else if (index['Index_type'] === 'FULLTEXT') {
@@ -252,7 +260,7 @@ const getIndexType = (index) => {
 	}
 };
 
-const getIndexCategory = (index) => {
+const getIndexCategory = index => {
 	if (index['Index_type'] === 'BTREE') {
 		return 'BTREE';
 	} else if (index['Index_type'] === 'HASH') {
@@ -264,39 +272,43 @@ const getIndexCategory = (index) => {
 	}
 };
 
-const parseIndexes = (indexes) => {
-	const indexesByConstraint = indexes.filter(index => !['PRIMARY', 'UNIQUE'].includes(getIndexType(index))).reduce((result, index) => {
-		const constraintName = index['Key_name'];
+const parseIndexes = indexes => {
+	const indexesByConstraint = indexes
+		.filter(index => !['PRIMARY', 'UNIQUE'].includes(getIndexType(index)))
+		.reduce((result, index) => {
+			const constraintName = index['Key_name'];
 
-		if (result[constraintName]) {
-			return {
-				...result,
-				[constraintName]: {
-					...result[constraintName],
-					indxKey: result[constraintName].indxKey.concat({
+			if (result[constraintName]) {
+				return {
+					...result,
+					[constraintName]: {
+						...result[constraintName],
+						indxKey: result[constraintName].indxKey.concat({
+							name: index['Column_name'],
+							type: getIndexOrder(index['Collation']),
+						}),
+					},
+				};
+			}
+
+			const indexData = {
+				indxName: constraintName,
+				indexType: getIndexType(index),
+				indexCategory: getIndexCategory(index),
+				indexComment: index['Index_comment'],
+				indxKey: [
+					{
 						name: index['Column_name'],
 						type: getIndexOrder(index['Collation']),
-					}),
-				},
+					},
+				],
 			};
-		}
 
-		const indexData = {
-			indxName: constraintName,
-			indexType: getIndexType(index),
-			indexCategory: getIndexCategory(index),
-			indexComment: index['Index_comment'],
-			indxKey: [{
-				name: index['Column_name'],
-				type: getIndexOrder(index['Collation']),
-			}],
-		};
-
-		return {
-			...result,
-			[constraintName]: indexData,
-		};
-	}, {});
+			return {
+				...result,
+				[constraintName]: indexData,
+			};
+		}, {});
 
 	return Object.values(indexesByConstraint);
 };

@@ -1,37 +1,35 @@
 class CheckConstraint {
+	/**
+	 * @type {string}
+	 * */
+	GUID;
 
-    /**
-     * @type {string}
-     * */
-    GUID
+	/**
+	 * @type {boolean}
+	 * */
+	constrCheck;
 
-    /**
-     * @type {boolean}
-     * */
-    constrCheck
+	/**
+	 * @type {boolean}
+	 * */
+	constrEnforceUpserts;
 
-    /**
-     * @type {boolean}
-     * */
-    constrEnforceUpserts
+	/**
+	 * @type {boolean}
+	 * */
+	constrEnforceReplication;
 
-    /**
-     * @type {boolean}
-     * */
-    constrEnforceReplication
+	/**
+	 * @type {string}
+	 * */
+	chkConstrName;
 
-    /**
-     * @type {string}
-     * */
-    chkConstrName
-
-    /**
-     * @type {string}
-     * */
-    constrExpression
-
+	/**
+	 * @type {string}
+	 * */
+	constrExpression;
 }
 
 module.exports = {
-    CheckConstraint,
-}
+	CheckConstraint,
+};

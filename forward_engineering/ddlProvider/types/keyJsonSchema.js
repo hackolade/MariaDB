@@ -1,17 +1,15 @@
 class KeyJsonSchema {
+	/**
+	 * @type {string}
+	 * */
+	name;
 
-    /**
-     * @type {string}
-     * */
-    name
-
-    /**
-     * @type {boolean}
-     * */
-    isActivated
-
+	/**
+	 * @type {boolean}
+	 * */
+	isActivated;
 }
 
 module.exports = {
-    KeyJsonSchema,
-}
+	KeyJsonSchema,
+};

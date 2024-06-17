@@ -14,8 +14,8 @@
 		"minLength": "",
 		"maxLength": "",
 		"enum": [],
-		"sample":"",
+		"sample": "",
 		"pattern": "",
-		"comments":""
+		"comments": ""
 	}
 }

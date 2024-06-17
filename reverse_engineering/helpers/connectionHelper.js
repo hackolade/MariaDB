@@ -4,14 +4,14 @@ const fs = require('fs');
 let connection;
 let isSshTunnel = false;
 
-const getSslOptions = (connectionInfo) => {
+const getSslOptions = connectionInfo => {
 	if (connectionInfo.sslType === 'Off') {
 		return false;
 	}
 
 	if (connectionInfo.sslType === 'Unvalidated') {
 		return {
-			rejectUnauthorized: false
+			rejectUnauthorized: false,
 		};
 	}
 
@@ -51,14 +51,14 @@ const createConnection = async (connectionInfo, sshService) => {
 		};
 	}
 
-	return mysql.createConnection({ 
+	return mysql.createConnection({
 		host: connectionInfo.host,
-		user: connectionInfo.userName, 
-		password: connectionInfo.userPassword, 
+		user: connectionInfo.userName,
+		password: connectionInfo.userPassword,
 		port: connectionInfo.port,
 		metaAsArray: false,
 		ssl: getSslOptions(connectionInfo),
-		dateStrings: true ,
+		dateStrings: true,
 		supportBigInt: true,
 		autoJsonMap: false,
 		connectTimeout: Number(connectionInfo.queryRequestTimeout) || 60000,
@@ -66,23 +66,25 @@ const createConnection = async (connectionInfo, sshService) => {
 	});
 };
 
-const promisify = (f, context) => (...args) => {
-	return new Promise((resolve, reject) => {
-		return f.call(context, ...args, (error, results) => {
-			if (error) {
-				return reject(error);
-			} else {
-				return resolve(results);
-			}
+const promisify =
+	(f, context) =>
+	(...args) => {
+		return new Promise((resolve, reject) => {
+			return f.call(context, ...args, (error, results) => {
+				if (error) {
+					return reject(error);
+				} else {
+					return resolve(results);
+				}
+			});
 		});
-	});
-};
+	};
 
 const connect = async (connectionInfo, sshService) => {
 	if (connection) {
 		return connection;
 	}
- 
+
 	connection = await createConnection(connectionInfo, sshService);
 
 	return connection;
@@ -93,15 +95,15 @@ const createInstance = (connection, logger) => {
 		return await connection.ping();
 	};
 
-	const getDatabases = async (systemDatabases) => {
+	const getDatabases = async systemDatabases => {
 		const databases = await query('show databases;');
-		
+
 		return databases.map(item => item.Database).filter(dbName => !systemDatabases.includes(dbName));
 	};
-	
-	const getTables = async (dbName) => {
+
+	const getTables = async dbName => {
 		const tables = await query(`show full tables from \`${dbName}\`;`);
-	
+
 		return tables;
 	};
 
@@ -110,10 +112,10 @@ const createInstance = (connection, logger) => {
 
 		return Number(count[0]?.count || 0);
 	};
-	
+
 	const getRecords = async (dbName, tableName, limit) => {
 		const result = await query({
-			sql: `SELECT * FROM \`${dbName}\`.\`${tableName}\` LIMIT ${limit};`
+			sql: `SELECT * FROM \`${dbName}\`.\`${tableName}\` LIMIT ${limit};`,
 		});
 
 		return result;
@@ -125,35 +127,35 @@ const createInstance = (connection, logger) => {
 		return version[0].version;
 	};
 
-	const describeDatabase = async (dbName) => {
+	const describeDatabase = async dbName => {
 		const data = await query(`show create database \`${dbName}\`;`);
 
 		return data[0]['Create Database'];
-	}; 
+	};
 
-	const getFunctions = async (dbName) => {
+	const getFunctions = async dbName => {
 		const functions = await query(`show function status WHERE Db = '${dbName}'`);
 
 		return Promise.all(
-			functions.map(
-				f => query(`show create function \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
+			functions.map(f =>
+				query(`show create function \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
 					meta: f,
 					data: functionCode,
-				}))
-			)
+				})),
+			),
 		);
 	};
 
-	const getProcedures = async (dbName) => {
+	const getProcedures = async dbName => {
 		const functions = await query(`show procedure status WHERE Db = '${dbName}'`);
 
 		return Promise.all(
-			functions.map(
-				f => query(`show create procedure \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
+			functions.map(f =>
+				query(`show create procedure \`${dbName}\`.\`${f.Name}\`;`).then(functionCode => ({
 					meta: f,
 					data: functionCode,
-				}))
-			)
+				})),
+			),
 		);
 	};
 
@@ -165,8 +167,10 @@ const createInstance = (connection, logger) => {
 
 	const getConstraints = async (dbName, tableName) => {
 		try {
-			const result = await query(`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`);
-	
+			const result = await query(
+				`select * from information_schema.check_constraints where CONSTRAINT_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}';`,
+			);
+
 			return result;
 		} catch (error) {
 			logger.log('error', {
@@ -195,13 +199,13 @@ const createInstance = (connection, logger) => {
 		return result[0]?.['Create View'];
 	};
 
-	const query = (sql) => {
+	const query = sql => {
 		return promisify(connection.query, connection)(sql);
 	};
 
 	const serverVersion = async () => {
 		const result = await query('select VERSION() as version;');
-		
+
 		return result[0]?.version || '';
 	};
 
@@ -225,7 +229,7 @@ const createInstance = (connection, logger) => {
 	};
 };
 
-const close = async (sshService) => {
+const close = async sshService => {
 	if (connection) {
 		connection.end();
 		connection = null;

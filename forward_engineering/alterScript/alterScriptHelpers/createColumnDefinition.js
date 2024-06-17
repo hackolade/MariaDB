@@ -1,9 +1,7 @@
-const {HydratedColumn} = require('../../ddlProvider/types/hydratedColumn');
-const {ColumnDefinition} = require('../../ddlProvider/types/columnDefinition');
-
+const { HydratedColumn } = require('../../ddlProvider/types/hydratedColumn');
+const { ColumnDefinition } = require('../../ddlProvider/types/columnDefinition');
 
 module.exports = _ => {
-
 	/**
 	 * @param data {ColumnDefinition}
 	 * @return {ColumnDefinition}
