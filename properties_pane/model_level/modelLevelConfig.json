@@ -62,9 +62,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "DB vendor",
 				"propertyType": "select",
-				"options": [
-					"MariaDB"
-				],
+				"options": ["MariaDB"],
 				"disabledOption": true
 			},
 			{
@@ -73,9 +71,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "DB version",
 				"propertyType": "select",
-				"options": [
-					"v10.x"
-				],
+				"options": ["v10.x"],
 				"disabledOption": false
 			},
 			{

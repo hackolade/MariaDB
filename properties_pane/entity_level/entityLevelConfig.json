@@ -132,13 +132,16 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "checkbox",
 				"dependency": {
 					"type": "or",
-					"values": [{
-						"key": "ifNotExist",
-						"value": false
-					}, {
-						"key": "ifNotExist",
-						"exists": false
-					}]
+					"values": [
+						{
+							"key": "ifNotExist",
+							"value": false
+						},
+						{
+							"key": "ifNotExist",
+							"exists": false
+						}
+					]
 				}
 			},
 			{
@@ -148,13 +151,16 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "checkbox",
 				"dependency": {
 					"type": "or",
-					"values": [{
-						"key": "orReplace",
-						"value": false
-					}, {
-						"key": "orReplace",
-						"exists": false
-					}]
+					"values": [
+						{
+							"key": "orReplace",
+							"value": false
+						},
+						{
+							"key": "orReplace",
+							"exists": false
+						}
+					]
 				}
 			},
 			{
@@ -162,7 +168,7 @@ making sure that you maintain a proper JSON format.
 				"propertyKeyword": "temporary",
 				"propertyType": "checkbox"
 			},
- 			{
+			{
 				"propertyName": "Like parent table",
 				"propertyKeyword": "like",
 				"propertyTooltip": "To create a table with the same definition as another table, including columns, indexes, and table options. Foreign key definitions, as well as any DATA DIRECTORY or INDEX DIRECTORY table options specified on the original table, will NOT be created.",
@@ -225,22 +231,28 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}, {
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}, {
-								"key": "ENGINE",
-								"value": "Memory"
-							}, {
-								"key": "ENGINE",
-								"value": "Archive"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								},
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Memory"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Archive"
+								}
+							]
 						}
 					},
 					{
@@ -253,13 +265,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -274,13 +289,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -339,847 +357,736 @@ making sure that you maintain a proper JSON format.
 							"utf32"
 						]
 					},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"big5_chinese_ci",
-					"big5_bin",
-					"big5_chinese_nopad_ci",
-					"big5_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "big5"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"dec8_swedish_ci",
-					"dec8_bin",
-					"dec8_swedish_nopad_ci",
-					"dec8_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "dec8"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp850_general_ci",
-					"cp850_bin",
-					"cp850_general_nopad_ci",
-					"cp850_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp850"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"hp8_english_ci",
-					"hp8_bin",
-					"hp8_english_nopad_ci",
-					"hp8_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "hp8"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"koi8r_general_ci",
-					"koi8r_bin",
-					"koi8r_general_nopad_ci",
-					"koi8r_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "koi8r"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"latin1_german1_ci",
-					"latin1_swedish_ci",
-					"latin1_danish_ci",
-					"latin1_german2_ci",
-					"latin1_bin",
-					"latin1_general_ci",
-					"latin1_general_cs",
-					"latin1_spanish_ci",
-					"latin1_swedish_nopad_ci",
-					"latin1_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "latin1"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"latin2_czech_cs",
-					"latin2_general_ci",
-					"latin2_hungarian_ci",
-					"latin2_croatian_ci",
-					"latin2_bin",
-					"latin2_general_nopad_ci",
-					"latin2_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "latin2"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"swe7_swedish_ci",
-					"swe7_bin",
-					"swe7_swedish_nopad_ci",
-					"swe7_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "swe7"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"ascii_general_ci",
-					"ascii_bin",
-					"ascii_general_nopad_ci",
-					"ascii_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "ascii"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"ujis_japanese_ci",
-					"ujis_bin",
-					"ujis_japanese_nopad_ci",
-					"ujis_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "ujis"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"sjis_japanese_ci",
-					"sjis_bin",
-					"sjis_japanese_nopad_ci",
-					"sjis_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "sjis"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"hebrew_general_ci",
-					"hebrew_bin",
-					"hebrew_general_nopad_ci",
-					"hebrew_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "hebrew"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"tis620_thai_ci",
-					"tis620_bin",
-					"tis620_thai_nopad_ci",
-					"tis620_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "tis620"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"euckr_korean_ci",
-					"euckr_bin",
-					"euckr_korean_nopad_ci",
-					"euckr_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "euckr"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"koi8u_general_ci",
-					"koi8u_bin",
-					"koi8u_general_nopad_ci",
-					"koi8u_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "koi8u"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"gb2312_chinese_ci",
-					"gb2312_bin",
-					"gb2312_chinese_nopad_ci",
-					"gb2312_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "gb2312"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"greek_general_ci",
-					"greek_bin",
-					"greek_general_nopad_ci",
-					"greek_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "greek"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp1250_general_ci",
-					"cp1250_czech_cs",
-					"cp1250_croatian_ci",
-					"cp1250_bin",
-					"cp1250_polish_ci",
-					"cp1250_general_nopad_ci",
-					"cp1250_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp1250"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"gbk_chinese_ci",
-					"gbk_bin",
-					"gbk_chinese_nopad_ci",
-					"gbk_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "gbk"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"latin5_turkish_ci",
-					"latin5_bin",
-					"latin5_turkish_nopad_ci",
-					"latin5_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "latin5"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"armscii8_general_ci",
-					"armscii8_bin",
-					"armscii8_general_nopad_ci",
-					"armscii8_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "armscii8"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"utf8_general_ci",
-					"utf8_bin",
-					"utf8_unicode_ci",
-					"utf8_icelandic_ci",
-					"utf8_latvian_ci",
-					"utf8_romanian_ci",
-					"utf8_slovenian_ci",
-					"utf8_polish_ci",
-					"utf8_estonian_ci",
-					"utf8_spanish_ci",
-					"utf8_swedish_ci",
-					"utf8_turkish_ci",
-					"utf8_czech_ci",
-					"utf8_danish_ci",
-					"utf8_lithuanian_ci",
-					"utf8_slovak_ci",
-					"utf8_spanish2_ci",
-					"utf8_roman_ci",
-					"utf8_persian_ci",
-					"utf8_esperanto_ci",
-					"utf8_hungarian_ci",
-					"utf8_sinhala_ci",
-					"utf8_german2_ci",
-					"utf8_croatian_mysql561_ci",
-					"utf8_unicode_520_ci",
-					"utf8_vietnamese_ci",
-					"utf8_general_mysql500_ci",
-					"utf8_croatian_ci",
-					"utf8_myanmar_ci",
-					"utf8_thai_520_w2",
-					"utf8_general_nopad_ci",
-					"utf8_nopad_bin",
-					"utf8_unicode_nopad_ci",
-					"utf8_unicode_520_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "utf8"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"ucs2_general_ci",
-					"ucs2_bin",
-					"ucs2_unicode_ci",
-					"ucs2_icelandic_ci",
-					"ucs2_latvian_ci",
-					"ucs2_romanian_ci",
-					"ucs2_slovenian_ci",
-					"ucs2_polish_ci",
-					"ucs2_estonian_ci",
-					"ucs2_spanish_ci",
-					"ucs2_swedish_ci",
-					"ucs2_turkish_ci",
-					"ucs2_czech_ci",
-					"ucs2_danish_ci",
-					"ucs2_lithuanian_ci",
-					"ucs2_slovak_ci",
-					"ucs2_spanish2_ci",
-					"ucs2_roman_ci",
-					"ucs2_persian_ci",
-					"ucs2_esperanto_ci",
-					"ucs2_hungarian_ci",
-					"ucs2_sinhala_ci",
-					"ucs2_german2_ci",
-					"ucs2_croatian_mysql561_ci",
-					"ucs2_unicode_520_ci",
-					"ucs2_vietnamese_ci",
-					"ucs2_general_mysql500_ci",
-					"ucs2_croatian_ci",
-					"ucs2_myanmar_ci",
-					"ucs2_thai_520_w2",
-					"ucs2_general_nopad_ci",
-					"ucs2_nopad_bin",
-					"ucs2_unicode_nopad_ci",
-					"ucs2_unicode_520_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "ucs2"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp866_general_ci",
-					"cp866_bin",
-					"cp866_general_nopad_ci",
-					"cp866_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp866"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"keybcs2_general_ci",
-					"keybcs2_bin",
-					"keybcs2_general_nopad_ci",
-					"keybcs2_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "keybcs2"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"macce_general_ci",
-					"macce_bin",
-					"macce_general_nopad_ci",
-					"macce_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "macce"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"macroman_general_ci",
-					"macroman_bin",
-					"macroman_general_nopad_ci",
-					"macroman_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "macroman"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp852_general_ci",
-					"cp852_bin",
-					"cp852_general_nopad_ci",
-					"cp852_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp852"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"latin7_estonian_cs",
-					"latin7_general_ci",
-					"latin7_general_cs",
-					"latin7_bin",
-					"latin7_general_nopad_ci",
-					"latin7_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "latin7"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"utf8mb4_general_ci",
-					"utf8mb4_bin",
-					"utf8mb4_unicode_ci",
-					"utf8mb4_icelandic_ci",
-					"utf8mb4_latvian_ci",
-					"utf8mb4_romanian_ci",
-					"utf8mb4_slovenian_ci",
-					"utf8mb4_polish_ci",
-					"utf8mb4_estonian_ci",
-					"utf8mb4_spanish_ci",
-					"utf8mb4_swedish_ci",
-					"utf8mb4_turkish_ci",
-					"utf8mb4_czech_ci",
-					"utf8mb4_danish_ci",
-					"utf8mb4_lithuanian_ci",
-					"utf8mb4_slovak_ci",
-					"utf8mb4_spanish2_ci",
-					"utf8mb4_roman_ci",
-					"utf8mb4_persian_ci",
-					"utf8mb4_esperanto_ci",
-					"utf8mb4_hungarian_ci",
-					"utf8mb4_sinhala_ci",
-					"utf8mb4_german2_ci",
-					"utf8mb4_croatian_mysql561_ci",
-					"utf8mb4_unicode_520_ci",
-					"utf8mb4_vietnamese_ci",
-					"utf8mb4_croatian_ci",
-					"utf8mb4_myanmar_ci",
-					"utf8mb4_thai_520_w2",
-					"utf8mb4_general_nopad_ci",
-					"utf8mb4_nopad_bin",
-					"utf8mb4_unicode_nopad_ci",
-					"utf8mb4_unicode_520_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "utf8mb4"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp1251_bulgarian_ci",
-					"cp1251_ukrainian_ci",
-					"cp1251_bin",
-					"cp1251_general_ci",
-					"cp1251_general_cs",
-					"cp1251_nopad_bin",
-					"cp1251_general_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp1251"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"utf16_general_ci",
-					"utf16_bin",
-					"utf16_unicode_ci",
-					"utf16_icelandic_ci",
-					"utf16_latvian_ci",
-					"utf16_romanian_ci",
-					"utf16_slovenian_ci",
-					"utf16_polish_ci",
-					"utf16_estonian_ci",
-					"utf16_spanish_ci",
-					"utf16_swedish_ci",
-					"utf16_turkish_ci",
-					"utf16_czech_ci",
-					"utf16_danish_ci",
-					"utf16_lithuanian_ci",
-					"utf16_slovak_ci",
-					"utf16_spanish2_ci",
-					"utf16_roman_ci",
-					"utf16_persian_ci",
-					"utf16_esperanto_ci",
-					"utf16_hungarian_ci",
-					"utf16_sinhala_ci",
-					"utf16_german2_ci",
-					"utf16_croatian_mysql561_ci",
-					"utf16_unicode_520_ci",
-					"utf16_vietnamese_ci",
-					"utf16_croatian_ci",
-					"utf16_myanmar_ci",
-					"utf16_thai_520_w2",
-					"utf16_general_nopad_ci",
-					"utf16_nopad_bin",
-					"utf16_unicode_nopad_ci",
-					"utf16_unicode_520_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "utf16"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"utf16le_general_ci",
-					"utf16le_bin",
-					"utf16le_general_nopad_ci",
-					"utf16le_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "utf16le"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp1256_general_ci",
-					"cp1256_bin",
-					"cp1256_general_nopad_ci",
-					"cp1256_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp1256"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp1257_lithuanian_ci",
-					"cp1257_bin",
-					"cp1257_general_ci",
-					"cp1257_nopad_bin",
-					"cp1257_general_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp1257"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"utf32_bin",
-					"utf32_unicode_ci",
-					"utf32_icelandic_ci",
-					"utf32_latvian_ci",
-					"utf32_romanian_ci",
-					"utf32_slovenian_ci",
-					"utf32_polish_ci",
-					"utf32_estonian_ci",
-					"utf32_spanish_ci",
-					"utf32_swedish_ci",
-					"utf32_turkish_ci",
-					"utf32_czech_ci",
-					"utf32_danish_ci",
-					"utf32_lithuanian_ci",
-					"utf32_slovak_ci",
-					"utf32_spanish2_ci",
-					"utf32_roman_ci",
-					"utf32_persian_ci",
-					"utf32_esperanto_ci",
-					"utf32_hungarian_ci",
-					"utf32_sinhala_ci",
-					"utf32_german2_ci",
-					"utf32_croatian_mysql561_ci",
-					"utf32_unicode_520_ci",
-					"utf32_vietnamese_ci",
-					"utf32_croatian_ci",
-					"utf32_myanmar_ci",
-					"utf32_thai_520_w2",
-					"utf32_general_nopad_ci",
-					"utf32_nopad_bin",
-					"utf32_unicode_nopad_ci",
-					"utf32_unicode_520_nopad_ci"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "utf32"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"binary"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "binary"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"geostd8_general_ci",
-					"geostd8_bin",
-					"geostd8_general_nopad_ci",
-					"geostd8_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "geostd8"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"cp932_japanese_ci",
-					"cp932_bin",
-					"cp932_japanese_nopad_ci",
-					"cp932_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "cp932"
-				}
-			},
-			{
-				"propertyName": "Collation",
-				"propertyKeyword": "collation",
-				"propertyTooltip": "Select from list of options",
-				"propertyType": "select",
-				"options": [
-					"",
-					"eucjpms_japanese_ci",
-					"eucjpms_bin",
-					"eucjpms_japanese_nopad_ci",
-					"eucjpms_nopad_bin"
-				],
-				"dependency": {
-					"key": "characterSet",
-					"value": "eucjpms"
-				}
-			},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "big5_chinese_ci", "big5_bin", "big5_chinese_nopad_ci", "big5_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "big5"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "dec8_swedish_ci", "dec8_bin", "dec8_swedish_nopad_ci", "dec8_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "dec8"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "cp850_general_ci", "cp850_bin", "cp850_general_nopad_ci", "cp850_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp850"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "hp8_english_ci", "hp8_bin", "hp8_english_nopad_ci", "hp8_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "hp8"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "koi8r_general_ci", "koi8r_bin", "koi8r_general_nopad_ci", "koi8r_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "koi8r"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"latin1_german1_ci",
+							"latin1_swedish_ci",
+							"latin1_danish_ci",
+							"latin1_german2_ci",
+							"latin1_bin",
+							"latin1_general_ci",
+							"latin1_general_cs",
+							"latin1_spanish_ci",
+							"latin1_swedish_nopad_ci",
+							"latin1_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "latin1"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"latin2_czech_cs",
+							"latin2_general_ci",
+							"latin2_hungarian_ci",
+							"latin2_croatian_ci",
+							"latin2_bin",
+							"latin2_general_nopad_ci",
+							"latin2_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "latin2"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "swe7_swedish_ci", "swe7_bin", "swe7_swedish_nopad_ci", "swe7_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "swe7"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "ascii_general_ci", "ascii_bin", "ascii_general_nopad_ci", "ascii_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "ascii"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "ujis_japanese_ci", "ujis_bin", "ujis_japanese_nopad_ci", "ujis_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "ujis"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "sjis_japanese_ci", "sjis_bin", "sjis_japanese_nopad_ci", "sjis_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "sjis"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"hebrew_general_ci",
+							"hebrew_bin",
+							"hebrew_general_nopad_ci",
+							"hebrew_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "hebrew"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "tis620_thai_ci", "tis620_bin", "tis620_thai_nopad_ci", "tis620_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "tis620"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "euckr_korean_ci", "euckr_bin", "euckr_korean_nopad_ci", "euckr_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "euckr"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "koi8u_general_ci", "koi8u_bin", "koi8u_general_nopad_ci", "koi8u_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "koi8u"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"gb2312_chinese_ci",
+							"gb2312_bin",
+							"gb2312_chinese_nopad_ci",
+							"gb2312_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "gb2312"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "greek_general_ci", "greek_bin", "greek_general_nopad_ci", "greek_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "greek"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"cp1250_general_ci",
+							"cp1250_czech_cs",
+							"cp1250_croatian_ci",
+							"cp1250_bin",
+							"cp1250_polish_ci",
+							"cp1250_general_nopad_ci",
+							"cp1250_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp1250"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "gbk_chinese_ci", "gbk_bin", "gbk_chinese_nopad_ci", "gbk_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "gbk"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"latin5_turkish_ci",
+							"latin5_bin",
+							"latin5_turkish_nopad_ci",
+							"latin5_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "latin5"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"armscii8_general_ci",
+							"armscii8_bin",
+							"armscii8_general_nopad_ci",
+							"armscii8_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "armscii8"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"utf8_general_ci",
+							"utf8_bin",
+							"utf8_unicode_ci",
+							"utf8_icelandic_ci",
+							"utf8_latvian_ci",
+							"utf8_romanian_ci",
+							"utf8_slovenian_ci",
+							"utf8_polish_ci",
+							"utf8_estonian_ci",
+							"utf8_spanish_ci",
+							"utf8_swedish_ci",
+							"utf8_turkish_ci",
+							"utf8_czech_ci",
+							"utf8_danish_ci",
+							"utf8_lithuanian_ci",
+							"utf8_slovak_ci",
+							"utf8_spanish2_ci",
+							"utf8_roman_ci",
+							"utf8_persian_ci",
+							"utf8_esperanto_ci",
+							"utf8_hungarian_ci",
+							"utf8_sinhala_ci",
+							"utf8_german2_ci",
+							"utf8_croatian_mysql561_ci",
+							"utf8_unicode_520_ci",
+							"utf8_vietnamese_ci",
+							"utf8_general_mysql500_ci",
+							"utf8_croatian_ci",
+							"utf8_myanmar_ci",
+							"utf8_thai_520_w2",
+							"utf8_general_nopad_ci",
+							"utf8_nopad_bin",
+							"utf8_unicode_nopad_ci",
+							"utf8_unicode_520_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "utf8"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"ucs2_general_ci",
+							"ucs2_bin",
+							"ucs2_unicode_ci",
+							"ucs2_icelandic_ci",
+							"ucs2_latvian_ci",
+							"ucs2_romanian_ci",
+							"ucs2_slovenian_ci",
+							"ucs2_polish_ci",
+							"ucs2_estonian_ci",
+							"ucs2_spanish_ci",
+							"ucs2_swedish_ci",
+							"ucs2_turkish_ci",
+							"ucs2_czech_ci",
+							"ucs2_danish_ci",
+							"ucs2_lithuanian_ci",
+							"ucs2_slovak_ci",
+							"ucs2_spanish2_ci",
+							"ucs2_roman_ci",
+							"ucs2_persian_ci",
+							"ucs2_esperanto_ci",
+							"ucs2_hungarian_ci",
+							"ucs2_sinhala_ci",
+							"ucs2_german2_ci",
+							"ucs2_croatian_mysql561_ci",
+							"ucs2_unicode_520_ci",
+							"ucs2_vietnamese_ci",
+							"ucs2_general_mysql500_ci",
+							"ucs2_croatian_ci",
+							"ucs2_myanmar_ci",
+							"ucs2_thai_520_w2",
+							"ucs2_general_nopad_ci",
+							"ucs2_nopad_bin",
+							"ucs2_unicode_nopad_ci",
+							"ucs2_unicode_520_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "ucs2"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "cp866_general_ci", "cp866_bin", "cp866_general_nopad_ci", "cp866_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp866"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"keybcs2_general_ci",
+							"keybcs2_bin",
+							"keybcs2_general_nopad_ci",
+							"keybcs2_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "keybcs2"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "macce_general_ci", "macce_bin", "macce_general_nopad_ci", "macce_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "macce"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"macroman_general_ci",
+							"macroman_bin",
+							"macroman_general_nopad_ci",
+							"macroman_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "macroman"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "cp852_general_ci", "cp852_bin", "cp852_general_nopad_ci", "cp852_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp852"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"latin7_estonian_cs",
+							"latin7_general_ci",
+							"latin7_general_cs",
+							"latin7_bin",
+							"latin7_general_nopad_ci",
+							"latin7_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "latin7"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"utf8mb4_general_ci",
+							"utf8mb4_bin",
+							"utf8mb4_unicode_ci",
+							"utf8mb4_icelandic_ci",
+							"utf8mb4_latvian_ci",
+							"utf8mb4_romanian_ci",
+							"utf8mb4_slovenian_ci",
+							"utf8mb4_polish_ci",
+							"utf8mb4_estonian_ci",
+							"utf8mb4_spanish_ci",
+							"utf8mb4_swedish_ci",
+							"utf8mb4_turkish_ci",
+							"utf8mb4_czech_ci",
+							"utf8mb4_danish_ci",
+							"utf8mb4_lithuanian_ci",
+							"utf8mb4_slovak_ci",
+							"utf8mb4_spanish2_ci",
+							"utf8mb4_roman_ci",
+							"utf8mb4_persian_ci",
+							"utf8mb4_esperanto_ci",
+							"utf8mb4_hungarian_ci",
+							"utf8mb4_sinhala_ci",
+							"utf8mb4_german2_ci",
+							"utf8mb4_croatian_mysql561_ci",
+							"utf8mb4_unicode_520_ci",
+							"utf8mb4_vietnamese_ci",
+							"utf8mb4_croatian_ci",
+							"utf8mb4_myanmar_ci",
+							"utf8mb4_thai_520_w2",
+							"utf8mb4_general_nopad_ci",
+							"utf8mb4_nopad_bin",
+							"utf8mb4_unicode_nopad_ci",
+							"utf8mb4_unicode_520_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "utf8mb4"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"cp1251_bulgarian_ci",
+							"cp1251_ukrainian_ci",
+							"cp1251_bin",
+							"cp1251_general_ci",
+							"cp1251_general_cs",
+							"cp1251_nopad_bin",
+							"cp1251_general_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp1251"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"utf16_general_ci",
+							"utf16_bin",
+							"utf16_unicode_ci",
+							"utf16_icelandic_ci",
+							"utf16_latvian_ci",
+							"utf16_romanian_ci",
+							"utf16_slovenian_ci",
+							"utf16_polish_ci",
+							"utf16_estonian_ci",
+							"utf16_spanish_ci",
+							"utf16_swedish_ci",
+							"utf16_turkish_ci",
+							"utf16_czech_ci",
+							"utf16_danish_ci",
+							"utf16_lithuanian_ci",
+							"utf16_slovak_ci",
+							"utf16_spanish2_ci",
+							"utf16_roman_ci",
+							"utf16_persian_ci",
+							"utf16_esperanto_ci",
+							"utf16_hungarian_ci",
+							"utf16_sinhala_ci",
+							"utf16_german2_ci",
+							"utf16_croatian_mysql561_ci",
+							"utf16_unicode_520_ci",
+							"utf16_vietnamese_ci",
+							"utf16_croatian_ci",
+							"utf16_myanmar_ci",
+							"utf16_thai_520_w2",
+							"utf16_general_nopad_ci",
+							"utf16_nopad_bin",
+							"utf16_unicode_nopad_ci",
+							"utf16_unicode_520_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "utf16"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"utf16le_general_ci",
+							"utf16le_bin",
+							"utf16le_general_nopad_ci",
+							"utf16le_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "utf16le"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"cp1256_general_ci",
+							"cp1256_bin",
+							"cp1256_general_nopad_ci",
+							"cp1256_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp1256"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"cp1257_lithuanian_ci",
+							"cp1257_bin",
+							"cp1257_general_ci",
+							"cp1257_nopad_bin",
+							"cp1257_general_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp1257"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"utf32_bin",
+							"utf32_unicode_ci",
+							"utf32_icelandic_ci",
+							"utf32_latvian_ci",
+							"utf32_romanian_ci",
+							"utf32_slovenian_ci",
+							"utf32_polish_ci",
+							"utf32_estonian_ci",
+							"utf32_spanish_ci",
+							"utf32_swedish_ci",
+							"utf32_turkish_ci",
+							"utf32_czech_ci",
+							"utf32_danish_ci",
+							"utf32_lithuanian_ci",
+							"utf32_slovak_ci",
+							"utf32_spanish2_ci",
+							"utf32_roman_ci",
+							"utf32_persian_ci",
+							"utf32_esperanto_ci",
+							"utf32_hungarian_ci",
+							"utf32_sinhala_ci",
+							"utf32_german2_ci",
+							"utf32_croatian_mysql561_ci",
+							"utf32_unicode_520_ci",
+							"utf32_vietnamese_ci",
+							"utf32_croatian_ci",
+							"utf32_myanmar_ci",
+							"utf32_thai_520_w2",
+							"utf32_general_nopad_ci",
+							"utf32_nopad_bin",
+							"utf32_unicode_nopad_ci",
+							"utf32_unicode_520_nopad_ci"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "utf32"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "binary"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "binary"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"geostd8_general_ci",
+							"geostd8_bin",
+							"geostd8_general_nopad_ci",
+							"geostd8_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "geostd8"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": ["", "cp932_japanese_ci", "cp932_bin", "cp932_japanese_nopad_ci", "cp932_nopad_bin"],
+						"dependency": {
+							"key": "characterSet",
+							"value": "cp932"
+						}
+					},
+					{
+						"propertyName": "Collation",
+						"propertyKeyword": "collation",
+						"propertyTooltip": "Select from list of options",
+						"propertyType": "select",
+						"options": [
+							"",
+							"eucjpms_japanese_ci",
+							"eucjpms_bin",
+							"eucjpms_japanese_nopad_ci",
+							"eucjpms_nopad_bin"
+						],
+						"dependency": {
+							"key": "characterSet",
+							"value": "eucjpms"
+						}
+					},
 					{
 						"propertyName": "Data directory",
 						"propertyKeyword": "DATA_DIRECTORY",
@@ -1187,16 +1094,20 @@ making sure that you maintain a proper JSON format.
 						"propertyType": "text",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}, {
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								},
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1211,13 +1122,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -1227,16 +1141,20 @@ making sure that you maintain a proper JSON format.
 						"propertyType": "text",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}, {
-								"key": "ENGINE",
-								"value": "Aria"
-							}, {
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								},
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								},
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1247,15 +1165,14 @@ making sure that you maintain a proper JSON format.
 						"defaultValue": "No",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						},
-						"options": [
-							"No",
-							"Yes"
-						]
+						"options": ["No", "Yes"]
 					},
 					{
 						"propertyName": "Encryption key ID",
@@ -1266,13 +1183,16 @@ making sure that you maintain a proper JSON format.
 						"minValue": 0,
 						"dependency": {
 							"type": "and",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}, {
-								"key": "ENCRYPTED",
-								"value": "Yes"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								},
+								{
+									"key": "ENCRYPTED",
+									"value": "Yes"
+								}
+							]
 						}
 					},
 					{
@@ -1283,15 +1203,14 @@ making sure that you maintain a proper JSON format.
 						"defaultValue": "No",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "CSV"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "CSV"
+								}
+							]
 						},
-						"options": [
-							"No",
-							"Yes"
-						]
+						"options": ["No", "Yes"]
 					},
 					{
 						"propertyName": "INSERT method",
@@ -1301,16 +1220,14 @@ making sure that you maintain a proper JSON format.
 						"defaultValue": "No",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MERGE"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MERGE"
+								}
+							]
 						},
-						"options": [
-							"No",
-							"First",
-							"Last"
-						]
+						"options": ["No", "First", "Last"]
 					},
 					{
 						"propertyName": "Union",
@@ -1321,10 +1238,12 @@ making sure that you maintain a proper JSON format.
 						"markdown": false,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MERGE"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MERGE"
+								}
+							]
 						}
 					},
 					{
@@ -1348,10 +1267,12 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Memory"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Memory"
+								}
+							]
 						}
 					},
 					{
@@ -1365,10 +1286,12 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Memory"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Memory"
+								}
+							]
 						}
 					},
 					{
@@ -1377,12 +1300,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Can be used to determine whether the indexes will be compressed. Set it to 1 to compress all keys. With a value of 0, compression will not be used. With the DEFAULT value, only long strings will be compressed. Uncompressed keys are faster.",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"Default",
-							"0",
-							"1"
-						]
+						"options": ["", "Default", "0", "1"]
 					},
 					{
 						"propertyName": "Page checksum",
@@ -1396,10 +1314,12 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -1414,10 +1334,12 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1432,13 +1354,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "and",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}, {
-								"key": "PAGE_COMPRESSED",
-								"value": 1
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								},
+								{
+									"key": "PAGE_COMPRESSED",
+									"value": 1
+								}
+							]
 						}
 					},
 					{
@@ -1447,18 +1372,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
-						"options": [
-							"Default",
-							"Fixed",
-							"Dynamic",
-							"Compressed"
-						],
+						"options": ["Default", "Fixed", "Dynamic", "Compressed"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "MyISAM"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "MyISAM"
+								}
+							]
 						}
 					},
 					{
@@ -1467,18 +1389,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
-						"options": [
-							"Default",
-							"Page",
-							"Compressed",
-							"Fixed"
-						],
+						"options": ["Default", "Page", "Compressed", "Fixed"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -1487,20 +1406,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Specifies the row format for the data file. Possible values are engine-dependent.",
 						"propertyType": "select",
 						"defaultValue": "Default",
-						"options": [
-							"Default",
-							"Compact",
-							"Redundant",
-							"Compressed",
-							"Dynamic",
-							"Fixed"
-						],
+						"options": ["Default", "Compact", "Redundant", "Compressed", "Dynamic", "Fixed"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1515,13 +1429,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Sequence"
-							}, {
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Sequence"
+								},
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1530,17 +1447,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "If set to 1, statistics will be recalculated when more than 10% of the data has changed. When set to 0, stats will be recalculated only when an ANALYZE TABLE is run. If set to DEFAULT, or left out, the value set by the innodb_stats_auto_recalc system variable applies.",
 						"propertyType": "select",
 						"defaultValue": "Default",
-						"options": [
-							"Default",
-							"0",
-							"1"
-						],
+						"options": ["Default", "0", "1"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1549,17 +1464,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Indicates whether the InnoDB statistics created by ANALYZE TABLE will remain on disk or not. It can be set to 1 (on disk), 0 (not on disk, the pre-MariaDB 10 behavior), or DEFAULT (the same as leaving out the option), in which case the value set by the innodb_stats_persistent system variable will apply.",
 						"propertyType": "select",
 						"defaultValue": "Default",
-						"options": [
-							"Default",
-							"0",
-							"1"
-						],
+						"options": ["Default", "0", "1"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "InnoDB"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "InnoDB"
+								}
+							]
 						}
 					},
 					{
@@ -1568,16 +1481,15 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Indicates whether the InnoDB statistics created by ANALYZE TABLE will remain on disk or not. It can be set to 1 (on disk), 0 (not on disk, the pre-MariaDB 10 behavior), or DEFAULT (the same as leaving out the option), in which case the value set by the innodb_stats_persistent system variable will apply.",
 						"propertyType": "select",
 						"defaultValue": "0",
-						"options": [
-							"0",
-							"1"
-						],
+						"options": ["0", "1"],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "ENGINE",
-								"value": "Aria"
-							}]
+							"values": [
+								{
+									"key": "ENGINE",
+									"value": "Aria"
+								}
+							]
 						}
 					},
 					{
@@ -1599,14 +1511,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Choose the desired partition type",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"RANGE",
-							"LIST",
-							"HASH",
-							"KEY",
-							"SYSTEM_TIME"
-						]
+						"options": ["", "RANGE", "LIST", "HASH", "KEY", "SYSTEM_TIME"]
 					},
 					{
 						"propertyName": "Linear",
@@ -1614,13 +1519,16 @@ making sure that you maintain a proper JSON format.
 						"propertyType": "checkbox",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "partitionType",
-								"value": "HASH"
-							},{
-								"key": "partitionType",
-								"value": "KEY"
-							}]
+							"values": [
+								{
+									"key": "partitionType",
+									"value": "HASH"
+								},
+								{
+									"key": "partitionType",
+									"value": "KEY"
+								}
+							]
 						}
 					},
 					{
@@ -1632,19 +1540,24 @@ making sure that you maintain a proper JSON format.
 						"markdown": false,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "partitionType",
-								"value": "RANGE"
-							},{
-								"key": "partitionType",
-								"value": "LIST"
-							},{
-								"key": "partitionType",
-								"value": "HASH"
-							},{
-								"key": "partitionType",
-								"value": "KEY"
-							}]
+							"values": [
+								{
+									"key": "partitionType",
+									"value": "RANGE"
+								},
+								{
+									"key": "partitionType",
+									"value": "LIST"
+								},
+								{
+									"key": "partitionType",
+									"value": "HASH"
+								},
+								{
+									"key": "partitionType",
+									"value": "KEY"
+								}
+							]
 						}
 					},
 					{
@@ -1665,10 +1578,12 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "partitionType",
-								"value": "SYSTEM_TIME"
-							}]
+							"values": [
+								{
+									"key": "partitionType",
+									"value": "SYSTEM_TIME"
+								}
+							]
 						}
 					},
 					{
@@ -1702,10 +1617,12 @@ making sure that you maintain a proper JSON format.
 						],
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "partitionType",
-								"value": "SYSTEM_TIME"
-							}]
+							"values": [
+								{
+									"key": "partitionType",
+									"value": "SYSTEM_TIME"
+								}
+							]
 						}
 					},
 					{
@@ -1714,11 +1631,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "Choose the desired partition type",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"HASH",
-							"KEY"
-						]
+						"options": ["", "HASH", "KEY"]
 					},
 					{
 						"propertyName": "Linear",
@@ -1726,13 +1639,16 @@ making sure that you maintain a proper JSON format.
 						"propertyType": "checkbox",
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "subpartitionType",
-								"value": "HASH"
-							},{
-								"key": "subpartitionType",
-								"value": "KEY"
-							}]
+							"values": [
+								{
+									"key": "subpartitionType",
+									"value": "HASH"
+								},
+								{
+									"key": "subpartitionType",
+									"value": "KEY"
+								}
+							]
 						}
 					},
 					{
@@ -1745,13 +1661,16 @@ making sure that you maintain a proper JSON format.
 						"step": 1,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "subpartitionType",
-								"value": "HASH"
-							},{
-								"key": "subpartitionType",
-								"value": "KEY"
-							}]
+							"values": [
+								{
+									"key": "subpartitionType",
+									"value": "HASH"
+								},
+								{
+									"key": "subpartitionType",
+									"value": "KEY"
+								}
+							]
 						}
 					},
 					{
@@ -1762,13 +1681,16 @@ making sure that you maintain a proper JSON format.
 						"markdown": false,
 						"dependency": {
 							"type": "or",
-							"values": [{
-								"key": "subpartitionType",
-								"value": "HASH"
-							},{
-								"key": "subpartitionType",
-								"value": "KEY"
-							}]
+							"values": [
+								{
+									"key": "subpartitionType",
+									"value": "HASH"
+								},
+								{
+									"key": "subpartitionType",
+									"value": "KEY"
+								}
+							]
 						}
 					},
 					{
@@ -1837,7 +1759,7 @@ making sure that you maintain a proper JSON format.
 									}
 								]
 							}
-						}, 
+						},
 						{
 							"tooltip": "Remove or update the existing composite primary key definition prior to unlock the possibility to create a new composite primary key definition for this table",
 							"dependency": {
@@ -1899,10 +1821,7 @@ making sure that you maintain a proper JSON format.
 						"propertyKeyword": "compositePrimaryKey",
 						"propertyType": "primaryKeySetter",
 						"abbr": "pk",
-						"attributeList": [
-							"ascending",
-							"descending"
-						]
+						"attributeList": ["ascending", "descending"]
 					},
 					{
 						"propertyName": "Category",
@@ -1910,12 +1829,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -1940,7 +1854,7 @@ making sure that you maintain a proper JSON format.
 						"template": "textarea"
 					}
 				]
-			}, 
+			},
 			{
 				"propertyName": "Unique key",
 				"propertyType": "group",
@@ -1962,10 +1876,7 @@ making sure that you maintain a proper JSON format.
 						"template": "collectiontree",
 						"isCompositeKey": true,
 						"abbr": " ",
-						"attributeList": [
-							"ascending",
-							"descending"
-						]
+						"attributeList": ["ascending", "descending"]
 					},
 					{
 						"propertyName": "Alternate key",
@@ -1980,12 +1891,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": [
-							"",
-							"BTREE",
-							"HASH",
-							"RTREE"
-						]
+						"options": ["", "BTREE", "HASH", "RTREE"]
 					},
 					{
 						"propertyName": "Key block size",
@@ -2015,176 +1921,149 @@ making sure that you maintain a proper JSON format.
 	},
 	{
 		"lowerTab": "Indexes",
-		"structure": [{
-			"propertyName": "Index",
-			"propertyType": "group",
-			"propertyKeyword": "Indxs",
-			"propertyTooltip": "In general you should only add indexes to match the queries your application uses. Any extra will waste resources.",
-			"structure": [
-				{
-					"propertyName": "Name",
-					"propertyKeyword": "indxName",
-					"propertyTooltip": "Optional, if not specified an automatic name will be assigned. Index name are needed to drop indexes and appear in error messages when a constraint is violated.",
-					"propertyType": "text",
-					"validation": {
-						"required": true
+		"structure": [
+			{
+				"propertyName": "Index",
+				"propertyType": "group",
+				"propertyKeyword": "Indxs",
+				"propertyTooltip": "In general you should only add indexes to match the queries your application uses. Any extra will waste resources.",
+				"structure": [
+					{
+						"propertyName": "Name",
+						"propertyKeyword": "indxName",
+						"propertyTooltip": "Optional, if not specified an automatic name will be assigned. Index name are needed to drop indexes and appear in error messages when a constraint is violated.",
+						"propertyType": "text",
+						"validation": {
+							"required": true
+						}
+					},
+					{
+						"propertyName": "Activated",
+						"propertyKeyword": "isActivated",
+						"propertyTooltip": "Deactivated item will be not included in FE script",
+						"propertyType": "checkbox",
+						"defaultValue": true
+					},
+					{
+						"propertyName": "If not exist",
+						"propertyKeyword": "ifNotExist",
+						"propertyTooltip": "The index will only be created if an index with the same name does not already exist. If the index already exists, then a warning will be triggered by default.",
+						"defaultValue": true,
+						"propertyType": "checkbox"
+					},
+					{
+						"propertyName": "Type",
+						"propertyKeyword": "indexType",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "",
+						"options": ["", "KEY", "UNIQUE", "FULLTEXT", "SPATIAL"]
+					},
+					{
+						"propertyName": "Category",
+						"propertyKeyword": "indexCategory",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "BTREE",
+						"options": ["", "BTREE", "HASH", "RTREE"]
+					},
+					{
+						"propertyName": "Keys",
+						"propertyKeyword": "indxKey",
+						"propertyType": "fieldList",
+						"template": "orderedList",
+						"attributeList": ["", "ASC", "DESC"]
+					},
+					{
+						"propertyName": "Wait",
+						"propertyKeyword": "waitNoWait",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "NoWait",
+						"options": ["", "NoWait", "Wait"]
+					},
+					{
+						"propertyName": "Wait",
+						"propertyKeyword": "waitValue",
+						"propertyTooltip": "",
+						"propertyType": "numeric",
+						"valueType": "number",
+						"defaultValue": 1,
+						"minValue": 1,
+						"step": 1,
+						"dependency": {
+							"key": "waitNoWait",
+							"value": "Wait"
+						}
+					},
+					{
+						"propertyName": "Algorithm",
+						"propertyKeyword": "indexAlgorithm",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "DEFAULT",
+						"options": ["", "DEFAULT", "COPY", "INPLACE", "NOCOPY", "INSTANT"]
+					},
+					{
+						"propertyName": "Lock",
+						"propertyKeyword": "indexLock",
+						"propertyTooltip": "",
+						"propertyType": "select",
+						"defaultValue": "DEFAULT",
+						"options": ["", "DEFAULT", "SHARED", "EXCLUSIVE"]
+					},
+					{
+						"propertyName": "Comment",
+						"propertyKeyword": "indexComment",
+						"propertyTooltip": "comment",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
 					}
-				},
-				{
-					"propertyName": "Activated",
-					"propertyKeyword": "isActivated",
-					"propertyTooltip": "Deactivated item will be not included in FE script",
-					"propertyType": "checkbox",
-					"defaultValue": true
-				},
-				{
-					"propertyName": "If not exist",
-					"propertyKeyword": "ifNotExist",
-					"propertyTooltip": "The index will only be created if an index with the same name does not already exist. If the index already exists, then a warning will be triggered by default.",
-					"defaultValue": true,
-					"propertyType": "checkbox"
-				},
-				{
-					"propertyName": "Type",
-					"propertyKeyword": "indexType",
-					"propertyTooltip": "",
-					"propertyType": "select",
-					"defaultValue": "",
-					"options": [
-						"",
-						"KEY",
-						"UNIQUE",
-						"FULLTEXT",
-						"SPATIAL"
-					]
-				},
-				{
-					"propertyName": "Category",
-					"propertyKeyword": "indexCategory",
-					"propertyTooltip": "",
-					"propertyType": "select",
-					"defaultValue": "BTREE",
-					"options": [
-						"",
-						"BTREE",
-						"HASH",
-						"RTREE"
-					]
-				},
-				{
-					"propertyName": "Keys",
-					"propertyKeyword": "indxKey",
-					"propertyType": "fieldList",
-					"template": "orderedList",
-					"attributeList": [
-						"",
-						"ASC",
-						"DESC"
-					]				
-				},
-				{
-					"propertyName": "Wait",
-					"propertyKeyword": "waitNoWait",
-					"propertyTooltip": "",
-					"propertyType": "select",
-					"defaultValue": "NoWait",
-					"options": [
-						"",
-						"NoWait",
-						"Wait"
-					]
-				},
-				{
-					"propertyName": "Wait",
-					"propertyKeyword": "waitValue",
-					"propertyTooltip": "",
-					"propertyType": "numeric",
-					"valueType": "number",
-					"defaultValue": 1,
-					"minValue": 1,
-					"step": 1,
-					"dependency": {
-						"key": "waitNoWait",
-						"value": "Wait"
-					}
-				},
-				{
-					"propertyName": "Algorithm",
-					"propertyKeyword": "indexAlgorithm",
-					"propertyTooltip": "",
-					"propertyType": "select",
-					"defaultValue": "DEFAULT",
-					"options": [
-						"",
-						"DEFAULT",
-						"COPY",
-						"INPLACE",
-						"NOCOPY",
-						"INSTANT"
-					]
-				},
-				{
-					"propertyName": "Lock",
-					"propertyKeyword": "indexLock",
-					"propertyTooltip": "",
-					"propertyType": "select",
-					"defaultValue": "DEFAULT",
-					"options": [
-						"",
-						"DEFAULT",
-						"SHARED",
-						"EXCLUSIVE"
-					]
-				},
-				{
-					"propertyName": "Comment",
-					"propertyKeyword": "indexComment",
-					"propertyTooltip": "comment",
-					"addTimestampButton": false,
-					"propertyType": "details",
-					"template": "textarea"
-				}
-			]
-		}]
+				]
+			}
+		]
 	},
 	{
 		"lowerTab": "Check Constraints",
-		"structure": [{
-			"propertyName": "Check Constraint",
-			"propertyType": "group",
-			"propertyKeyword": "chkConstr",
-			"propertyTooltip": "",
-			"structure": [
-				{
-					"propertyName": "Name",
-					"propertyKeyword": "chkConstrName",
-					"propertyTooltip": "",
-					"propertyType": "text"
-				},
-				{
-					"propertyName": "Description",
-					"propertyKeyword": "constrDescription",
-					"propertyTooltip": "description",
-					"propertyType": "details",
-					"template": "textarea"
-				},
-				{
-					"propertyName": "Expression",
-					"propertyKeyword": "constrExpression",
-					"propertyTooltip": "Expression",
-					"propertyType": "details",
-					"template": "textarea",
-					"markdown": false
-				},
-				{
-					"propertyName": "Comments",
-					"propertyKeyword": "constrComments",
-					"propertyTooltip": "comments",
-					"addTimestampButton": false,
-					"propertyType": "details",
-					"template": "textarea"
-				}
-			]
-		}]
+		"structure": [
+			{
+				"propertyName": "Check Constraint",
+				"propertyType": "group",
+				"propertyKeyword": "chkConstr",
+				"propertyTooltip": "",
+				"structure": [
+					{
+						"propertyName": "Name",
+						"propertyKeyword": "chkConstrName",
+						"propertyTooltip": "",
+						"propertyType": "text"
+					},
+					{
+						"propertyName": "Description",
+						"propertyKeyword": "constrDescription",
+						"propertyTooltip": "description",
+						"propertyType": "details",
+						"template": "textarea"
+					},
+					{
+						"propertyName": "Expression",
+						"propertyKeyword": "constrExpression",
+						"propertyTooltip": "Expression",
+						"propertyType": "details",
+						"template": "textarea",
+						"markdown": false
+					},
+					{
+						"propertyName": "Comments",
+						"propertyKeyword": "constrComments",
+						"propertyTooltip": "comments",
+						"addTimestampButton": false,
+						"propertyType": "details",
+						"template": "textarea"
+					}
+				]
+			}
+		]
 	}
 ]
