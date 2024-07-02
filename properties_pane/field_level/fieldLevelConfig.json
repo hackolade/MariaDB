@@ -1484,6 +1484,7 @@ making sure that you maintain a proper JSON format.
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
 				"options": ["", "integer"],
+				"defaultValue": "",
 				"dependency": {
 					"key": "mode",
 					"value": "int"
@@ -1495,6 +1496,7 @@ making sure that you maintain a proper JSON format.
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
 				"options": ["", "dec", "fixed", "numeric", "number"],
+				"defaultValue": "",
 				"dependency": {
 					"key": "mode",
 					"value": "decimal"
@@ -1506,6 +1508,7 @@ making sure that you maintain a proper JSON format.
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
 				"options": ["", "double precision", "real"],
+				"defaultValue": "",
 				"dependency": {
 					"key": "mode",
 					"value": "double"
@@ -2126,6 +2129,7 @@ making sure that you maintain a proper JSON format.
 				"propertyTooltip": "Select from list of options",
 				"propertyType": "select",
 				"options": ["", "char byte"],
+				"defaultValue": "",
 				"dependency": {
 					"key": "mode",
 					"value": "binary"
