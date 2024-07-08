@@ -22,7 +22,8 @@
 				"table",
 				"xml",
 				"reference",
-				"multiple"
+				"multiple",
+				"object"
 			]
 		}
 	}
