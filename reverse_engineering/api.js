@@ -147,7 +147,7 @@ module.exports = {
 			const collections = data.collectionData.collections;
 			const dataBaseNames = data.collectionData.dataBaseNames;
 			const connection = await this.connect(data, app);
-			const instance = await connectionHelper.createInstance(connection, logger);
+			const instance = connectionHelper.createInstance(connection, logger);
 
 			log.info('MariaDB version: ' + (await instance.serverVersion()));
 			log.progress('Start reverse engineering ...');
