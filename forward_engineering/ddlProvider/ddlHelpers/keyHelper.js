@@ -42,6 +42,8 @@ module.exports = (_, clean) => {
 		}
 	};
 
+	const mapKeyOrder = key => `\`${key.name}\`${key.type === 'DESC' ? ' DESC' : ''}`;
+
 	const hydrateUniqueOptions = (options, columnName, isActivated) =>
 		clean({
 			keyType: 'UNIQUE',
@@ -163,5 +165,6 @@ module.exports = (_, clean) => {
 		isInlinePrimaryKey,
 		hydratePrimaryKeyOptions,
 		hydrateUniqueOptions,
+		mapKeyOrder,
 	};
 };

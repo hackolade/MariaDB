@@ -198,19 +198,17 @@ module.exports = (baseProvider, options, app) => {
 				return '';
 			}
 
-			const allDeactivated = checkAllKeysDeactivated(index.indxKey || []);
+			const allDeactivated = checkAllKeysDeactivated(index.indxKey);
 			const wholeStatementCommented = index.isActivated === false || !isParentActivated || allDeactivated;
 			const indexType = index.indexType ? `${_.toUpper(index.indexType)} ` : '';
 			const ifNotExist = index.ifNotExist ? 'IF NOT EXISTS ' : '';
-			const name = wrap(index.indxName || '', '`', '`');
+			const name = wrap(index.indxName, '`', '`');
 			const table = getTableName(tableName, dbData.databaseName);
 			const indexCategory = index.indexCategory ? ` USING ${index.indexCategory}` : '';
 			let indexOptions = [];
 
-			const dividedKeys = divideIntoActivatedAndDeactivated(
-				index.indxKey || [],
-				key => `\`${key.name}\`${key.type === 'DESC' ? ' DESC' : ''}`,
-			);
+			const dividedKeys = divideIntoActivatedAndDeactivated(index.indxKey, keyHelper.mapKeyOrder);
+
 			const commentedKeys = dividedKeys.deactivatedItems.length
 				? commentIfDeactivated(dividedKeys.deactivatedItems.join(', '), {
 						isActivated: wholeStatementCommented,
@@ -252,9 +250,9 @@ module.exports = (baseProvider, options, app) => {
 
 			if (wholeStatementCommented) {
 				return commentIfDeactivated(indexStatement, { isActivated: false });
-			} else {
-				return indexStatement;
 			}
+
+			return indexStatement;
 		},
 
 		/**
