@@ -128,8 +128,7 @@ making sure that you maintain a proper JSON format.
 				"propertyType": "select",
 				"options": ["char", "varchar", "tinytext", "text", "mediumtext", "longtext"],
 				"data": "options",
-				"valueType": "string",
-				"cleanDependency": true
+				"valueType": "string"
 			},
 			{
 				"propertyName": "Length",
@@ -189,7 +188,6 @@ making sure that you maintain a proper JSON format.
 					"key": "mode",
 					"value": "longtext"
 				},
-				"cleanDependency": true,
 				"defaultValue": ""
 			},
 			{
@@ -1303,7 +1301,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Unique",
 				"propertyKeyword": "unique",
-				"cleanDependency": true,
 				"enableForReference": true,
 				"propertyType": "checkbox",
 				"dependency": {
@@ -1894,7 +1891,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Unique",
 				"propertyKeyword": "unique",
-				"cleanDependency": true,
 				"enableForReference": true,
 				"propertyType": "checkbox",
 				"dependency": {
@@ -2087,7 +2083,6 @@ making sure that you maintain a proper JSON format.
 				"maxValue": 255,
 				"step": 1,
 				"typeDecorator": true,
-				"cleanDependency": true,
 				"dependency": {
 					"key": "mode",
 					"value": "binary"
@@ -2103,7 +2098,6 @@ making sure that you maintain a proper JSON format.
 				"maxValue": 21844,
 				"step": 1,
 				"typeDecorator": true,
-				"cleanDependency": true,
 				"dependency": {
 					"key": "mode",
 					"value": "varbinary"
@@ -2119,7 +2113,6 @@ making sure that you maintain a proper JSON format.
 				"maxValue": 21844,
 				"step": 1,
 				"typeDecorator": true,
-				"cleanDependency": true,
 				"dependency": {
 					"key": "mode",
 					"value": "blob"
@@ -2471,7 +2464,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Unique",
 				"propertyKeyword": "unique",
-				"cleanDependency": true,
 				"enableForReference": true,
 				"propertyType": "checkbox",
 				"dependency": {
@@ -2963,7 +2955,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Unique",
 				"propertyKeyword": "unique",
-				"cleanDependency": true,
 				"enableForReference": true,
 				"propertyType": "checkbox",
 				"dependency": {
@@ -3634,7 +3625,6 @@ making sure that you maintain a proper JSON format.
 			{
 				"propertyName": "Unique",
 				"propertyKeyword": "unique",
-				"cleanDependency": true,
 				"enableForReference": true,
 				"propertyType": "checkbox",
 				"dependency": {
