@@ -4,6 +4,7 @@ const templates = require('./templates');
 const { HydratedColumn } = require('./types/hydratedColumn');
 const { ColumnDefinition } = require('./types/columnDefinition');
 const { KeyJsonSchema } = require('./types/keyJsonSchema');
+const { joinActivatedAndDeactivatedStatements } = require('../utils/joinActivatedAndDeactivatedStatements');
 
 module.exports = (baseProvider, options, app) => {
 	const _ = app.require('lodash');
@@ -154,10 +155,11 @@ module.exports = (baseProvider, options, app) => {
 
 			const dividedForeignKeys = divideIntoActivatedAndDeactivated(foreignKeyConstraints, key => key.statement);
 			const foreignKeyConstraintsString = generateConstraintsString(dividedForeignKeys, isActivated);
+			const columnStatements = joinActivatedAndDeactivatedStatements({ statements: columns, indent: '\n\t' });
 
 			return assignTemplates(templates.createTable, {
 				name: tableName,
-				column_definitions: columns.join(',\n\t'),
+				column_definitions: columnStatements,
 				selectStatement: selectStatement ? ` ${selectStatement}` : '',
 				orReplace: orReplaceTable,
 				temporary: temporaryTable,
