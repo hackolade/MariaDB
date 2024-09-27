@@ -1,9 +1,9 @@
 {
     "name": "MariaDB",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "author": "hackolade",
     "engines": {
-        "hackolade": "6.1.2",
+        "hackolade": "7.7.10",
         "hackoladePlugin": "1.2.0"
     },
     "contributes": {
@@ -32,7 +32,14 @@
                 "disablePipelines": true
             },
             "relationships": {
-                "compositeRelationships": true
+                "compositeRelationships": {
+                    "allowRelationshipsByProperties": [
+                        "primaryKey",
+                        "unique",
+                        "compositeUniqueKey",
+                        "compositePrimaryKey"
+                    ]
+                }
             },
             "FEScriptCommentsSupported": true,
             "enableFetchSystemEntitiesCheckbox": true,
