@@ -1199,6 +1199,13 @@ making sure that you maintain a proper JSON format.
 									]
 								}
 							]
+						},
+						{
+							"type": "not",
+							"values": {
+								"key": "unique",
+								"value": true
+							}
 						}
 					]
 				}
@@ -1313,12 +1320,21 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [
 								{
-									"key": "compositePrimaryKey",
-									"value": false
+									"type": "or",
+									"values": [
+										{
+											"key": "primaryKey",
+											"value": false
+										},
+										{
+											"key": "primaryKey",
+											"exist": false
+										}
+									]
 								},
 								{
 									"key": "compositePrimaryKey",
-									"exist": false
+									"value": true
 								}
 							]
 						},
@@ -1759,6 +1775,13 @@ making sure that you maintain a proper JSON format.
 									]
 								}
 							]
+						},
+						{
+							"type": "not",
+							"values": {
+								"key": "unique",
+								"value": true
+							}
 						}
 					]
 				}
@@ -1904,12 +1927,21 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [
 								{
-									"key": "compositePrimaryKey",
-									"value": false
+									"type": "or",
+									"values": [
+										{
+											"key": "primaryKey",
+											"value": false
+										},
+										{
+											"key": "primaryKey",
+											"exist": false
+										}
+									]
 								},
 								{
 									"key": "compositePrimaryKey",
-									"exist": false
+									"value": true
 								}
 							]
 						},
@@ -2367,6 +2399,13 @@ making sure that you maintain a proper JSON format.
 									]
 								}
 							]
+						},
+						{
+							"type": "not",
+							"values": {
+								"key": "unique",
+								"value": true
+							}
 						}
 					]
 				}
@@ -2481,12 +2520,21 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [
 								{
-									"key": "compositePrimaryKey",
-									"value": false
+									"type": "or",
+									"values": [
+										{
+											"key": "primaryKey",
+											"value": false
+										},
+										{
+											"key": "primaryKey",
+											"exist": false
+										}
+									]
 								},
 								{
 									"key": "compositePrimaryKey",
-									"exist": false
+									"value": true
 								}
 							]
 						},
@@ -2859,6 +2907,13 @@ making sure that you maintain a proper JSON format.
 									]
 								}
 							]
+						},
+						{
+							"type": "not",
+							"values": {
+								"key": "unique",
+								"value": true
+							}
 						}
 					]
 				}
@@ -2973,12 +3028,21 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [
 								{
-									"key": "compositePrimaryKey",
-									"value": false
+									"type": "or",
+									"values": [
+										{
+											"key": "primaryKey",
+											"value": false
+										},
+										{
+											"key": "primaryKey",
+											"exist": false
+										}
+									]
 								},
 								{
 									"key": "compositePrimaryKey",
-									"exist": false
+									"value": true
 								}
 							]
 						},
@@ -3530,6 +3594,13 @@ making sure that you maintain a proper JSON format.
 									]
 								}
 							]
+						},
+						{
+							"type": "not",
+							"values": {
+								"key": "unique",
+								"value": true
+							}
 						}
 					]
 				}
@@ -3644,12 +3715,21 @@ making sure that you maintain a proper JSON format.
 							"type": "or",
 							"values": [
 								{
-									"key": "compositePrimaryKey",
-									"value": false
+									"type": "or",
+									"values": [
+										{
+											"key": "primaryKey",
+											"value": false
+										},
+										{
+											"key": "primaryKey",
+											"exist": false
+										}
+									]
 								},
 								{
 									"key": "compositePrimaryKey",
-									"exist": false
+									"value": true
 								}
 							]
 						},
