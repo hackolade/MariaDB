@@ -23,16 +23,6 @@ module.exports = ({ _, wrap }) => {
 	};
 
 	/**
-	 * @param {Object} params
-	 * @param {string} params.name
-	 * @param {string} params.schemaName
-	 * @returns {string}
-	 */
-	const getIndexName = ({ name, schemaName }) => {
-		return getNamePrefixedWithSchemaName(name, schemaName);
-	}
-
-	/**
 	 * @param schemaName {string}
 	 * @param procedureName {string}
 	 * @return {string}
@@ -404,7 +394,6 @@ module.exports = ({ _, wrap }) => {
 
 	return {
 		getTableName,
-		getIndexName,
 		getCollectionName,
 		getCollectionSchema,
 		getDatabaseName,
