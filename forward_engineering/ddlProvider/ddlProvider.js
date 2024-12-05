@@ -20,7 +20,7 @@ module.exports = (baseProvider, options, app) => {
 	const { assignTemplates } = app.require('@hackolade/ddl-fe-utils');
 	const { decorateDefault, decorateType, canBeNational, getSign, canHaveAutoIncrement } =
 		require('./ddlHelpers/columnDefinitionHelper')(_, wrap);
-	const { getTableName, getIndexName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes, wrapInTics } =
+	const { getTableName, getTableOptions, getPartitions, getViewData, getCharacteristics, escapeQuotes, wrapInTics } =
 		require('../utils/general')({ _, wrap });
 	const { generateConstraintsString, foreignKeysToString, foreignActiveKeysToString, createKeyConstraint } =
 		require('./ddlHelpers/constraintsHelper')({
@@ -204,7 +204,7 @@ module.exports = (baseProvider, options, app) => {
 			const wholeStatementCommented = index.isActivated === false || !isParentActivated || allDeactivated;
 			const indexType = index.indexType ? `${_.toUpper(index.indexType)} ` : '';
 			const ifNotExist = index.ifNotExist ? 'IF NOT EXISTS ' : '';
-			const name = getIndexName({ name: index.indxName, schemaName: dbData.databaseName });
+			const name = wrap(index.indxName, '`', '`');
 			const table = getTableName(tableName, dbData.databaseName);
 			const indexCategory = index.indexCategory ? ` USING ${index.indexCategory}` : '';
 			let indexOptions = [];
