@@ -92,7 +92,7 @@ module.exports = (baseProvider, options, app) => {
 			udfs,
 			procedures,
 			useDb = true,
-			isActivated,
+			isActivated = true,
 		}) {
 			let dbOptions = '';
 			dbOptions += characterSet ? tab(`\nCHARACTER SET = '${characterSet}'`) : '';
