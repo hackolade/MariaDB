@@ -92,6 +92,7 @@ module.exports = (baseProvider, options, app) => {
 			udfs,
 			procedures,
 			useDb = true,
+			isActivated,
 		}) {
 			let dbOptions = '';
 			dbOptions += characterSet ? tab(`\nCHARACTER SET = '${characterSet}'`) : '';
@@ -108,7 +109,9 @@ module.exports = (baseProvider, options, app) => {
 			const udfStatements = udfs.map(udf => this.createUdf(databaseName, udf));
 			const procStatements = procedures.map(procedure => this.createProcedure(databaseName, procedure));
 
-			return [databaseStatement, ...udfStatements, ...procStatements].join('\n');
+			return commentIfDeactivated([databaseStatement, ...udfStatements, ...procStatements].join('\n'), {
+				isActivated,
+			});
 		},
 
 		/**
@@ -157,7 +160,7 @@ module.exports = (baseProvider, options, app) => {
 			const foreignKeyConstraintsString = generateConstraintsString(dividedForeignKeys, isActivated);
 			const columnStatements = joinActivatedAndDeactivatedStatements({ statements: columns, indent: '\n\t' });
 
-			return assignTemplates(templates.createTable, {
+			const statement = assignTemplates(templates.createTable, {
 				name: tableName,
 				column_definitions: columnStatements,
 				selectStatement: selectStatement ? ` ${selectStatement}` : '',
@@ -170,6 +173,8 @@ module.exports = (baseProvider, options, app) => {
 				foreignKeyConstraints: foreignKeyConstraintsString,
 				keyConstraints: keyConstraintsString,
 			});
+
+			return commentIfDeactivated(statement, { isActivated });
 		},
 
 		mapColumnToColumnDefinitionDdl,
@@ -521,6 +526,7 @@ module.exports = (baseProvider, options, app) => {
 				comments: containerData.description,
 				udfs: (data?.udfs || []).map(this.hydrateUdf),
 				procedures: (data?.procedures || []).map(this.hydrateProcedure),
+				isActivated: containerData.isActivated,
 			};
 		},
 
