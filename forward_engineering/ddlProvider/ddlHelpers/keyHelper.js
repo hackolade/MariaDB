@@ -37,12 +37,16 @@ module.exports = (_, clean) => {
 			return 'ASC';
 		} else if (_.toLower(order) === 'desc') {
 			return 'DESC';
-		} else {
-			return '';
 		}
+
+		return '';
 	};
 
-	const mapKeyOrder = key => `\`${key.name}\`${key.type === 'DESC' ? ' DESC' : ''}`;
+	const mapKeyOrder = key => {
+		const order = getOrder(key.type);
+
+		return `\`${key.name}\`${order ? ` ${order}` : ''}`;
+	};
 
 	const hydrateUniqueOptions = (options, columnName, isActivated) =>
 		clean({
