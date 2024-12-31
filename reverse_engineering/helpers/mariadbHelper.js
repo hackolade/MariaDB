@@ -253,11 +253,9 @@ const getIndexType = index => {
 		return 'SPATIAL';
 	} else if (Number(index['Non_unique']) === 0) {
 		return 'UNIQUE';
-	} else if (index['Index_type'] === 'KEY') {
-		return 'KEY';
-	} else {
-		return '';
 	}
+
+	return '';
 };
 
 const getIndexCategory = index => {
