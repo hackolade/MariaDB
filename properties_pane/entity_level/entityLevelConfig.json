@@ -1950,7 +1950,7 @@ making sure that you maintain a proper JSON format.
 						"propertyTooltip": "",
 						"propertyType": "select",
 						"defaultValue": "",
-						"options": ["", "KEY", "UNIQUE", "FULLTEXT", "SPATIAL"]
+						"options": ["", "UNIQUE", "FULLTEXT", "SPATIAL"]
 					},
 					{
 						"propertyName": "Category",
