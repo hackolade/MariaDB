@@ -38,7 +38,7 @@
 		"field": [
 			{
 				"from": {
-					"mode": "varchar",
+					"childType": "char",
 					"length": 21844
 				},
 				"to": {
@@ -47,7 +47,7 @@
 			},
 			{
 				"from": {
-					"mode": "blob",
+					"mode": "varbinary",
 					"length": 21844
 				},
 				"to": {
