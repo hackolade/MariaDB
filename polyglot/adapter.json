@@ -120,6 +120,16 @@
 			},
 			{
 				"from": {
+					"type": "varchar",
+					"mode": "char",
+					"hasMaxLength": true
+				},
+				"to": {
+					"length": 255
+				}
+			},
+			{
+				"from": {
 					"type": "nvarchar",
 					"hasMaxLength": true
 				},

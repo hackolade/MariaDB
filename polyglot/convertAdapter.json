@@ -39,7 +39,18 @@
 			{
 				"from": {
 					"childType": "char",
+					"mode": "varchar",
 					"length": 21844
+				},
+				"to": {
+					"hasMaxLength": true
+				}
+			},
+			{
+				"from": {
+					"childType": "char",
+					"mode": "char",
+					"length": 255
 				},
 				"to": {
 					"hasMaxLength": true
