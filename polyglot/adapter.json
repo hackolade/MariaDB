@@ -115,17 +115,17 @@
 					"hasMaxLength": true
 				},
 				"to": {
-					"length": 21844
+					"length": 255
 				}
 			},
 			{
 				"from": {
 					"type": "varchar",
-					"mode": "char",
+					"mode": "character",
 					"hasMaxLength": true
 				},
 				"to": {
-					"length": 255
+					"length": 21844
 				}
 			},
 			{
@@ -134,7 +134,7 @@
 					"hasMaxLength": true
 				},
 				"to": {
-					"length": 21844
+					"length": 255
 				}
 			},
 			{
