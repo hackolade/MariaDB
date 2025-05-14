@@ -108,6 +108,43 @@
 				"to": {
 					"mode": "point"
 				}
+			},
+			{
+				"from": {
+					"type": "varchar",
+					"hasMaxLength": true
+				},
+				"to": {
+					"length": 21844
+				}
+			},
+			{
+				"from": {
+					"type": "varchar",
+					"mode": "char",
+					"hasMaxLength": true
+				},
+				"to": {
+					"length": 255
+				}
+			},
+			{
+				"from": {
+					"type": "nvarchar",
+					"hasMaxLength": true
+				},
+				"to": {
+					"length": 255
+				}
+			},
+			{
+				"from": {
+					"type": "binary",
+					"hasMaxLength": true
+				},
+				"to": {
+					"length": 21844
+				}
 			}
 		]
 	},

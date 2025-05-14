@@ -1,0 +1,70 @@
+/**
+ *
+ * {
+ * 		"add": {
+ * 			"entity": [<names of new property>],
+ * 			"container": [<names of new property>],
+ * 			"model": [<names of new property>],
+ * 			"view": [<names of new property>],
+ *			"field": {
+ *				"<type>": [<names of new property>]
+ *			}
+ * 		},
+ * 		"delete": {
+ * 			"entity": [<names of new property>],
+ * 			"container": [<names of new property>],
+ * 			"model": [<names of new property>],
+ * 			"view": [<names of new property>],
+ *			"field": {
+ *				"<type>": [<names of new property>]
+ *			}
+ * 		},
+ * 		"modify": {
+ *	 		"entity": [
+ *	 			{
+ *					"from": { <properties that identify record> },
+ *					"to": { <properties that need to be changed> }
+ *				}
+ *			],
+ *			"container": [],
+ *			"model": [],
+ *			"view": [],
+ *			"field": []
+ * 		},
+ * }
+ */
+ {
+	"modify": {
+		"field": [
+			{
+				"from": {
+					"childType": "char",
+					"mode": "varchar",
+					"length": 21844
+				},
+				"to": {
+					"hasMaxLength": true
+				}
+			},
+			{
+				"from": {
+					"childType": "char",
+					"mode": "char",
+					"length": 255
+				},
+				"to": {
+					"hasMaxLength": true
+				}
+			},
+			{
+				"from": {
+					"mode": "varbinary",
+					"length": 21844
+				},
+				"to": {
+					"hasMaxLength": true
+				}
+			}
+		]
+	}
+}
