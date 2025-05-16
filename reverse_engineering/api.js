@@ -1,3 +1,5 @@
+'use strict';
+
 const connectionHelper = require('./helpers/connectionHelper');
 const mariadbHelper = require('./helpers/mariadbHelper');
 
@@ -31,6 +33,9 @@ module.exports = {
 		});
 
 		try {
+			logger.clear();
+			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
+
 			const connection = await this.connect(connectionInfo, app);
 			const instance = connectionHelper.createInstance(connection, logger);
 
@@ -74,6 +79,8 @@ module.exports = {
 		});
 
 		try {
+			logger.clear();
+			logger.log('info', connectionInfo, 'connectionInfo', connectionInfo.hiddenKeys);
 			const systemDatabases = connectionInfo.includeSystemCollection
 				? []
 				: ['information_schema', 'mysql', 'performance_schema'];
@@ -135,6 +142,8 @@ module.exports = {
 		});
 
 		try {
+			logger.log('info', data, 'data', data.hiddenKeys);
+
 			const collections = data.collectionData.collections;
 			const dataBaseNames = data.collectionData.dataBaseNames;
 			const connection = await this.connect(data, app);
