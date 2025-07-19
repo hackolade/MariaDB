@@ -11,7 +11,8 @@
             "applicationTarget": "MariaDB",
             "title": "MariaDB",
             "versions": [
-                "v10.x"
+                "v10.x",
+				"v11.x"
             ]
         },
         "features": {

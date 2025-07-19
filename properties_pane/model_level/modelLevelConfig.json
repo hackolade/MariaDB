@@ -71,7 +71,7 @@ making sure that you maintain a proper JSON format.
 				"shouldValidate": false,
 				"propertyTooltip": "DB version",
 				"propertyType": "select",
-				"options": ["v10.x"],
+				"options": ["v10.x", "v11.x"],
 				"disabledOption": false
 			},
 			{
