@@ -86,8 +86,8 @@ const getAlterCollectionsScripts = (collection, app) => {
 	return [
 		...createCollectionsScripts,
 		...deleteCollectionScripts,
-		...modifyCollectionScripts,
 		...addColumnScripts,
+		...modifyCollectionScripts,
 		...deleteColumnScripts,
 		...modifyColumnScript,
 	].filter(Boolean);
