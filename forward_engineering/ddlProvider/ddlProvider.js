@@ -368,8 +368,8 @@ module.exports = (baseProvider, options, app) => {
 
 			return {
 				statement: assignTemplates(templates.createForeignKey, {
-					primaryTable: getTableName(primaryTable, primarySchemaName || schemaData.schemaName),
-					foreignTable: getTableName(foreignTable, foreignSchemaName || schemaData.schemaName),
+					primaryTable: getTableName(primaryTable, primarySchemaName || schemaData?.schemaName),
+					foreignTable: getTableName(foreignTable, foreignSchemaName || schemaData?.schemaName),
 					name,
 					foreignKey: foreignKeysToString(foreignKey),
 					primaryKey: foreignKeysToString(primaryKey),
