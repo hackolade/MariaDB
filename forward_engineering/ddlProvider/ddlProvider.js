@@ -82,7 +82,7 @@ module.exports = (baseProvider, options, app) => {
 	};
 
 	return {
-		createDatabase({
+		createSchema({
 			databaseName,
 			orReplace,
 			ifNotExist,
@@ -516,7 +516,7 @@ module.exports = (baseProvider, options, app) => {
 			};
 		},
 
-		hydrateDatabase(containerData, data) {
+		hydrateSchema(containerData, data) {
 			return {
 				databaseName: containerData.name,
 				orReplace: containerData.orReplace,
@@ -575,6 +575,14 @@ module.exports = (baseProvider, options, app) => {
 
 		commentIfDeactivated(statement, data, isPartOfLine) {
 			return statement;
+		},
+
+		commentStatement(statement) {
+			return commentIfDeactivated(statement, { isActivated: false });
+		},
+
+		prepareName(name) {
+			return wrapInTics(name);
 		},
 
 		hydrateUdf(udf) {
