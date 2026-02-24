@@ -16,13 +16,13 @@ module.exports = app => {
 	 * */
 	const getAddContainerScriptDto = containerData => {
 		const constructedDbData = getDbData([containerData]);
-		const dbData = ddlProvider.hydrateDatabase(constructedDbData, {
+		const dbData = ddlProvider.hydrateSchema(constructedDbData, {
 			udfs: containerData.role?.UDFs,
 			procedures: containerData.role?.Procedures,
 			useDb: false,
 		});
 
-		const script = _.trim(ddlProvider.createDatabase(dbData));
+		const script = _.trim(ddlProvider.createSchema(dbData));
 		return AlterScriptDto.getInstance([script], true, false);
 	};
 
