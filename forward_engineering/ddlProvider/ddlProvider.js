@@ -530,6 +530,11 @@ module.exports = (baseProvider, options, app) => {
 			};
 		},
 
+		// Keep it because it was used to hydrate `dbData` for the API
+		hydrateDatabase(containerData, data) {
+			return this.hydrateSchema(containerData, data).bind(this);
+		},
+
 		hydrateTable({ tableData, entityData, jsonSchema }) {
 			const detailsTab = entityData[0];
 			const likeTable = _.get(tableData, `relatedSchemas[${detailsTab.like}]`, '');
