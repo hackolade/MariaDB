@@ -3,6 +3,7 @@
 	"ddlType": "plugin",
 	"namePrefix": "MariaDB",
 	"mode": "mysql",
+	"combinedContainers": true,
 	"level": {
 		"container": true,
 		"entity": true,
