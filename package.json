@@ -12,7 +12,9 @@
             "title": "MariaDB",
             "versions": [
                 "v10.x",
-                "v11.x"
+                "v11.x", 
+				"v12.x", 
+				"v13.x"
             ]
         },
         "features": {

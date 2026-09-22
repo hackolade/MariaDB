@@ -1,7 +1,7 @@
 {
 	"model": {
 		"modelName": "new_model",
-		"dbVersion": "v11.x",
+		"dbVersion": "v12.x",
 		"dbVendor": "MariaDB"
 	},
 	"container": {
