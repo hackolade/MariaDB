@@ -1,6 +1,6 @@
 {
     "name": "MariaDB",
-    "version": "0.2.28",
+    "version": "0.2.29",
     "author": "hackolade",
     "engines": {
         "hackolade": "7.7.10",
@@ -12,9 +12,9 @@
             "title": "MariaDB",
             "versions": [
                 "v10.x",
-                "v11.x", 
-				"v12.x", 
-				"v13.x"
+                "v11.x",
+                "v12.x",
+                "v13.x"
             ]
         },
         "features": {
