@@ -304,6 +304,7 @@ module.exports = (baseProvider, options, app) => {
 				primaryTableActivated,
 				foreignTableActivated,
 				primarySchemaName,
+				isActivated: isRelationshipActivated,
 			},
 			dbData,
 			schemaData,
@@ -323,7 +324,7 @@ module.exports = (baseProvider, options, app) => {
 					foreignKey: isActivated ? foreignKeysToString(foreignKey) : foreignActiveKeysToString(foreignKey),
 					primaryKey: isActivated ? foreignKeysToString(primaryKey) : foreignActiveKeysToString(primaryKey),
 				}),
-				isActivated,
+				isActivated: isActivated && isRelationshipActivated !== false,
 			};
 		},
 
@@ -359,6 +360,7 @@ module.exports = (baseProvider, options, app) => {
 				foreignTableActivated,
 				foreignSchemaName,
 				primarySchemaName,
+				isActivated: isRelationshipActivated,
 			},
 			dbData,
 			schemaData,
@@ -378,7 +380,8 @@ module.exports = (baseProvider, options, app) => {
 					!isAllPrimaryKeysDeactivated &&
 					!isAllForeignKeysDeactivated &&
 					primaryTableActivated &&
-					foreignTableActivated,
+					foreignTableActivated &&
+					isRelationshipActivated !== false,
 			};
 		},
 
