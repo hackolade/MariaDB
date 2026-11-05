@@ -35,9 +35,9 @@ const mapCheckConstraintNamesToChangeHistory = _ => collection => {
 };
 
 /**
- * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string) => Array<AlterScriptDto>}
+ * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string, isActivated: boolean) => Array<AlterScriptDto>}
  * */
-const getDropCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName) => {
+const getDropCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName, isActivated) => {
 	const { wrapInTics } = require('../../../utils/general')(_);
 
 	return constraintHistory
@@ -46,13 +46,13 @@ const getDropCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory,
 			const wrappedConstraintName = wrapInTics(historyEntry.old.chkConstrName);
 			return ddlProvider.dropConstraint(fullTableName, wrappedConstraintName);
 		})
-		.map(script => AlterScriptDto.getInstance([script], true, true));
+		.map(script => AlterScriptDto.getInstance([script], isActivated, true));
 };
 
 /**
- * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string) => Array<AlterScriptDto>}
+ * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string, isActivated: boolean) => Array<AlterScriptDto>}
  * */
-const getAddCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName) => {
+const getAddCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName, isActivated) => {
 	const { wrapInTics } = require('../../../utils/general')(_);
 
 	return constraintHistory
@@ -61,13 +61,13 @@ const getAddCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, 
 			const { chkConstrName, constrExpression } = historyEntry.new;
 			return ddlProvider.addCheckConstraint(fullTableName, wrapInTics(chkConstrName), constrExpression);
 		})
-		.map(script => AlterScriptDto.getInstance([script], true, false));
+		.map(script => AlterScriptDto.getInstance([script], isActivated, false));
 };
 
 /**
- * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string) => Array<AlterScriptDto>}
+ * @return {(constraintHistory: Array<CheckConstraintHistoryEntry>, fullTableName: string, isActivated: boolean) => Array<AlterScriptDto>}
  * */
-const getUpdateCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName) => {
+const getUpdateCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistory, fullTableName, isActivated) => {
 	const { wrapInTics } = require('../../../utils/general')(_);
 
 	return constraintHistory
@@ -91,8 +91,8 @@ const getUpdateCheckConstraintScriptDtos = (_, ddlProvider) => (constraintHistor
 			);
 
 			return [
-				AlterScriptDto.getInstance([dropConstraintScript], true, true),
-				AlterScriptDto.getInstance([addConstraintScript], true, false),
+				AlterScriptDto.getInstance([dropConstraintScript], isActivated, true),
+				AlterScriptDto.getInstance([addConstraintScript], isActivated, false),
 			];
 		})
 		.flat();
@@ -108,17 +108,24 @@ const getModifyCheckConstraintScriptDtos = (_, ddlProvider) => collection => {
 	const collectionName = getCollectionName(collectionSchema);
 	const databaseName = getDatabaseName(collection);
 	const fullTableName = getTableName(collectionName, databaseName);
+	const isActivated = collection.role?.isActivated !== false;
 
 	const constraintHistory = mapCheckConstraintNamesToChangeHistory(_)(collection);
 
-	const addCheckConstraintScripts = getAddCheckConstraintScriptDtos(_, ddlProvider)(constraintHistory, fullTableName);
+	const addCheckConstraintScripts = getAddCheckConstraintScriptDtos(_, ddlProvider)(
+		constraintHistory,
+		fullTableName,
+		isActivated,
+	);
 	const dropCheckConstraintScripts = getDropCheckConstraintScriptDtos(_, ddlProvider)(
 		constraintHistory,
 		fullTableName,
+		isActivated,
 	);
 	const updateCheckConstraintScripts = getUpdateCheckConstraintScriptDtos(_, ddlProvider)(
 		constraintHistory,
 		fullTableName,
+		isActivated,
 	);
 
 	return [...addCheckConstraintScripts, ...dropCheckConstraintScripts, ...updateCheckConstraintScripts].filter(
