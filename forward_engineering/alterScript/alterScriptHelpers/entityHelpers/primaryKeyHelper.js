@@ -1,4 +1,5 @@
 const { AlterScriptDto } = require('../../types/AlterScriptDto');
+const { isCollectionInDeltaModelActivated } = require('../../../utils/general');
 const {
 	AlterCollectionDto,
 	AlterCollectionColumnDto,
@@ -328,7 +329,11 @@ const getAddCompositePkScriptDtos = (_, ddlProvider) => collection => {
 	return newPrimaryKeys
 		.map(newPk => {
 			const ddlConfig = getCreateCompositePKDDLProviderConfig(_)(newPk, entityName, collection);
-			const statementDto = ddlProvider.addPrimaryKey(fullTableName, collection.isActivated, ddlConfig);
+			const statementDto = ddlProvider.addPrimaryKey(
+				fullTableName,
+				isCollectionInDeltaModelActivated(collection),
+				ddlConfig,
+			);
 			return new PkScriptModificationDto(statementDto.statement, fullTableName, false, statementDto.isActivated);
 		})
 		.filter(scriptDto => Boolean(scriptDto.script));
@@ -366,7 +371,12 @@ const getDropCompositePkScriptDtos = (_, ddlProvider) => collection => {
 	return oldPrimaryKeys
 		.map(oldPk => {
 			const script = ddlProvider.dropPrimaryKey(fullTableName);
-			return new PkScriptModificationDto(script, fullTableName, true, collection.isActivated);
+			return new PkScriptModificationDto(
+				script,
+				fullTableName,
+				true,
+				isCollectionInDeltaModelActivated(collection),
+			);
 		})
 		.filter(scriptDto => Boolean(scriptDto.script));
 };
@@ -613,7 +623,11 @@ const getAddPkScriptDtos = (_, ddlProvider) => collection => {
 		})
 		.map(([name, jsonSchema]) => {
 			const ddlConfig = getCreateRegularPKDDLProviderConfig(_)(name, jsonSchema);
-			const statementDto = ddlProvider.addPrimaryKey(fullTableName, collection.isActivated, ddlConfig);
+			const statementDto = ddlProvider.addPrimaryKey(
+				fullTableName,
+				isCollectionInDeltaModelActivated(collection),
+				ddlConfig,
+			);
 			return new PkScriptModificationDto(statementDto.statement, fullTableName, false, statementDto.isActivated);
 		})
 		.filter(scriptDto => Boolean(scriptDto.script));
@@ -647,7 +661,12 @@ const getDropPkScriptDto = (_, ddlProvider) => collection => {
 		})
 		.map(([name, jsonSchema]) => {
 			const script = ddlProvider.dropPrimaryKey(fullTableName);
-			return new PkScriptModificationDto(script, fullTableName, true, collection.isActivated);
+			return new PkScriptModificationDto(
+				script,
+				fullTableName,
+				true,
+				isCollectionInDeltaModelActivated(collection),
+			);
 		})
 		.filter(scriptDto => Boolean(scriptDto.script));
 };

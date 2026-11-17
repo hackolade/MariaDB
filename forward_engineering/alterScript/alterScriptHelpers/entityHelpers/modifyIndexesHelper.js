@@ -39,6 +39,8 @@ const getModifyIndexesDtos = app => collection => {
 	const idToActivatedHashTable = generateIdToActivatedHashTable(tableData);
 
 	const collectionName = getCollectionName(tableData);
+	const { isCollectionInDeltaModelActivated } = require('../../../utils/general');
+	const isCollectionActivated = isCollectionInDeltaModelActivated(tableData);
 
 	const compMod = getCompMod(tableData);
 	const indexesCompMod = compMod[indexesCompModKey] || {};
@@ -49,21 +51,22 @@ const getModifyIndexesDtos = app => collection => {
 
 	const { removed, added, modified } = getModifiedGroupItemsByName(newHydrated, oldHydrated);
 
+	const isIndexScriptActivated = item => isCollectionActivated && item.isActivated !== false;
 	const removedScriptDtos = removed.map(item => {
 		const script = ddlProvider.dropIndex(collectionName, dbData, item);
-		return AlterScriptDto.getInstance([script], true, true);
+		return AlterScriptDto.getInstance([script], isIndexScriptActivated(item), true);
 	});
 	const addedScriptDtos = added.map(item => {
-		const script = ddlProvider.createIndex(collectionName, item, dbData);
+		const script = ddlProvider.createIndex(collectionName, item, dbData, isCollectionActivated);
 		return AlterScriptDto.getInstance([script], true, false);
 	});
 	const modifiedScriptDtos = modified
 		.map(item => {
 			const dropScript = ddlProvider.dropIndex(collectionName, dbData, item);
-			const addScript = ddlProvider.createIndex(collectionName, item, dbData);
+			const addScript = ddlProvider.createIndex(collectionName, item, dbData, isCollectionActivated);
 
 			return [
-				AlterScriptDto.getInstance([dropScript], true, true),
+				AlterScriptDto.getInstance([dropScript], isIndexScriptActivated(item), true),
 				AlterScriptDto.getInstance([addScript], true, false),
 			];
 		})
