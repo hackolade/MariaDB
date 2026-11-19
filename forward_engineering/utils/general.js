@@ -1,5 +1,21 @@
 const { TableOptionsByEngine, TableOptions } = require('../enums/tableOptions');
 
+const isObjectInDeltaModelActivated = modelObject => {
+	return modelObject?.compMod?.isActivated?.new ?? modelObject?.role?.isActivated ?? modelObject?.isActivated ?? true;
+};
+
+const isParentContainerActivated = collection => {
+	return (
+		collection?.compMod?.bucketProperties?.isActivated ??
+		collection?.role?.compMod?.bucketProperties?.isActivated ??
+		true
+	);
+};
+
+const isCollectionInDeltaModelActivated = collection => {
+	return Boolean(isParentContainerActivated(collection) && isObjectInDeltaModelActivated(collection));
+};
+
 module.exports = ({ _, wrap }) => {
 	/**
 	 * @param schemaName {string}
@@ -227,15 +243,25 @@ module.exports = ({ _, wrap }) => {
 		return keys.reduce(
 			(result, key) => {
 				if (!key.tableName) {
-					result.columns.push(getKeyWithAlias(key));
+					result.columns.push({
+						statement: getKeyWithAlias(key),
+						isActivated: key.isActivated,
+					});
 
 					return result;
 				}
 
 				const tableName = `\`${key.dbName}\`.\`${key.tableName}\``;
+				const isKeyActivated = key.isActivated !== false;
+				const addedTable = result.tables.find(table => table.statement === tableName);
 
-				if (!result.tables.includes(tableName)) {
-					result.tables.push(tableName);
+				if (addedTable) {
+					addedTable.isActivated = addedTable.isActivated || isKeyActivated;
+				} else {
+					result.tables.push({
+						statement: tableName,
+						isActivated: isKeyActivated,
+					});
 				}
 
 				result.columns.push({
@@ -418,3 +444,7 @@ module.exports = ({ _, wrap }) => {
 		getNamePrefixedWithSchemaName,
 	};
 };
+
+module.exports.isObjectInDeltaModelActivated = isObjectInDeltaModelActivated;
+module.exports.isParentContainerActivated = isParentContainerActivated;
+module.exports.isCollectionInDeltaModelActivated = isCollectionInDeltaModelActivated;

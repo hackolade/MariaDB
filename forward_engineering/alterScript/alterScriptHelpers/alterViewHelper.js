@@ -22,9 +22,11 @@ const getAddViewScriptDto = app => view => {
 	};
 	const hydratedView = ddlProvider.hydrateView({ viewData, entityData: [view] });
 
-	const scriptDto = ddlProvider.createViewForAlterScript(hydratedView, databaseName);
+	const { isCollectionInDeltaModelActivated } = require('../../utils/general');
+	const isParentActivated = isCollectionInDeltaModelActivated(view);
+	const scriptDto = ddlProvider.createViewForAlterScript(hydratedView, databaseName, isParentActivated);
 	const { deactivatedWholeStatement, statement } = scriptDto;
-	const isViewActivated = view.isActivated && !deactivatedWholeStatement;
+	const isViewActivated = isParentActivated && !deactivatedWholeStatement;
 	return AlterScriptDto.getInstance([statement], isViewActivated, false);
 };
 
@@ -66,7 +68,9 @@ const getModifiedViewScriptDto = app => view => {
 	const isAlgorithmChanged = !checkCompModEqual(viewSchema.compMod?.algorithm, _);
 	const isSqlSecurityChanged = !checkCompModEqual(viewSchema.compMod?.sqlSecurity, _);
 
-	const { deactivatedWholeStatement, selectStatement } = ddlProvider.viewSelectStatement(viewData);
+	const { isCollectionInDeltaModelActivated } = require('../../utils/general');
+	const isParentActivated = isCollectionInDeltaModelActivated(view);
+	const { deactivatedWholeStatement, selectStatement } = ddlProvider.viewSelectStatement(viewData, isParentActivated);
 
 	const algorithm = viewSchema.algorithm ? `ALGORITHM ${viewSchema.algorithm}` : 'ALGORITHM UNDEFINED';
 	const sqlSecurity = viewData.sqlSecurity ? `SQL SECURITY ${viewData.sqlSecurity}` : '';
@@ -81,7 +85,7 @@ const getModifiedViewScriptDto = app => view => {
 		viewName: ddlViewName,
 		selectStatement,
 	});
-	const isViewActivated = viewSchema.isActivated && !deactivatedWholeStatement;
+	const isViewActivated = isParentActivated && !deactivatedWholeStatement;
 	return AlterScriptDto.getInstance([script], isViewActivated, false);
 };
 

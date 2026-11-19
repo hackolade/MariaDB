@@ -403,8 +403,8 @@ module.exports = (baseProvider, options, app) => {
 		 *     statement: string,
 		 * }}
 		 * */
-		createViewForAlterScript(viewData, databaseName) {
-			const { deactivatedWholeStatement, selectStatement } = this.viewSelectStatement(viewData);
+		createViewForAlterScript(viewData, databaseName, isActivated = true) {
+			const { deactivatedWholeStatement, selectStatement } = this.viewSelectStatement(viewData, isActivated);
 			const algorithm =
 				viewData.algorithm && viewData.algorithm !== 'UNDEFINED' ? `ALGORITHM ${viewData.algorithm} ` : '';
 
@@ -556,11 +556,14 @@ module.exports = (baseProvider, options, app) => {
 		},
 
 		hydrateViewColumn(data) {
+			const isSourceTableActivated = _.first(data.entityData)?.isActivated !== false;
+			const isSourceSchemaActivated = _.first(data.containerData)?.isActivated !== false;
+
 			return {
 				name: data.name,
 				tableName: data.entityName,
 				alias: data.alias,
-				isActivated: data.isActivated,
+				isActivated: data.isActivated !== false && isSourceTableActivated && isSourceSchemaActivated,
 				dbName: data.dbName,
 			};
 		},
@@ -701,25 +704,30 @@ module.exports = (baseProvider, options, app) => {
 
 		viewSelectStatement(viewData, isActivated = true) {
 			const allDeactivated = checkAllKeysDeactivated(viewData.keys || []);
-			const deactivatedWholeStatement = allDeactivated || !isActivated;
+			const hasCustomSelectStatement = Boolean(_.trim(viewData.selectStatement));
+			const deactivatedWholeStatement = isActivated === false || (!hasCustomSelectStatement && allDeactivated);
 			const { columns, tables } = getViewData(viewData.keys);
-			let columnsAsString = columns.map(column => column.statement).join(',\n\t\t');
+			const joinViewItems = (items, separator) => {
+				if (deactivatedWholeStatement) {
+					return items.map(item => item.statement).join(separator);
+				}
 
-			if (!deactivatedWholeStatement) {
-				const dividedColumns = divideIntoActivatedAndDeactivated(columns, column => column.statement);
-				const deactivatedColumnsString = dividedColumns.deactivatedItems.length
-					? commentIfDeactivated(dividedColumns.deactivatedItems.join(',\n\t\t'), {
+				const dividedItems = divideIntoActivatedAndDeactivated(items, item => item.statement);
+				const deactivatedItemsString = dividedItems.deactivatedItems.length
+					? commentIfDeactivated(dividedItems.deactivatedItems.join(separator), {
 							isActivated: false,
 							isPartOfLine: true,
 						})
 					: '';
-				columnsAsString = dividedColumns.activatedItems.join(',\n\t\t') + deactivatedColumnsString;
-			}
 
-			const selectStatement = _.trim(viewData.selectStatement)
+				return dividedItems.activatedItems.join(separator) + deactivatedItemsString;
+			};
+			const columnsAsString = joinViewItems(columns, ',\n\t\t');
+
+			const selectStatement = hasCustomSelectStatement
 				? _.trim(tab(viewData.selectStatement))
 				: assignTemplates(templates.viewSelectStatement, {
-						tableName: tables.join(', '),
+						tableName: joinViewItems(tables, ', '),
 						keys: columnsAsString,
 					});
 
